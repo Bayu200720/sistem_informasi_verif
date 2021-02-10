@@ -1,8 +1,7 @@
-## Oswa - inv
+## SIV
 
 
-![OSWA-INV v2 image](https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/12045296_896994067005023_5505146103193104549_o.jpg?oh=4afd029c1486604d29f672d76becb8bc&oe=5921F70A " Warehouse inventory system ")
-#Warehouse inventory system
+#Verification information system
 - - - -
 
 The application was initially created by **Siamon Hasan**, useing [php](http:php.net), [mysql](https://www.mysql.com) and [bootstrap](http://getbootstrap.com).
@@ -19,7 +18,7 @@ If you find any bug, and a fix for that bug, please leave a comment on the githu
 ****
 
 
-1. Download the latest version with git (`git clone https://github.com/siamon123/warehouse-inventory-system.git`)
+1. Download the latest version with git 
 
 2. Import/load oswa_inv.sql into your mysql database. This should set up the basic structure of the database system.
 
@@ -30,10 +29,10 @@ If you find any bug, and a fix for that bug, please leave a comment on the githu
 5. Then loging by typing **username** and **password**:
 
 
-   Administrator        | Special User           | Default User
+   Administrator        | BPP User           | Verif User
    ---------------------| -----------------------| -------------------
-   **Username** : admin | **Username** : special | **Username** : user
-   **Password** : admin | **Password** : special | **Password** : user
+   **Username** : admin | **Username** : aptika | **Username** : verifikasi
+   **Password** : admin | **Password** : user | **Password** : user
 
 6. Good luck!  
 
@@ -43,6 +42,3 @@ If you find any bug, and a fix for that bug, please leave a comment on the githu
 
 - - - -
 
-Like  [@OSWA](https://www.facebook.com/oswapp) on Facebook for more project.
-
-Don't forget to visit [oswapp.com](http://oswapp.com "OSWA")
