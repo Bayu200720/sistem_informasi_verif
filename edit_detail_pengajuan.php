@@ -36,10 +36,11 @@
     //  }
 
      $keterangan   = remove_junk($db->escape($_POST['keterangan']));
+     $tanggal   = remove_junk($db->escape($_POST['tanggal']));
      $date    = make_date();
      $id_pengajuan = remove_junk($db->escape($_GET['id']));
      $query  = "UPDATE detail_pengajuan SET";
-     $query .=" no_sptjb='{$no_sptjb}',nominal='{$nominal}',id_akun='{$akun}',keterangan='{$keterangan}',pph='{$pph}',ppn='{$ppn}'";
+     $query .=" no_sptjb='{$no_sptjb}',nominal='{$nominal}',id_akun='{$akun}',keterangan='{$keterangan}',pph='{$pph}',ppn='{$ppn}',tanggal_dp='{$tanggal}'";
      $query .=" WHERE id= '{$id_pengajuan}'";
      if($db->query($query)){
        $session->msg('s',"Detail Pengajuan edited ");
@@ -105,6 +106,15 @@
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
                   <input type="text" id="e_nominal" class="form-control" name="nominal" placeholder="Nominal" value="<?=$detail['nominal']?>">
+               </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-th-large"></i>
+                  </span>
+                  <input type="date" id="e_tanggal" class="form-control" name="tanggal" placeholder="tanggal" value="<?=$detail['tanggal']?>">
                </div>
               </div>
 

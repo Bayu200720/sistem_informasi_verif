@@ -10,7 +10,7 @@
 
 <?php
  if(isset($_POST['add_detail_pengajuan'])){
-   $req_fields = array('no_sptjb','nominal','id_akun','pph','ppn');
+   $req_fields = array('no_sptjb','nominal','id_akun','pph','ppn','tanggal');
    validate_fields($req_fields);
    var_dump($_POST);
    $teks5 = $_POST['nominal'];
@@ -20,6 +20,7 @@
 
    if(empty($errors)){
      $no_sptjb  = remove_junk($db->escape($_POST['no_sptjb']));
+     $tanggal  = remove_junk($db->escape($_POST['tanggal']));
      $nominal  = remove_junk($db->escape($nominal));
       $akun  = remove_junk($db->escape($_POST['id_akun']));
 
@@ -40,9 +41,9 @@
      $date    = make_date();
      $id_pengajuan = remove_junk($db->escape($_GET['id']));
      $query  = "INSERT INTO detail_pengajuan (";
-     $query .=" no_sptjb,nominal,id_akun,keterangan,id_pengajuan,pph,ppn";
+     $query .=" no_sptjb,nominal,id_akun,keterangan,id_pengajuan,pph,ppn,tanggal_dp";
      $query .=") VALUES (";
-     $query .=" '{$no_sptjb}', '{$nominal}', '{$akun}', '{$keterangan}', '{$id_pengajuan}','{$pph}','{$ppn}'";
+     $query .=" '{$no_sptjb}', '{$nominal}', '{$akun}', '{$keterangan}', '{$id_pengajuan}','{$pph}','{$ppn}','{$tanggal}'";
      $query .=")";
      if($db->query($query)){
        $session->msg('s',"Detail Pengajuan added ");
@@ -82,7 +83,7 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
+                  SPTJB</span>
                   <input type="text" class="form-control" name="no_sptjb" placeholder="NO SPTJB">
                </div>
               </div>
@@ -107,8 +108,17 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
+                  Nominal</span>
                   <input type="text" id="rupiah" class="form-control" name="nominal" placeholder="Nominal">
+               </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-th-large"></i>
+                  Tanggal</span>
+                  <input type="date" id="rupiah" class="form-control" name="tanggal" placeholder="tanggal">
                </div>
               </div>
 
@@ -134,7 +144,7 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
+                  Keterangan</span>
                   <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
                </div>
               </div>

@@ -93,7 +93,8 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
                 <th class="text-center" style="width: 15%;"> ID</th>
                 <th class="text-center" style="width: 15%;"> Nominal </th> 
                 <th class="text-center" style="width: 15%;"> PPH </th>
-                <th class="text-center" style="width: 15%;"> PPN </th>         
+                <th class="text-center" style="width: 15%;"> PPN </th> 
+                <th class="text-center" style="width: 15%;"> Tanggal Transaksi</th>           
                 <th class="text-center" style="width: 15%;"> Keterangan </th>
                 <th class="text-center" style="width: 15%;"> Kekurangan Verifikasi </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
@@ -114,6 +115,7 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
                <td class="text-center"><?php echo rupiah($sale['nominal']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['pph']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['ppn']); ?></td>
+               <td class="text-center"><?php echo $sale['tanggal_transaksi']; ?></td>
                <td class="text-center"><?php echo $sale['uraian'];  ?></td>
                <td class="text-center">
                <?php  if($user['user_level'] != 6 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
@@ -144,6 +146,7 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
                 <th class="text-center"> <?=rupiah($tot);?> </th> 
                 <th class="text-center"> <?=rupiah($tot1);?> </th>
                 <th class="text-center"> <?=rupiah($tot2);?> </th>
+                <th class="text-center"> </th>
                 <th class="text-center">Status Verifikasi  </th>
                 <th class="text-center"> 
                   <?php   if($user['user_level'] != 6 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>

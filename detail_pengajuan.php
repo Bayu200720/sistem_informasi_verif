@@ -250,7 +250,8 @@ if($_GET['s']=='kasubok'){
                 <th class="text-center" style="width: 15%;"> Akun</th>
                 <th class="text-center" style="width: 15%;"> Nominal </th> 
                 <th class="text-center" style="width: 15%;"> PPH </th>
-                <th class="text-center" style="width: 15%;"> PPN </th>         
+                <th class="text-center" style="width: 15%;"> PPN </th>
+                <th class="text-center" style="width: 15%;"> Tanggal </th>               
                 <th class="text-center" style="width: 15%;"> Keterangan </th>
                 <th class="text-center" style="width: 15%;"> Kekurangan Verifikasi </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
@@ -270,6 +271,7 @@ if($_GET['s']=='kasubok'){
                <td class="text-center"><?php echo rupiah($sale['nominal']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['pph']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['ppn']); ?></td>
+               <td class="text-center"><?php echo $sale['tanggal']; ?></td>
                <td class="text-center"><?php echo $sale['keterangan'];  ?></td>
                <td class="text-center">
                <?php  if($user['user_level'] != 6 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
@@ -308,6 +310,7 @@ if($_GET['s']=='kasubok'){
                 <th class="text-center">Jumlah</th>
                 <th class="text-center">  </th>
                 <th class="text-center"> </th>
+                <th class="text-center"> </th>
                 <th class="text-center"> <?=rupiah($tot);?> </th> 
                 <th class="text-center"> <?=rupiah($tot1);?> </th>
                 <th class="text-center"> <?=rupiah($tot2);?> </th>
@@ -335,6 +338,8 @@ if($_GET['s']=='kasubok'){
                 <th class="text-center"> </th> 
                 <th class="text-center"> </th>
                 <th class="text-center"> </th>
+                <th class="text-center"> </th>
+                
                 <th class="text-center">Status Verifikasi Kasubbbag Verifiaksi  </th>
                 <th class="text-center"> 
                       <?php $v=find_by_id('pengajuan',$_GET['id']);

@@ -44,8 +44,8 @@ if(isset($_POST["Import_detail"])){
              // echo count($has)
               for($i=1;$i<count($hasil);$i++){
                  // $akun=find_all_global('akun',$hasil[$i][4],'mak');
-                  $sql = "INSERT into detail_transaksi (id_detail_pengajuan,uraian,nominal,penerima,id_penerima,pph,ppn) 
-                      values ('".$_POST['id']."','".$hasil[$i][5]."','".$hasil[$i][2]."','".$hasil[$i][0]."','".$hasil[$i][1]."','".$hasil[$i][3]."','".$hasil[$i][4]."')";
+                  $sql = "INSERT into detail_transaksi (id_detail_pengajuan,uraian,nominal,penerima,id_penerima,pph,ppn,tanggal_transaksi) 
+                      values ('".$_POST['id']."','".$hasil[$i][5]."','".$hasil[$i][2]."','".$hasil[$i][0]."','".$hasil[$i][1]."','".$hasil[$i][3]."','".$hasil[$i][4]."','".$hasil[$i][6]."')";
                  // echo $sql;echo "<br>";
                  $result= $db->query($sql);
                 //echo $sql; echo "<br>";//exit();
@@ -102,8 +102,8 @@ if(isset($_POST["Import_detail"])){
                // echo count($has)
                 for($i=1;$i<count($hasil);$i++){
                     $akun=find_all_global('akun',$hasil[$i][4],'mak');
-                    $sql = "INSERT into detail_Pengajuan (no_sptjb,nominal,pph,ppn,id_pengajuan,id_akun) 
-                        values ('".$hasil[$i][0]."','".$hasil[$i][1]."','".$hasil[$i][2]."','".$hasil[$i][3]."','".$_POST['id']."','".$akun[0]['id']."')";
+                    $sql = "INSERT into detail_Pengajuan (no_sptjb,nominal,pph,ppn,id_pengajuan,id_akun,tanggal_dp) 
+                        values ('".$hasil[$i][0]."','".$hasil[$i][1]."','".$hasil[$i][2]."','".$hasil[$i][3]."','".$_POST['id']."','".$akun[0]['id']."','".$hasil[$i][5]."')";
                    // echo $sql;echo "<br>";
                     $result= $db->query($sql);
                   //echo $sql; echo "<br>";//exit();
