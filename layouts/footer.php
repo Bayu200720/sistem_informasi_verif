@@ -4,7 +4,23 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
   <script type="text/javascript" src="libs/js/functions.js"></script>
+  
+  <!-- Datatable -->
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+
   <script>
+    $(document).ready(function() {
+      dataTable();
+    });
+
+    function dataTable(){
+      $('#tabel').DataTable({
+        responsive:true
+      });
+    }
       var e_nominal = document.getElementById('e_nominal');
 		e_nominal.addEventListener('keyup', function(e){
 			e_nominal.value = formatRupiah(this.value, 'Rp. ');
