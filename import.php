@@ -17,9 +17,67 @@ $pengajuan = find_by_id('pengajuan',$_POST['id']);
   ?>
 
 <?php
- if(isset($_POST["Import"])){
-    
 
+if(isset($_POST["Import_detail"])){
+  
+  $allowedExts = array("gif", "jpeg", "jpg", "png","csv");
+  $extension = end(explode(".", $_FILES["file"]["name"]));
+ // echo $extension; echo $_FILES["file"]["type"]; exit();
+  if (($_FILES["file"]["size"] < 20000)
+  && in_array($extension, $allowedExts)){
+
+          $filename=$_FILES["file"]["tmp_name"];    
+          if($_FILES["file"]["size"] > 0)
+          {
+              $file = fopen($filename, "r");
+          
+              while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
+              {
+                  $hasil[]=$getData;
+                 // $akun=find_all_global('akun',$getData['4'],'mak');
+                //  $sql = "INSERT into detail_Pengajuan (no_sptjb,nominal,pph,ppn,id_pengajuan,id_akun) 
+                  //    values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$_POST['id']."','".$akun[0]['id']."')";
+                      //echo $sql;exit();
+                    //  $hasil=$db->query($sql);
+                   
+              }
+             // echo count($has)
+              for($i=1;$i<count($hasil);$i++){
+                 // $akun=find_all_global('akun',$hasil[$i][4],'mak');
+                  $sql = "INSERT into detail_transaksi (id_detail_pengajuan,uraian,nominal,penerima,id_penerima,pph,ppn) 
+                      values ('".$_POST['id']."','".$hasil[$i][5]."','".$hasil[$i][2]."','".$hasil[$i][0]."','".$hasil[$i][1]."','".$hasil[$i][3]."','".$hasil[$i][4]."')";
+                 // echo $sql;echo "<br>";
+                 $result= $db->query($sql);
+                //echo $sql; echo "<br>";//exit();
+              }
+             // exit();
+              if($result){
+                  $session->msg('s',"Berhasil Import ");
+                  if($user['user_level']==6){
+                  redirect('transaksi_db_a.php?id='.$_POST['id'], false);
+                  }else{
+                  redirect('transaksi_db_a.php?id='.$_POST['id'], false);
+                  }
+              } else {
+                  $session->msg('d',' Sorry failed to Import!');
+                  if($user['user_level']==6){
+                  redirect('transaksi_db_a.php?id='.$_POST['id'], false);
+                  }else{
+                  redirect('transaksi_db_a.php?id='.$_POST['id'], false);
+                  }
+              }
+              
+             // var_dump($hasil);
+              fclose($file); 
+          }
+  }else{
+      $session->msg('d',' Format File CSV Only!');
+      redirect('detail_pengajuan.php?id='.$pengajuan['id'], false);
+  }
+}   
+
+ if(isset($_POST["Import"])){
+  
     $allowedExts = array("gif", "jpeg", "jpg", "png","csv");
     $extension = end(explode(".", $_FILES["file"]["name"]));
    // echo $extension; echo $_FILES["file"]["type"]; exit();

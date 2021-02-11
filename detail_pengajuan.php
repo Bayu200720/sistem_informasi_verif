@@ -21,6 +21,29 @@
 $sales = find_detail($_GET['id']);
 $sales1 = find_all_global('pengajuan',$_GET['id'],'id');
 
+if($_GET['status'] == 'h'){
+  $id =$_GET['id'];
+  $query="DELETE FROM detail_pengajuan WHERE id_pengajuan =".$id;
+  $hasil=$db->query($query);
+  
+  if($hasil){
+      $session->msg('s',"Delete Success ");
+      if($user['user_level']==2){
+      redirect('detail_pengajuan.php?id='.$id, false);
+      }else{
+      redirect('detail_pengajuan.php?id='.$id, false);
+      }
+  } else {
+      $session->msg('d',' Sorry failed to added!');
+      if($user['user_level']==2){
+      redirect('detail_pengajuan.php?id='.$id, false);
+  }else{
+      redirect('detail_pengajuan.php?id='.$id, false);
+  }
+  }
+}
+
+
 
 if(isset($_POST['update_kekurangan'])){
   $req_fields = array('verifikasi');
@@ -208,7 +231,9 @@ if($_GET['s']=='kasubok'){
                 <a href="add_detail_pengajuan.php?id=<?=$_GET['id'];?>" class="btn btn-primary">Add Detail Pengajuan</a>
               <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
               <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
-              <a href="excle.php" class="btn btn-success">Excle</a>
+              
+              <a href="uploads/data_excle/data.csv" class="btn btn-success" target="_blank">Excle</a><!-- <a href="excle.php" class="btn btn-success">Excle</a> -->
+              <a onclick="return confirm('Yakin Hapus!!!')" href="detail_pengajuan.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
               <?php }else{ ?>
                 <!-- <a href="pengajuan_verif.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a> -->
               <?php } ?>
@@ -261,7 +286,11 @@ if($_GET['s']=='kasubok'){
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
 
-                     <a href="transaksi_db.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-sucess btn-xs"  title="Edit" data-toggle="tooltip">
+                     <a href="transaksi_db.php?id=<?php echo (int)$sale['id_sptjb_api'];?>&id_dp=<?=(int)$sale['id'];?>" class="btn btn-sucess btn-xs"  title="Detail API" data-toggle="tooltip">
+                       <span class="glyphicon glyphicon-edit"></span>
+                     </a>
+
+                     <a href="transaksi_db_a.php?id=<?=(int)$sale['id'];?>" class="btn btn-sucess btn-xs"  title="Detail SIV" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
 
@@ -351,7 +380,7 @@ if($_GET['s']=='kasubok'){
   </div>
 </div>
 
-<!-- Modal Upload-->
+<!-- Modal Import Data-->
 <div class="modal fade" id="UploadCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

@@ -20,88 +20,35 @@
 <?php
 
 
-
-if($_GET['status'] == 'g'){
-  $id_dp = $_GET['id_dp'];
-
-  //$url = file_get_contents('https://skim.kominfo.go.id/api_siak/index.php?id=40008');
-  $id= $_GET['id'];
-  $url = file_get_contents("https://skim.kominfo.go.id/CI3_api/api/Sptjb/detail?id=$id");
-  //echo "https://skim.kominfo.go.id/CI3_api/api/Sptjb/detail?id=$id    ";exit();
-  $sales = json_decode($url, true);
-  //var_dump($sales); exit();
-
-    for($i=0;$i<count($sales);$i++){
-
-      $id_rincian_api=$sales[$i]['id'];
-      $penerima=$sales[$i]['penerima'];
-      $total=$sales[$i]['nominal'];
-      $nip=$sales[$i]['id_penerima'];
-      $uraian = $sales[$i]['uraian'];
-      $pph = $sales[$i]['pph'];
-      $ppn = $sales[$i]['ppn'];
-     
-
-      $query= "INSERT INTO `detail_transaksi` (`id`, `id_detail_pengajuan`, `id_transaksi_api`, `uraian`, `nominal`, `penerima`, `id_penerima`, `pph`, `ppn`) VALUES (NULL, '{$id_dp}', '{$id_rincian_api}', '{$uraian}', '{$total}', '{$penerima}', '{$nip}', '{$pph}', '{$ppn}')";
-    // echo $query;
-      $hasil=$db->query($query);
-    }
-
-    if($hasil){
-        $session->msg('s',"Generate Success ");
-        if($user['user_level']==2){
-        redirect('transaksi_db_a.php?id='.$id_dp, false);
-        }else{
-        redirect('transaksi_db_a.php?id='.$id_dp, false);
-        }
-      } else {
-        $session->msg('d',' Sorry failed to added!');
-        if($user['user_level']==2){
-        redirect('transaksi_db_a.php?id='.$id_dp, false);
-      }else{
-        redirect('transaksi_db_a.php?id='.$id_dp, false);
-      }
-      }
-  }
-
 //$sales = find_detail($_GET['id']);
 //$id_pengajuan = $_GET['id'];
-// if($_GET['status'] == 'h'){
-
-//     $query="DELETE FROM detail_transaksi WHERE id_detail_pengajuan =".$_GET['id'];
-//     $hasil=$db->query($query);
+if($_GET['status'] == 'h'){
+    $id =$_GET['id'];
+    $query="DELETE FROM detail_transaksi WHERE id_detail_pengajuan =".$_GET['id'];
+    $hasil=$db->query($query);
     
-//     if($hasil){
-//         $session->msg('s',"Delete Success ");
-//         if($user['user_level']==2){
-//         redirect('transaksi_db_a.php?id='.$id, false);
-//         }else{
-//         redirect('transaksi_db_a.php?id='.$id, false);
-//         }
-//     } else {
-//         $session->msg('d',' Sorry failed to added!');
-//         if($user['user_level']==2){
-//         redirect('transaksi_db_a.php?id='.$id, false);
-//     }else{
-//         redirect('transaksi_db_a.php?id='.$id, false);
-//     }
-//     }
+    if($hasil){
+        $session->msg('s',"Delete Success ");
+        if($user['user_level']==2){
+        redirect('transaksi_db_a.php?id='.$id, false);
+        }else{
+        redirect('transaksi_db_a.php?id='.$id, false);
+        }
+    } else {
+        $session->msg('d',' Sorry failed to added!');
+        if($user['user_level']==2){
+        redirect('transaksi_db_a.php?id='.$id, false);
+    }else{
+        redirect('transaksi_db_a.php?id='.$id, false);
+    }
+    }
 
     
-// }
+}
 
 
 $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
 
-//var_dump()); exit();
-if(count($sales) > 0){
-  $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
-}else{
-  $id= $_GET['id'];
-  $url = file_get_contents("https://skim.kominfo.go.id/CI3_api/api/Sptjb/detail?id=$id");
-  //echo "https://skim.kominfo.go.id/CI3_api/api/Sptjb/detail?id=$id    ";exit();
-  $sales = json_decode($url, true);
-}
   
 
 ?>
@@ -117,19 +64,19 @@ if(count($sales) > 0){
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Detail Transaksi</span>
+            <span>Detail Transaksi SIV</span>
           </strong>
           <div class="pull-right">
             <?php $user1=find_by_id('users',$_SESSION['user_id']);  if( $user1['user_level'] != '3'){?>
 
               <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
                
-                <a href="transaksi_db.php?id=<?=$_GET['id'];?>&status=g&id_dp=<?=$_GET['id_dp']?>" class="btn btn-primary">Generate</a>
+              
               
               <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
-              <!-- <a href="transaksi_db.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a> -->
-              <!-- <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
-              <a href="excle.php" class="btn btn-success">Excle</a> -->
+              <a onclick="return confirm('Yakin Hapus!!')" href="transaksi_db_a.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
+              <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
+              <a href="uploads/data_excle/data_detail.csv" class="btn btn-success">Excle</a>
               <?php }else{ ?>
                 <!-- <a href="pengajuan_verif.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a> -->
               <?php } ?>
@@ -143,7 +90,7 @@ if(count($sales) > 0){
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
                 <th class="text-center" style="width: 15%;"> Nama </th>
-                <th class="text-center" style="width: 15%;"> Akun</th>
+                <th class="text-center" style="width: 15%;"> ID</th>
                 <th class="text-center" style="width: 15%;"> Nominal </th> 
                 <th class="text-center" style="width: 15%;"> PPH </th>
                 <th class="text-center" style="width: 15%;"> PPN </th>         
@@ -168,7 +115,7 @@ if(count($sales) > 0){
                <td class="text-center"><?php echo rupiah($sale['pph']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['ppn']); ?></td>
                <td class="text-center"><?php echo $sale['uraian'];  ?></td>
-               <td class="text-center"><?php echo $sale['id_transaksi_api'];  ?>
+               <td class="text-center">
                <?php  if($user['user_level'] != 6 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
                    <?php if($sale['keterangan_verifikasi']==''){ ?><a href="#" class="btn btn-primary" id="kekurangan"  data-toggle="modal" data-target="#PenolakanKPPN" data-id='<?=$sale['id'];?>' data-verifikasi='<?=$sale['keterangan_verifikasi'];?>'>Keterangan Verifikasi</a>
                    <?php }else{ ?><a href="#" class="btn btn-warning" id="kekurangan"  data-toggle="modal" data-target="#PenolakanKPPN" data-id='<?=$sale['id'];?>' data-verifikasi='<?=$sale['keterangan_verifikasi'];?>'><?=$sale['keterangan_verifikasi'];?></a><?php } ?>
@@ -176,7 +123,7 @@ if(count($sales) > 0){
                 <span class="label label-danger"><?=$sale['keterangan_verifikasi'];?></span>
                <?php } ?>
                </td>
-               <td class="text-center">
+               <td class="text-center"><?php echo $sale['id_transaksi_api'];  ?>
                <?php if($user['user_level'] != 2 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
                   <div class="btn-group">
                      <!-- <a href="transaksi_detail.php?id=<?php echo (int)$sale[0]['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
@@ -266,12 +213,12 @@ if(count($sales) > 0){
   </div>
 </div>
 
-<!-- Modal Upload-->
+<!-- Modal import detail-->
 <div class="modal fade" id="UploadCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Import Data dari Skim</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Import Data</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -286,7 +233,7 @@ if(count($sales) > 0){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" name="Import" value="Upload">
+        <input type="submit" class="btn btn-primary" name="Import_detail" value="Upload">
       </div>
       </form>
     </div>
