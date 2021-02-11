@@ -208,7 +208,8 @@ if(isset($_POST['update_sp2d'])){
             <span>All Pengajuan</span>
           </strong>
           <div class="pull-right">
-            
+          <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Update Data SP2D SPAN</a>
+          <a href="uploads/data_excle/example_DAFTAR SP2D SATKER.csv" class="btn btn-success">Excle</a>
           </div>
         </div>
         <div class="panel-body">
@@ -355,6 +356,34 @@ if(isset($_POST['update_sp2d'])){
       </div>
     </div>
   </div>
+
+
+  <!-- Modal import SP2D SPAN-->
+<div class="modal fade" id="UploadCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import Data SP2D</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="import.php" name="upload_excel" method="POST" enctype="multipart/form-data">
+      <div class="modal-body">
+       <div class="form-group">
+        <label for="exampleInputEmail1">Masukkan File CSV</label>
+        <input type="file" class="form-control" id="sptb" name="file" placeholder="sptb"> 
+       </div>
+       <input type="hidden" class="form-control" id="id" name="id" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" name="Import_span" value="Upload">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 

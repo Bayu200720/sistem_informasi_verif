@@ -9,6 +9,9 @@
     page_require_level(3);
     }else if($user['user_level'] == 6){ //echo "3";exit();
       page_require_level(6); 
+    }else if($user['user_level'] == 5){ //echo "3";exit();
+      page_require_level(5);
+    
     }else{
       page_require_level(3);
     }
@@ -17,6 +20,68 @@ $pengajuan = find_by_id('pengajuan',$_POST['id']);
   ?>
 
 <?php
+
+
+if(isset($_POST["Import_span"])){
+  
+  $allowedExts = array("gif", "jpeg", "jpg", "png","csv");
+  $extension = end(explode(".", $_FILES["file"]["name"]));
+ // echo $extension; echo $_FILES["file"]["type"]; exit();
+  if (($_FILES["file"]["size"] < 20000)
+  && in_array($extension, $allowedExts)){
+
+          $filename=$_FILES["file"]["tmp_name"];    
+          if($_FILES["file"]["size"] > 0)
+          {
+              $file = fopen($filename, "r");
+          
+              while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
+              {
+                  $hasil[]=$getData;
+                  //var_dump($hasil);
+                 // $akun=find_all_global('akun',$getData['4'],'mak');
+                //  $sql = "INSERT into detail_Pengajuan (no_sptjb,nominal,pph,ppn,id_pengajuan,id_akun) 
+                  //    values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$_POST['id']."','".$akun[0]['id']."')";
+                      //echo $sql;exit();
+                    //  $hasil=$db->query($sql);
+             //      print_r($hasil);
+              }
+             // echo count($has)
+              for($i=1;$i<count($hasil);$i++){
+                 // $akun=find_all_global('akun',$hasil[$i][4],'mak');
+                 $spm =substr($hasil[$i][10],0,5); 
+                  $sql = "UPDATE pengajuan SET sp2d='".$hasil[$i][1]."' WHERE SPM ='".$spm."'";
+                 //echo $sql;echo "<br>";
+                $result= $db->query($sql);
+                //echo $sql; echo "<br>";//exit();
+              }
+              //exit();
+              if($result){
+                  $session->msg('s',"Berhasil Import ");
+                  if($user['user_level']==6){
+                  redirect('ben.php?id='.$_POST['id'], false);
+                  }else{
+                  redirect('ben.php?id='.$_POST['id'], false);
+                  }
+              } else {
+                  $session->msg('d',' Sorry failed to Import!');
+                  if($user['user_level']==6){
+                  redirect('ben.php?id='.$_POST['id'], false);
+                  }else{
+                  redirect('ben.php?id='.$_POST['id'], false);
+                  }
+              }
+              
+             // var_dump($hasil);
+              fclose($file); 
+          }
+  }else{
+      $session->msg('d',' Format File CSV Only!');
+      redirect('detail_pengajuan.php?id='.$pengajuan['id'], false);
+  }
+}   
+
+
 
 if(isset($_POST["Import_detail"])){
   

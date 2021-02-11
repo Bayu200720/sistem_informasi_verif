@@ -306,7 +306,7 @@ $sales = find_all_global('pencairan',0,'status');
                 </select>
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1">Nominal</label>
+        <label for="exampleInputEmail1">Keterangan</label>
         <input type="text" class="form-control" id="sp2d" name="keterangan" placeholder="Keterangan">
        </div>
        </div>
