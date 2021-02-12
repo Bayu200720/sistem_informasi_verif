@@ -3,7 +3,7 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   $user = find_by_id('users',$_SESSION['user_id']);
-  if($user['user_level'] == 2){ //echo "ok 3";exit();
+  if($user['user_level'] == 2){ 
   page_require_level(2); 
   }else if($user['user_level'] == 7 ){ //echo "7";exit();
     page_require_level(7); 
