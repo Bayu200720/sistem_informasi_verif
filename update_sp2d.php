@@ -9,9 +9,9 @@
   if(!$pengajuan){
     $session->msg("d","Missing Pengajuan id.");
         if($user['user_level']==5){
-           redirect('ben.php', false);
+           redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
         }else{
-    redirect('pengajuan.php');
+    redirect('detail_dokumen_ses.php?id='.$_GET['id']);
       }
   }
   $query  = "UPDATE pengajuan SET ";
@@ -26,8 +26,8 @@
 
         $session->msg('s',' Berhasil di Proses');
             if($user['user_level']==5){
-           redirect('ben.php', false);
+           redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
         }else{
-      redirect('pengajuan.php', false);
+      redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
         }
 ?>

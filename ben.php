@@ -213,146 +213,54 @@ if(isset($_POST['update_sp2d'])){
           </div>
         </div>
         <div class="panel-body" style="width:100%">
-          <table id="example1" class="table table-bordered table-striped" style="width:100%;">
-            <thead>
-              <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th class="text-center" > SPM </th>
-                <th class="text-center" > Nominal Pengajuan </th>
-                <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
-                <th class="text-center" style="width: 15%;"> Dokumen </th>
-                <th class="text-center" style="width: 15%;"> Status SPM </th> 
-                <th class="text-center" style="width: 15%;"> Status KPPN </th>
-                <th class="text-center" style="width: 15%;"> Keterangan Penolakan </th> 
-                <th class="text-center" style="width: 15%;"> Status SP2D </th>
-                <th class="text-center" style="width: 15%;"> Status Pengambilan Uang </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
-             </tr>
-            </thead>
-           <tbody>
-             <?php $tot=0; foreach ($sales as $sale):?>
-             <tr>
-                <td class="text-center"><?php echo count_id();?></td>
-                <td class="text-center" >
-                  <?php echo remove_junk($sale['SPM']); ?>/<?php $nodin=find_by_id('nodin',$sale['id_nodin']);$jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']?>
-                  /<?php $nodin=find_by_id('nodin',$sale['id_nodin']);$satker=find_by_id('satker',$nodin['id_satker']); echo $satker['keterangan']?>
-                </td>
-                <td class="text-center" ><?php $tp=find_NominalPengajuan($sale['id']);echo rupiah($tp['jum']);?></td>
-                <td class="text-center">
-                    <?php if($sale['status_verifikasi']=='0' and $user['user_level'] == 2){?>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th class="text-center" style="width: 50px;">#</th>
+                        <th class="text-center" > SPM </th>
+                        <th class="text-center" > Jenis Pengajuan</th>
+                        <th class="text-center" > Satker </th>
+                        <th class="text-center" > Tanggal </th>
+                        <th class="text-center" > Nominal Pengajuan </th>
                         
-                            <a class="btn btn-success" href="<?php $jenis= find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['link']?>.php?id=<?php echo $sale['id']?>&v=insert"><?=$jenis['keterangan']?></a>
-                      
-                    <?php }else{
+                        <th class="text-center" style="width: 100px;"> Actions </th>
+                    </tr>
+                    </thead>
+                  <tbody>
+                    <?php $tot=0; foreach ($sales as $sale):?>
+                    <tr>
+                      <td class="text-center"><?php echo count_id();?></td>
+                      <td class="text-center" >
+                        <?php echo remove_junk($sale['SPM']); ?>
                         
-                        $v = find_by_filed('verifikasi',$sale['id'],'id_pengajuan');  
-                        if($v['status_pengajuan']==1){
-                        ?>
-                        <span class="label label-success">Terverifikasi verifikator</span><br>
-                        <?php }else{ ?>
-                        <span class="label label-danger">Ditolak verifikator</span><br>
-                        <?php } ?>
-                        <br>
-
-                        <?php $p = find_by_filed('pengajuan',$sale['id'],'id');  
-                        if($p['verifikasi_kasubbag_v']==1){   ?>
-                        <span class="label label-success">Terverifikasi Kasubbag verifikator</span>
-                        <?php }else{ ?>
-                        <span class="label label-danger">Ditolak Kasubbag verifikator</span>
-                        <?php } ?>
-                            
-                        <?php if($user['user_level'] == 2 ){  ?>
-                                <a href="<?php $jenis= find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['link'];?>.php?id=<?=$sale['id']?>" class="btn btn-success">Edit</a>
-                                    <br>
-                              
-                                <a href="batal_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal
-                                [<?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?>]
-                                </a>
+                      </td>
+                      <td class="text-center"><?php $nodin=find_by_id('nodin',$sale['id_nodin']);$jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']?> </td>
+                      <td class="text-center" ><?php $nodin=find_by_id('nodin',$sale['id_nodin']);$satker=find_by_id('satker',$nodin['id_satker']); echo $satker['keterangan']?></td>
+                      <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']);echo $nodin['tanggal']; ?></td>
+                      <td class="text-center" ><?php $tp=find_NominalPengajuan($sale['id']);echo rupiah($tp['jum']);?></td>
                     
-                    <?php }} ?>       
-                </td>
-                <td class="text-center">
-                    <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success" >Buka Dokumen</a>
-                </td>
-                <td class="text-center"><?php if($sale['status_spm']==0){?><span class="label label-danger">SPM Belom di Proses</span><?php }else{?>
-                <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_spm']);echo $user['name'];?></span><?php } ?>
-                </td>
-            
-                <td class="text-center">
-                  <?php if($sale['penolakan_kppn']!=''){?><span class="label label-danger">Penolakan KPPN perbaiakan= <?=$sale['penolakan_kppn'];?></span><?php }else{ ?>
+                      <td class="text-center">
+                          <div class="btn-group">
+                            <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success btn-xs" title="Detail status Pengajuan" data-toggle="tooltip" > <span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
+                              <span class="glyphicon glyphicon-edit"></span>
+                            </a>
                     
-                    <?php } ?>
-                    <?php if($sale['status_kppn']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
-                      <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_kppn']);echo $user['name'];?></span><?php } ?>
-                </td>
-
-                <td class="text-center">
-                    <?=$sale['penolakan_kppn'];?> 
-                </td>
-
-                <td class="text-center">
-                  <?php if($sale['status_kppn']==0){ ?>
-                    <span class="label label-danger">belom di validasi oleh petugas pengirim SPM ke KPPN</span>
-                  <?php }else{ ?>
-                  <?php if($sale['status_sp2d']==0){?><a href="update_sp2d.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
-                    <span class="label label-success">Sudah di Cairkan</span> <br>
-                  <a href="batal_sp2d.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
-                  <?php } ?>
-                </td>
-
-
-            <!-- <td>
-                <?php if($sale['file_sp2d']==''){?>
-               <a href="#" class="btn btn-primary" id="UploadSP2D" data-toggle="modal" data-target="#uploadSP2D" data-id='<?=$sale['id'];?>'>Upload File</a>     
-                <?php }else{ ?>
-                  <a href="uploads/sp2d/<?=$sale['file_sp2d']?>" class="btn btn-success" target="_blank">Preview</a>
-                  
-                  <a href="ben.php?id=<?=$sale['id']?>&s=sp2d" class="btn btn-danger">Batal</a>
-                <?php } ?>
-            </td> -->
-                
-                <td class="text-center">
-                    <?php  
-                    if($sale['status_sp2d'] != 0){
-                        if($sale['status_pengambilan_uang'] == 0){ ?>
-                    <form action="" method="post">
-                        <input type="hidden" name="id" value="<?=$sale['id']?>">
-                        <button name="cair" value="cair" class="btn btn-success">Konfirmasi</button>
-                    </form>
-                    <?php }else{ ?>
-                    <form action="" method="post">
-                        <input type="hidden" name="id" value="<?=$sale['id']?>">
-                        <button name="batal_cair" value="batal_cair" class="btn btn-danger">Batal</button>
-                    </form>
-                    <?php }} ?>
-
-                </td>
-                <td class="text-center">
-                    <div class="btn-group">
-                      
-                      <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                        <span class="glyphicon glyphicon-edit"></span>
-                      </a>
-              
-                    </div>
-                </td>
-             </tr>
-              <?php $tot+=$tp['jum']; endforeach;?>
-           </tbody>
-           <tr>
-                <th class="text-center">#</th>
-                <th class="text-center" > </th>
-                <th class="text-center" > <?=rupiah($tot);?> </th>
-                <th class="text-center">  </th> 
-                <th class="text-center"> </th>
-                <th class="text-center">  </th>
-                <th class="text-center">  </th>
-                <th class="text-center"> </th>
-                <th class="text-center">  </th>
-                <th class="text-center">  </th>
-                <th class="text-center"></th>
-             </tr>
-         </table>
+                          </div>
+                      </td>
+                    </tr>
+                    <?php $tot+=$tp['jum']; endforeach;?>
+                  </tbody>
+                  <tr>
+                        <th class="text-center" >#</th>
+                        <th class="text-center" >  </th>
+                        <th class="text-center" >  </th>
+                        <th class="text-center" >  </th>
+                        <th class="text-center" >  </th>
+                        <th class="text-center" >  <?=rupiah($tot);?> </th>
+                        <th class="text-center" > </th>
+                    </tr>
+              </table>
         </div>
       </div>
     </div>

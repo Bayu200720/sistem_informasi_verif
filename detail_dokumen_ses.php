@@ -11,6 +11,76 @@
   }
 
 
+  
+
+if(isset($_POST['batal_cair'])){
+  $req_fields = array('batal_cair');
+  validate_fields($req_fields);
+  if(empty($errors)){
+    $id   = remove_junk($db->escape($_POST['id']));
+    
+    $query  = "UPDATE pengajuan SET ";
+    $query .=" status_pengambilan_uang= '0'";
+    $query .=" WHERE id='{$id}'";
+    if($db->query($query)){
+      $session->msg('s',"Konfirmasi Updated ");
+      if($user['user_level']==2){
+       redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+      }else{
+      redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+      }
+    } else {
+      $session->msg('d',' Sorry failed to Updated!');
+      if($user['user_level']==2){
+       redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+     }else{
+        redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+     }
+    }
+
+  } else{
+    $session->msg("d", $errors);
+    redirect('detail_dokumen_ses.php?id='.$_GET['id'],false);
+  }
+
+}
+
+
+
+if(isset($_POST['cair'])){
+  $req_fields = array('cair');
+  validate_fields($req_fields);
+  if(empty($errors)){
+    $id   = remove_junk($db->escape($_POST['id']));
+    $keterangan   = remove_junk($db->escape($_POST['keterangan']));
+    $date    = make_date();
+    $query  = "UPDATE pengajuan SET ";
+    $query .=" status_pengambilan_uang= '1'";
+    $query .=" WHERE id='{$id}'";
+    if($db->query($query)){
+      $session->msg('s',"Konfirmasi Updated ");
+      if($user['user_level']==2){
+       redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+      }else{
+      redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+      }
+    } else {
+      $session->msg('d',' Sorry failed to Updated!');
+      if($user['user_level']==2){
+       redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+     }else{
+        redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+     }
+    }
+
+  } else{
+    $session->msg("d", $errors);
+    redirect('detail_dokumen_ses.php?id='.$_GET['id'],false);
+  }
+
+}
+
+
   if(isset($_POST['update_penolakan'])){
     $req_fields = array('keterangan');
     validate_fields($req_fields);
@@ -382,12 +452,36 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                     <?php }?> 
                </td>
 
-            <td class="text-center"><?php if($sale['status_sp2d']==0){?><span class="label label-danger">Belom Cair</span><?php }else{?>
-             <span class="label label-success">Sudah Cair [<?php $user = find_by_id('users',(int)$sale['status_sp2d']);echo $user['name'];?>]</span><?php } ?>
+            <td class="text-center">
+            
+                  <?php $user = find_by_id('users',$_SESSION['user_id']);  
+                  if($sale['status_kppn']==0){ ?>
+                    <span class="label label-danger">belom di validasi oleh petugas pengirim SPM ke KPPN</span>
+                  <?php }else if($sale['status_sp2d']==0 and $user['user_level']== 5){ ?>
+                        <a href="update_sp2d.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a>  
+                  <?php }else if($sale['status_sp2d']!=0 and $user['user_level']== 5){ ?>
+                        <a href="batal_sp2d.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
+                  <?php }else if($sale['status_sp2d']!=0 and $user['user_level']!= 5){  ?>
+                        <span class="label label-success">Sudah di Cairkan</span> 
+                  <?php } ?>
             </td>
             <td class="text-center">
-                <?php if($sale['status_pengambilan_uang']==0){?><span class="label label-danger">Belom di Ambil</span><?php }else{?>
-                 <span class="label label-success">Sudah Diambil <?php $user = find_by_id('users',(int)$sale['status_sp2d']);?></span><?php } ?>
+                 <?php $user = find_by_id('users',$_SESSION['user_id']);  
+                  if($sale['status_sp2d']==0){ ?>
+                    <span class="label label-danger">SP2D belom di Proses</span>
+                  <?php }else if($sale['status_pengambilan_uang']==0 and $user['user_level']== 5){ ?>
+                    <form action="" method="post">
+                        <input type="hidden" name="id" value="<?=$sale['id']?>">
+                        <button name="cair" value="cair" class="btn btn-success">Konfirmasi</button>
+                    </form>  
+                  <?php }else if($sale['status_pengambilan_uang']!=0 and $user['user_level']== 5){ ?>
+                    <form action="" method="post">
+                        <input type="hidden" name="id" value="<?=$sale['id']?>">
+                        <button name="batal_cair" value="batal_cair" class="btn btn-danger">Batal</button>
+                    </form>
+                  <?php }else if($sale['status_sp2d']!=0 and $user['user_level']!= 5){  ?>
+                        <span class="label label-success">Sudah di Ambil</span> 
+                  <?php } ?>
             </td>
 
               
