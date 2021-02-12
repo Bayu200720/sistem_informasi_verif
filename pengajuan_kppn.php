@@ -7,39 +7,6 @@
 <?php
 $sales = find_all('pengajuan');
 
-if(isset($_POST['update_penolakan'])){
-  $req_fields = array('keterangan');
-  validate_fields($req_fields);
-  if(empty($errors)){
-    $id   = remove_junk($db->escape($_POST['id']));
-    $keterangan   = remove_junk($db->escape($_POST['keterangan']));
-    $date    = make_date();
-    $query  = "UPDATE pengajuan SET ";
-    $query .=" penolakan_kppn= '{$keterangan}'";
-    $query .=" WHERE id='{$id}'";
-    if($db->query($query)){
-      $session->msg('s',"Keterangan penolakan KPPN Updated ");
-      if($user['user_level']==2){
-       redirect('pengajuan_kppn.php', false);
-      }else{
-      redirect('pengajuan_kppn.php', false);
-      }
-    } else {
-      $session->msg('d',' Sorry failed to Updated!');
-      if($user['user_level']==2){
-       redirect('pengajuan_kppn.php', false);
-     }else{
-        redirect('pengajuan_kppn.php', false);
-     }
-    }
-
-  } else{
-    $session->msg("d", $errors);
-    redirect('pengajuan_kppn.php',false);
-  }
-
-}
-
 
 if(isset($_POST['update_sp2d'])){
   $req_fields = array('sp2d', 'id' );
@@ -86,61 +53,54 @@ if(isset($_POST['update_sp2d'])){
           </div>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered table-striped">
-            <thead>
+          <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th class="text-center" style="width: 50px;">#</th>
+                    <th class="text-center" > SPM </th>
+                    <th class="text-center" > Jenis Pengajuan</th>
+                    <th class="text-center" > Satker </th>
+                    <th class="text-center" > Tanggal </th>
+                    <th class="text-center" > Nominal Pengajuan </th>
+                    
+                    <th class="text-center" style="width: 100px;"> Actions </th>
+                </tr>
+                </thead>
+              <tbody>
+                <?php $tot=0; foreach ($sales as $sale):?>
+                <tr>
+                  <td class="text-center"><?php echo count_id();?></td>
+                  <td class="text-center" >
+                    <?php echo remove_junk($sale['SPM']); ?>
+                    
+                  </td>
+                  <td class="text-center"><?php $nodin=find_by_id('nodin',$sale['id_nodin']);$jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']?> </td>
+                  <td class="text-center" ><?php $nodin=find_by_id('nodin',$sale['id_nodin']);$satker=find_by_id('satker',$nodin['id_satker']); echo $satker['keterangan']?></td>
+                  <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']);echo $nodin['tanggal']; ?></td>
+                  <td class="text-center" ><?php $tp=find_NominalPengajuan($sale['id']);echo rupiah($tp['jum']);?></td>
+                
+                  <td class="text-center">
+                      <div class="btn-group">
+                        <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success btn-xs" title="Detail status Pengajuan" data-toggle="tooltip" > <span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
+                          <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                
+                      </div>
+                  </td>
+                </tr>
+                <?php $tot+=$tp['jum']; endforeach;?>
+              </tbody>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th> SPM </th>
-                <th class="text-center" style="width: 15%;"> Tanggal</th>
-                <th class="text-center" style="width: 15%;"> Jenis </th>
-                <th class="text-center" style="width: 15%;"> File SPM </th>
-                <th class="text-center" style="width: 15%;"> Status KPPN </th> 
-                <th class="text-center" style="width: 15%;"> Keterangan Jika ditolak </th>              
-                <th class="text-center" style="width: 100px;"> SP2D</th>
-             </tr>
-            </thead>
-           <tbody>
-             <?php foreach ($sales as $sale):?>
-             <tr>
-               <td class="text-center"><?php echo count_id();?></td>
-               <td><?php echo remove_junk($sale['SPM']); ?></td>
-               <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']);echo $nodin['tanggal']; ?></td>
-               <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']); $jenis = find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan'];?></td>
-               <td><?php if($sale['file_spm']!=''){?><a href="uploads/spm/<?=$sale['file_spm']?>" class="btn btn-success" target="_blank">Preview</a><?php } ?></td>
-            
-             <td class="text-center">
-             <?php if($sale['status_spm']==0){ ?>
-              <span class="label label-danger">belom di validasi oleh pembuat SPM</span>
-             <?php }else{ ?>
-             <?php if($sale['status_kppn']==0){?><a href="update_kppn.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
-              <span class="label label-success">Diterima KPPN</span><br>
-             <a href="batal_kppn.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
-             <?php } ?>
-            </td>
-            <td><?php if($sale['penolakan_kppn']==''){ ?><a href="#" class="btn btn-primary" id="penolakan"  data-toggle="modal" data-target="#PenolakanKPPN" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['penolakan_kppn'];?>'>Keterangan Penolakan</a>
-            <?php }else{ ?><a href="#" class="btn btn-warning" id="penolakan"  data-toggle="modal" data-target="#PenolakanKPPN" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['penolakan_kppn'];?>'><?=$sale['penolakan_kppn'];?></a><?php } ?>
-            </td>
-
-               <td class="text-center">
-               <?php if($sale['sp2d'] == ''){?><a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input SP2D</a><?php }else{?>
-              <a href="#" class="btn btn-warning" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['sp2d'];?>'><?=$sale['sp2d'];?></a> <?php } ?>
-             
-                 <!-- <div class="btn-group">
-                     <a href="edit_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
-                     </a>
-                     <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
-                     </a>
-                     <a onclick="return confirm('Yakin Hapus?')" href="delete_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash"></span>
-                     </a>
-                  </div>-->
-               </td>
-             </tr>
-             <?php endforeach;?>
-           </tbody>
-         </table>
+                    <th class="text-center" >#</th>
+                    <th class="text-center" >  </th>
+                    <th class="text-center" >  </th>
+                    <th class="text-center" >  </th>
+                    <th class="text-center" >  </th>
+                    <th class="text-center" >  <?=rupiah($tot);?> </th>
+                    <th class="text-center" > </th>
+                </tr>
+            </table>
         </div>
       </div>
     </div>
@@ -234,29 +194,3 @@ if(isset($_POST['update_sp2d'])){
 
 <?php include_once('layouts/footer.php'); ?>
 
-<!-- Modal Edit Penolakan-->
-<div class="modal fade" id="PenolakanKPPN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Penolakan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="pengajuan_kppn.php" method="POST">
-      <div class="modal-body">
-       <div class="form-group">
-        <label for="exampleInputEmail1">Masukkan Penolakan KPPN</label>
-        <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan"> 
-       </div>
-       <input type="hidden" class="form-control" id="id" name="id" >
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" name="update_penolakan" value="Save">
-      </div>
-      </form>
-    </div>
-  </div>
-</div>

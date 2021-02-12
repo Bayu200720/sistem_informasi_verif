@@ -242,7 +242,7 @@ if($_GET['s']=='kasubok'){
           </div>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered table-striped">
+          <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>

@@ -9,10 +9,10 @@
   if(!$pengajuan){
     $session->msg("d","Missing Pengajuan id.");
     if($user['user_level']==4){
-           redirect('kppn.php', false);
+           redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
         }else{
-    redirect('pengajuan.php');
-      }
+           redirect("detail_dokumen_ses.php?id=".$_GET['id'],false);
+        }
   }
   $query  = "UPDATE pengajuan SET ";
         $query .= "status_kppn='".$_SESSION['user_id']."'";
@@ -20,9 +20,9 @@
         $result = $db->query($query);
         //echo $query;
         $session->msg('s',' Berhasil di Proses');
-          if($user['user_level']==4){
-           redirect('kppn.php', false);
+        if($user['user_level']==4){
+           redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
         }else{
-      redirect('pengajuan.php', false);
+           redirect('detail_dokumen_ses.php?id='.$_GET['id']);
         }
 ?>

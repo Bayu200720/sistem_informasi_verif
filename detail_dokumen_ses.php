@@ -11,6 +11,38 @@
   }
 
 
+  if(isset($_POST['update_penolakan'])){
+    $req_fields = array('keterangan');
+    validate_fields($req_fields);
+    if(empty($errors)){
+      $id   = remove_junk($db->escape($_POST['id']));
+      $keterangan   = remove_junk($db->escape($_POST['keterangan']));
+      $date    = make_date();
+      $query  = "UPDATE pengajuan SET ";
+      $query .=" penolakan_kppn= '{$keterangan}'";
+      $query .=" WHERE id='{$_GET['id']}'";
+      if($db->query($query)){
+        $session->msg('s',"Keterangan penolakan KPPN Updated ");
+        if($user['user_level']==2){
+         redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+        }else{
+        redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+        }
+      } else {
+        $session->msg('d',' Sorry failed to Updated!');
+        if($user['user_level']==2){
+         redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+       }else{
+          redirect('detail_dokumen_ses.php?id='.$_GET['id'], false);
+       }
+      }
+  
+    } else{
+      $session->msg("d", $errors);
+      redirect('detail_dokumen_ses.php?id='.$_GET['id'],false);
+    }
+  
+  }
   if(isset($_GET['s']) and $_GET['s'] == 'spm'){
     //var_dump($_GET); echo "ok";exit();
     if($_GET['s'] == 'spm'){
@@ -126,6 +158,11 @@
 <?php
 
 $sales = find_all_global('pengajuan',$_GET['id'],'id');
+
+for($i=0;$i<count($sales);$i++){
+  $sale = $sales[$i]; 
+}
+//var_dump($sale); exit();
 $idi= $_GET['id'];
 
 if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
@@ -182,7 +219,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
              </tr>
             </thead>
            <tbody>
-             <?php foreach ($sales as $sale):?>
+             <?php //foreach ($sales as $sale):?>
              <tr>
                    
                      <td class="text-center">
@@ -244,14 +281,126 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
              </tr>
 
 
-             <?php endforeach;?>
+             <?php //endforeach;?>
            </tbody>
          </table>
         </div>
       </div>
     </div>
   </div>
+    
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        
+        <div class="panel-body">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+               
+               <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
+                <th class="text-center" style="width: 15%;"> Status SPM </th> 
+                <th class="text-center" style="width: 15%;"> Keterangan Penolakan KPPN </th> 
+                <th class="text-center" style="width: 15%;"> Status KPPN </th>   
+                <th class="text-center" style="width: 15%;"> Status SP2D </th>
+                <th class="text-center" style="width: 15%;"> Status Pengambilan Uang </th>
+             
+             </tr>
+            </thead>
+           <tbody>
+             <?php //foreach ($sales as $sale):?>
+             <tr>
+                   
+             <td class="text-center">
+                <?php if($sale['status_verifikasi']=='0'){?>
+                    
+                  <a class="btn btn-success" href="<?php $jenis= find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['link']?>.php?id=<?php echo $sale['id']?>&v=insert"><?=$jenis['keterangan']?></a>
+                   
+                <?php }else{
+                    
+                    $v = find_by_filed('verifikasi',$sale['id'],'id_pengajuan');  
+                    if($v['status_pengajuan']==1){
+                    ?>
+                    <span class="label label-success">Terverifikasi verifikator</span><br>
+                    <?php }else{ ?>
+                    <span class="label label-danger">Ditolak verifikator</span><br>
+                    <?php } ?>
+                    <br>
 
+                    <?php $p = find_by_filed('pengajuan',$sale['id'],'id');  
+                    if($p['verifikasi_kasubbag_v']==1){   ?>
+                    <span class="label label-success">Terverifikasi Kasubbag verifikator</span>
+                    <?php }else{ ?>
+                    <span class="label label-danger">Ditolak Kasubbag verifikator</span>
+                    <?php } ?>
+                        
+                    <?php  $user = find_by_id('users',$_SESSION['user_id']); if($user['user_level'] == 2  or $user['user_level'] == 7){  ?>
+                            <a href="<?php $jenis= find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['link'];?>.php?id=<?=$sale['id']?>" class="btn btn-success">Edit</a>
+                                <br>
+                          
+                              <a href="batal_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal
+                            [<?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?>]
+                            </a>
+                
+                <?php }} ?>
+                
+            </td>
+            <td class="text-center">
+
+                <?php  $user = find_by_id('users',$_SESSION['user_id']); if($sale['status_spm']==0 and $user['user_level'] == 3){?>
+                           <a href="update_spm.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a>         
+                <?php }else if($sale['status_spm'] != 0 and $user['user_level'] == 3){ ?>          
+                           <a href="batal_spm.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
+                  <?php }else if($sale['status_spm']==0 and $user['status_verifikasi'] == 0){?>
+                            <span class="label label-danger">Belom di Proses</span>
+                  <?php }else{  ?>
+                    <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_spm']);echo $user['name'];?></span>
+                  <?php } ?>   
+            </td>
+            <td class="text-center">
+                  <?php $user = find_by_id('users',$_SESSION['user_id']);  
+                      if($sale['status_spm'] == 0 ){ ?>
+                          <span class="label label-danger">Belom di proses</span>
+                   <?php }else if($user['user_level'] == 4 and $sale['penolakan_kppn'] == 0 ){ ?>
+                          <a href="#" class="btn btn-warning" id="penolakan"  data-toggle="modal" data-target="#PenolakanKPPN" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['penolakan_kppn'];?>'><?=$sale['penolakan_kppn'];?></a>
+                    <?php }else{ ?>
+                          <span class="label label-success">SPM sudah di proses= <?=$sale['penolakan_kppn'];?></span>
+                    <?php } ?>
+            </td>
+            <td class="text-center">
+                   <?php $user = find_by_id('users',$_SESSION['user_id']);  
+                      if($sale['status_spm'] == 0  ){ ?>
+                          <span class="label label-danger">Belom di proses oleh verifikator</span>
+                   <?php }else if($user['user_level'] == 4 and $sale['status_kppn'] == 0 ){ ?>
+                          <a href="update_kppn.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a> 
+                    <?php }else if($user['user_level'] == 4 and $sale['status_kppn'] != 0 ){ ?>
+                         <a href="batal_kppn.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
+                    <?php }else if($sale['status_kppn'] != 0){ ?>
+                         <span class="label label-success">Diterima KPPN</span><br>
+                    <?php }else if($sale['status_kppn'] == 0){ ?>
+                      <span class="label label-danger">Belom di proses petugas KPPN</span><br>
+                    <?php }?> 
+               </td>
+
+            <td class="text-center"><?php if($sale['status_sp2d']==0){?><span class="label label-danger">Belom Cair</span><?php }else{?>
+             <span class="label label-success">Sudah Cair [<?php $user = find_by_id('users',(int)$sale['status_sp2d']);echo $user['name'];?>]</span><?php } ?>
+            </td>
+            <td class="text-center">
+                <?php if($sale['status_pengambilan_uang']==0){?><span class="label label-danger">Belom di Ambil</span><?php }else{?>
+                 <span class="label label-success">Sudah Diambil <?php $user = find_by_id('users',(int)$sale['status_sp2d']);?></span><?php } ?>
+            </td>
+
+              
+             </tr>
+
+
+             <?php // endforeach;?>
+           </tbody>
+         </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
    <!-- Modal input nodin-->
 <div class="modal fade" id="NodinPengajuan" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
@@ -481,6 +630,34 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <input type="submit" class="btn btn-primary" name="upload" value="Save">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Edit Penolakan-->
+<div class="modal fade" id="PenolakanKPPN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Penolakan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" method="POST">
+      <div class="modal-body">
+       <div class="form-group">
+        <label for="exampleInputEmail1">Masukkan Penolakan KPPN</label>
+        <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan"> 
+       </div>
+       <input type="hidden" class="form-control" id="id" name="id" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" name="update_penolakan" value="Save">
       </div>
       </form>
     </div>
