@@ -92,7 +92,7 @@ $sales = find_all('k_cair');
                <td class="text-center"><?php echo $sale['time_add'];?></td>
                <td class="text-center"><?php $t=sumStatus($sale['id']); echo rupiah($t['jum']);?></td>
                <td class="text-center">
-                     <a href="cetaktt1.php?id=<?=$sale['id'];?>"  class="btn btn-primary btn-xs"  title="Cetak" title="Cetak" data-toggle="tooltip">
+                     <a href="cetaktt1.php?id=<?=$sale['id'];?>"  class="btn btn-primary btn-xs"  title="Cetak" title="Cetak" data-toggle="tooltip" target="_BLANK"> 
                        Cetak
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="cetakP.php?id=<?php echo (int)$sale['id'];?>&status=deleteKc" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">

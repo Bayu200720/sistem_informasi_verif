@@ -99,7 +99,6 @@ function find_tt($id) {
 
 function find_ss($id_satker,$id_status) {
   global $db;
- 
 return find_by_sql("SELECT p.nominal as nominal,p.spm as spm,p.id_satker as id_satker,k.id as id FROM `pencairan` p,k_cair k WHERE p.status=k.id and p.status={$id_status} and p.id_satker={$id_satker}");
 
 }
@@ -363,7 +362,7 @@ function tableExists($table){
     $sql .=",pengajuan p ";
     $sql .=",nodin n ";
     $sql .="WHERE d.id_pengajuan = p.id and p.id_nodin = n.id and n.tahun ='{$tahun}' ";
-    $sql .="and n.id_satker ='{$id_satker}' and n.id_jenis=2";
+    $sql .="and n.id_satker ='{$id_satker}' and n.id_jenis=2 and n.status_pengajuan=1";
     $result = find_by_sql($sql);
     return $result;
 }

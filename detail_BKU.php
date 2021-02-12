@@ -25,7 +25,7 @@
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 50px;">#</th>
-                        <th class="text-center" >No SPTJB/SPM </th>
+                        <th class="text-center" >No SPTJB-SPM </th>
                         <th class="text-center" style="width: 100px;"> Jumlah </th>
                     </tr>
                     </thead>
@@ -35,13 +35,13 @@
                       
                     $tot1=0; foreach ($sales as $sale):?>
                     <tr>
-                    <td class="text-center"><?php echo count_id();?></td>
-                    <td class="text-center" >
-                    <?php echo $sale['SPM'];?>/<?php echo $sale['no_sptjb'];?>
-                    </td>
-                    <td class="text-center">    
-                        <?php echo rupiah($sale['nominal'])?>
-                    </td>
+                      <td class="text-center"><?php echo count_id();?></td>
+                      <td class="text-center" >
+                      <?php echo $sale['SPM'];?>-<?php echo $sale['no_sptjb'];?>
+                      </td>
+                      <td class="text-center">    
+                          <?php echo rupiah($sale['nominal'])?>
+                      </td>
                     </tr>
                     <?php $tot1+=$sale['nominal']; endforeach;?>
                 </tbody>

@@ -28,8 +28,10 @@
      $query .=") VALUES (";
      $query .=" '{$spm}','{$id_nodin}',{$id_jenis_pengajuan}";
      $query .=")";
+     $result =$db->query($query);
+     //var_dump($result);exit();
   
-     if($db->query($query)){
+     if($result){
        $session->msg('s',"Pengajuan added ");
        if($user['user_level']==2){
         redirect('nodin_bpp.php', false);
@@ -37,7 +39,7 @@
        redirect('nodin_bpp.php?id='.$id_nodin.'', false);
        }
      } else {
-       $session->msg('d',' Sorry failed to added!');
+       $session->msg('d',' Sorry failed to added!,make sure the SPM number is not the same');
        if($user['user_level']==2){
         redirect('nodin_bpp.php', false);
       }else{

@@ -190,7 +190,7 @@ $sales = find_all_global('pencairan',0,'status');
                <td class="text-center"><?php $pengajuan= find_by_id('pengajuan',$sale['id_pengajuan']);$nodin=find_by_id('nodin',$pengajuan['id_nodin']);
                $jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']; ?></td>
                <td class="text-center"><?=$sale['tanggal']; ?></td>
-               <td class="text-center"><?=$sale['nominal'];?></td>
+               <td class="text-center"><?=rupiah($sale['nominal']);?></td>
                <td class="text-center"><?php $satker = find_by_id('satker',$sale['id_satker']); echo $satker['keterangan'];?></td>
                <td class="text-center"><?=$sale['keterangan'];?></td>
             <td class="text-center">

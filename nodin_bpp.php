@@ -222,7 +222,7 @@ if($_GET['status']=='delete_nodin'){
                <td class="text-center"><?php echo $sale['no_nodin']; ?></td>
 
             <td class="text-center">
-             <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary">Cetak</a>
+             <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary" target="_BLANK">Cetak</a>
             </td>
             <td class="text-center">
                   <?php if($sale['status_pengajuan'] == 1){?>

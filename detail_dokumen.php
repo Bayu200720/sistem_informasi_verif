@@ -50,11 +50,11 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
               <tr>
                
                 <th class="text-center" style="width: 15%;"> Upload Dokumen Pengajuan</th>
-                <th class="text-center" style="width: 15%;"> Upload Dokumen Pertanggungjawaban</th>
                 <th class="text-center" style="width: 15%;"> ADK SPP </th>
                 <th class="text-center" style="width: 15%;"> SPM yang Telah di Proses</th>
                 <th class="text-center" style="width: 15%;"> Dokumen SP2D</th>
                 <th class="text-center" style="width: 15%;"> SP2D</th>
+                <th class="text-center" style="width: 15%;"> Upload Dokumen Pertanggungjawaban</th>
              
              </tr>
             </thead>
@@ -67,11 +67,6 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                              <a href="uploads/products/<?=$sale['upload']?>" class="btn btn-success" target="_blank">Preview</a>
                             <a href="batal_upload.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
                         <?php } ?>
-                    </td>
-                    <td class="text-center"><?php if($sale['upload_pertanggungjawaban']==''){?><a href="media_pertanggungjawaban.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
-                             <a href="uploads/pertanggungjawaban/<?=$sale['upload_pertanggungjawaban']?>" class="btn btn-success" target="_blank">Preview</a>
-                               <a href="batal_uploadPj.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
-                             <?php } ?>
                     </td>
 
                     <td class="text-center"><?php if($sale['upload_adk']==''){?><a href="media_adk.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
@@ -87,6 +82,12 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                     </td>
                     <td class="text-center">
                           <?php echo $sale['sp2d']?>
+                    </td>
+
+                    <td class="text-center"><?php if($sale['upload_pertanggungjawaban']==''){?><a href="media_pertanggungjawaban.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
+                             <a href="uploads/pertanggungjawaban/<?=$sale['upload_pertanggungjawaban']?>" class="btn btn-success" target="_blank">Preview</a>
+                               <a href="batal_uploadPj.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
+                             <?php } ?>
                     </td>
 
               

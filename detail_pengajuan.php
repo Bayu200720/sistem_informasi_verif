@@ -232,7 +232,7 @@ if($_GET['s']=='kasubok'){
               <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
               <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
               
-              <a href="uploads/data_excle/data.csv" class="btn btn-success" target="_blank">Excle</a><!-- <a href="excle.php" class="btn btn-success">Excle</a> -->
+              <a href="uploads/data_excle/data.csv" class="btn btn-success" target="_blank">Excel</a><!-- <a href="excle.php" class="btn btn-success">Excle</a> -->
               <a onclick="return confirm('Yakin Hapus!!!')" href="detail_pengajuan.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
               <?php }else{ ?>
                 <!-- <a href="pengajuan_verif.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a> -->

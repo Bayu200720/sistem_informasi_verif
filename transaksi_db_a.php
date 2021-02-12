@@ -66,7 +66,7 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
               <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
               <a onclick="return confirm('Yakin Hapus!!')" href="transaksi_db_a.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
               <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
-              <a href="uploads/data_excle/data_detail.csv" class="btn btn-success">Excle</a>
+              <a href="uploads/data_excle/data_detail.csv" class="btn btn-success">Excel</a>
               <?php }else{ ?>
                 <!-- <a href="pengajuan_verif.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a> -->
               <?php } ?>
