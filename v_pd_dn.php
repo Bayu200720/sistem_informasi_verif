@@ -49,7 +49,7 @@ $id_nodin= $id['id_nodin'];
             <span>Verifikasi Perjalanan Dinas Dalam Negeri</span>
           </strong>
           <div class="pull-right">
-            <a href="pengajuan_v.php?id=<?=$id_nodin;?>" class="btn btn-primary">Back</a>
+            <a href="pengajuan_verif.php?id=<?=$id_nodin;?>" class="btn btn-primary">Back</a>
           </div>
           <div class="pull-right">
         </div>

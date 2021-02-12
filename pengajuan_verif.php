@@ -148,25 +148,3 @@ $idi= $_GET['id'];
     </div>
   </div>
 <?php include_once('layouts/footer.php'); ?>
-
-<!-- jQuery -->
-<script src="libs/js/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="libs/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="libs/js/jquery.dataTables.js"></script>
-<script src="libs/js/dataTables.bootstrap4.js"></script>
-
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-  });
-</script>

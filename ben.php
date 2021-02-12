@@ -312,7 +312,9 @@ if(isset($_POST['update_sp2d'])){
             </td> -->
                 
                 <td class="text-center">
-                    <?php  if($sale['status_pengambilan_uang'] == 0){ ?>
+                    <?php  
+                    if($sale['status_sp2d'] != 0){
+                        if($sale['status_pengambilan_uang'] == 0){ ?>
                     <form action="" method="post">
                         <input type="hidden" name="id" value="<?=$sale['id']?>">
                         <button name="cair" value="cair" class="btn btn-success">Konfirmasi</button>
@@ -322,7 +324,7 @@ if(isset($_POST['update_sp2d'])){
                         <input type="hidden" name="id" value="<?=$sale['id']?>">
                         <button name="batal_cair" value="batal_cair" class="btn btn-danger">Batal</button>
                     </form>
-                    <?php } ?>
+                    <?php }} ?>
 
                 </td>
                 <td class="text-center">

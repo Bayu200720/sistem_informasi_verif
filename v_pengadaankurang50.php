@@ -8,8 +8,8 @@
 $verif = find_by_filed('verifikasi',$_GET['id'],'id_pengajuan');
 
 $id_pengajuan = $_GET['id'];
-$update ="UPDATE `pengajuan` SET `jenis_v` = 'v_pengadaankurang50',`status_verifikasi`=".$_SESSION['user_id']." WHERE `pengajuan`.`id` =".$id_pengajuan;
-//    echo $update; exit();
+$update ="UPDATE `pengajuan` SET `status_verifikasi`=".$_SESSION['user_id']." WHERE `pengajuan`.`id` =".$id_pengajuan;
+   // echo $update; exit();
     $db->query($update);
 if($verif == NULL){
   
@@ -42,7 +42,7 @@ $id_nodin= $id['id_nodin'];
             <span>Verifikasi Pengadaan Kurang dari 50 Juta</span>
           </strong>
           <div class="pull-right">
-            <a href="pengajuan_v.php?id=<?=$id_nodin;?>" class="btn btn-primary">Back</a>
+            <a href="pengajuan_verif.php?id=<?=$id_nodin;?>" class="btn btn-primary">Back</a>
           </div>
           <div class="pull-right">
         </div>

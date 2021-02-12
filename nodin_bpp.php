@@ -310,7 +310,7 @@ if($_GET['status']=='delete_nodin'){
             
                   }
                 
-                ?>" class="btn btn-warning">Kekurangan</a>
+                ?>" class="btn btn-warning" target="_BALNK">Kekurangan</a>
             <?php } ?>
             </td>
             
