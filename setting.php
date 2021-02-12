@@ -90,7 +90,7 @@
                    <i class=""></i>Prefik
                   </span>
                   
-                  <input type="text" class="form-control" value="<?=$satker[0]['prefik'];?>" name="prefik" placeholder="tahun">
+                  <input type="text" class="form-control" value="<?=$satker[0]['prefik'];?>" name="prefik" placeholder="prefik">
                </div>
               </div>
 

@@ -144,10 +144,10 @@ if($_GET['status']=='delete_akun'){
         <table id="tabel" class="table table-bordered table-striped" style="width:100%;">
           <thead>
             <tr>
-              <th class="text-center" style="width: 50px;">#</th>
+              <th class="text-center" style="width: 5%;">#</th>
               <th class="text-center" style="width: 15%;"> Tahun</th>
-              <th class="text-center" style="width: 15%;"> Kode </th>
-              <th class="text-center" style="width: 100px;"> Uraian </th>             
+              <th class="text-center" style="width: 25%;"> Kode </th>
+              <th class="text-center" style="width: 40%;"> Uraian </th>             
               <th class="text-center" style="width: 15%;"> Actions </th>
             </tr>
           </thead>

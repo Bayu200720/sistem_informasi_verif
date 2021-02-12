@@ -27,4 +27,10 @@
          <li><a href="cetakP.php">Cetak Pencairan</a> </li>
      </ul>
   </li>
+  <li>
+    <a href="BKU.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>BKU</span>
+      </a>
+  </li>
 </ul>

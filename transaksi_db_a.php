@@ -18,15 +18,12 @@
     }  
   ?>
 <?php
-
-
 //$sales = find_detail($_GET['id']);
 //$id_pengajuan = $_GET['id'];
 if($_GET['status'] == 'h'){
     $id =$_GET['id'];
     $query="DELETE FROM detail_transaksi WHERE id_detail_pengajuan =".$_GET['id'];
-    $hasil=$db->query($query);
-    
+    $hasil=$db->query($query);  
     if($hasil){
         $session->msg('s',"Delete Success ");
         if($user['user_level']==2){
@@ -41,15 +38,10 @@ if($_GET['status'] == 'h'){
     }else{
         redirect('transaksi_db_a.php?id='.$id, false);
     }
-    }
-
-    
+    }    
 }
 
-
 $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
-
-  
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -70,9 +62,7 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
             <?php $user1=find_by_id('users',$_SESSION['user_id']);  if( $user1['user_level'] != '3'){?>
 
               <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
-               
-              
-              
+                
               <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
               <a onclick="return confirm('Yakin Hapus!!')" href="transaksi_db_a.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
               <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>

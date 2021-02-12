@@ -173,11 +173,11 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
               <tr>
                
                 <th class="text-center" style="width: 15%;"> Upload Dokumen Pengajuan</th>
-                <th class="text-center" style="width: 15%;"> Upload Dokumen Pertanggungjawaban</th>
                 <th class="text-center" style="width: 15%;"> ADK SPP </th>
                 <th class="text-center" style="width: 15%;"> SPM yang Telah di Proses</th>
                 <th class="text-center" style="width: 15%;"> Dokumen SP2D</th>
                 <th class="text-center" style="width: 15%;"> SP2D</th>
+                <th class="text-center" style="width: 15%;"> Upload Dokumen Pertanggungjawaban</th>
              
              </tr>
             </thead>
@@ -190,11 +190,6 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                              <a href="uploads/products/<?=$sale['upload']?>" class="btn btn-success" target="_blank">Preview</a>
                            
                         <?php } ?>
-                    </td>
-                    <td class="text-center"><?php if($sale['upload_pertanggungjawaban']==''){?><?php }else{?>
-                             <a href="uploads/pertanggungjawaban/<?=$sale['upload_pertanggungjawaban']?>" class="btn btn-success" target="_blank">Preview</a>
-                               
-                             <?php } ?>
                     </td>
 
                     <td class="text-center"><?php if($sale['upload_adk']==''){?><?php }else{?>
@@ -237,6 +232,12 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                             <?php if($sale['sp2d'] == ''){?><a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input SP2D</a><?php }else{?>
                             <a href="#" class="btn btn-warning" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['sp2d'];?>'><?=$sale['sp2d'];?></a> <?php } ?>
                         <?php } ?>
+                    </td>
+
+                    <td class="text-center"><?php if($sale['upload_pertanggungjawaban']==''){?><?php }else{?>
+                             <a href="uploads/pertanggungjawaban/<?=$sale['upload_pertanggungjawaban']?>" class="btn btn-success" target="_blank">Preview</a>
+                               
+                             <?php } ?>
                     </td>
 
               

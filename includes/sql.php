@@ -70,6 +70,13 @@ function find_all_global_tahun($table,$id,$key,$tahun) {
   }
 }
 
+function find_all_group_by_satker($table,$key,$tahun) {
+  global $db;
+  if(tableExists($table))
+  {
+    return find_by_sql("SELECT sum(nominal) as nominal , id_satker FROM ".$db->escape($table)." WHERE YEAR(tanggal) = '{$db->escape($tahun)}'  GROUP BY {$db->escape($key)}");
+  }
+}
 
 /*--------------------------------------------------------------*/
 /* Function for find all database table global
@@ -347,6 +354,30 @@ function tableExists($table){
       $result = find_by_sql($sql);
       return $result;
   }
+
+  function find_sptb_tahun($tahun,$id_satker){
+    global $db;
+    $results = array();
+    $sql = "SELECT * ";
+    $sql .="FROM detail_pengajuan d ";
+    $sql .=",pengajuan p ";
+    $sql .=",nodin n ";
+    $sql .="WHERE d.id_pengajuan = p.id and p.id_nodin = n.id and n.tahun ='{$tahun}' ";
+    $sql .="and n.id_satker ='{$id_satker}' and n.id_jenis=2";
+    $result = find_by_sql($sql);
+    return $result;
+}
+
+function find_pencairan_tahun($tahun,$id_satker){
+  global $db;
+  $results = array();
+  $sql = "SELECT * ";
+  $sql .="FROM pencairan ";
+  $sql .="WHERE YEAR(tanggal) ='{$tahun}' ";
+  $sql .="and id_satker ='{$id_satker}' and spm like '%panjar%'";
+  $result = find_by_sql($sql);
+  return $result;
+}
   /*--------------------------------------------------------------*/
   /* Function to update the last log in of a user
   /*--------------------------------------------------------------*/
