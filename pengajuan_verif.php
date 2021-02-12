@@ -43,6 +43,7 @@ $idi= $_GET['id'];
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
                 <th class="text-center" > SPM </th>
+                <th class="text-center" > Satker </th>
                 <th class="text-center" > Nominal Pengajuan </th>
                 <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
                 <th class="text-center" style="width: 15%;"> Dokumen </th>
@@ -58,9 +59,10 @@ $idi= $_GET['id'];
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
                <td class="text-center" >
-                <?php echo remove_junk($sale['SPM']); ?>/<?php $nodin=find_by_id('nodin',$sale['id_nodin']);$jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']?>
-                 /<?php $nodin=find_by_id('nodin',$sale['id_nodin']);$satker=find_by_id('satker',$nodin['id_satker']); echo $satker['keterangan']?>
+                <?php echo remove_junk($sale['SPM']); ?>
+                
               </td>
+              <td class="text-center" ><?php $nodin=find_by_id('nodin',$sale['id_nodin']);$jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']?> /<?php $nodin=find_by_id('nodin',$sale['id_nodin']);$satker=find_by_id('satker',$nodin['id_satker']); echo $satker['keterangan']?></td>
                 <td class="text-center" ><?php $tp=find_NominalPengajuan($sale['id']);echo rupiah($tp['jum']);?></td>
             <td class="text-center">
                 <?php if($sale['status_verifikasi']=='0'){?>
