@@ -6,12 +6,30 @@
   <script type="text/javascript" src="libs/js/functions.js"></script>
   
   <!-- Datatable -->
-  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="libs/js/dataTable/jquery.dataTables.min.js"></script>
+  <script src="libs/js/dataTable/dataTables.bootstrap4.min.js"></script>
+  <script src="libs/js/dataTable/dataTables.responsive.min.js"></script>
+  <script src="libs/js/dataTable/responsive.bootstrap4.min.js"></script>
+  <!-- <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
-
+  <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script> -->
   <script>
+
+    function Tampil(a){
+        $('#Body_dp').load('detail_p.php?id='+a);
+        $('#Detail_Nodin').modal('show');
+    }
+
+    function simpan_dp(a){
+        var spm = $('#spm').val();
+        var jenis = $('#jenis').val();
+        alert(spm);
+        $('#Body_dp').POST('insert_dp.php?spm='+spm+'&jenis='+jenis);
+        // $('#Detail_Nodin').modal('show');
+    }
+
+
     $(document).ready(function() {
       dataTable();
     });
@@ -21,6 +39,12 @@
         responsive:true
       });
     }
+
+    function showT(modal){
+        //$('#'+modal).modal('show');
+        $('#NodinPengajuan').modal('show');
+    }
+
       var e_nominal = document.getElementById('e_nominal');
 		e_nominal.addEventListener('keyup', function(e){
 			e_nominal.value = formatRupiah(this.value, 'Rp. ');
@@ -55,56 +79,10 @@
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
   }
-  
-  </script>
-  </body>
-
-  
-<!-- jQuery -->
-<script src="libs/js/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="libs/js/bootstrap.bundle.js"></script>
-<!-- DataTables -->
-<script src="libs/js/jquery.dataTables.js"></script>
-<script src="libs/js/dataTables.bootstrap4.js"></script>
-
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-  });
-</script>
-
-  
-<script type="text/javascript">
 
 
-  
-  var rupiah = document.getElementById('rupiah');
-  rupiah.addEventListener('keyup', function(e){
-    // tambahkan 'Rp.' pada saat form di ketik
-    // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-    rupiah.value = formatRupiah1(this.value, 'Rp. ');
-  });
 
-  var pph = document.getElementById('pph');
-		pph.addEventListener('keyup', function(e){
-			// tambahkan 'Rp.' pada saat form di ketik
-			// gunakan fungsi formatpph() untuk mengubah angka yang di ketik menjadi format angka
-			pph.value = formatRupiah1(this.value, 'Rp. ');
-		});
 
-    var ppn = document.getElementById('ppn');
-		ppn.addEventListener('keyup', function(e){
-			ppn.value = formatRupiah1(this.value, 'Rp. ');
-		});
 
     /* Fungsi formatRupiah */
   function formatRupiah1(angka, prefix){
@@ -123,9 +101,10 @@
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
   }
-
   
 </script>
+
+</body>
 
 </html>
 

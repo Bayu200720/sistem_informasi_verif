@@ -75,14 +75,14 @@ $sales = find_all('k_cair');
           
           </div>
         </div>
-        <div class="panel-body">
-          <table class="table table-bordered table-striped">
+        <div class="panel-body"  style="width: 100%;">
+          <table id="tabel" class="table table-bordered table-striped"  style="width: 100%;">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th class="text-center" style="width: 15%;"> Waktu</th>
-                <th class="text-center" style="width: 15%;"> Total</th>
-                <th class="text-center" style="width: 100px;"> Cetak</th>
+                <th class="text-center">#</th>
+                <th class="text-center"> Waktu</th>
+                <th class="text-center"> Total</th>
+                <th class="text-center"> Cetak</th>
              </tr>
             </thead>
            <tbody>

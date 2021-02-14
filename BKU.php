@@ -36,14 +36,14 @@ $sales = find_all_group_by_satker('pencairan','id_satker',2021);
         
           </div>
         </div>
-        <div class="panel-body">
-          <table id="example1" class="table table-bordered table-striped">
+        <div class="panel-body"  style="width: 100%;">
+          <table id="tabel" class="table table-bordered table-striped" style="width: 100%;">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                <th class="text-center" >#</th>
                 <th class="text-center" > Satker </th>
                 <th class="text-center" > Pencairan </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
+                <th class="text-center" > Actions </th>
              </tr>
             </thead>
            <tbody>

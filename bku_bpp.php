@@ -77,7 +77,7 @@
         <div class="panel-body" style="width:100%;">
           <div class="row" style="width:100%; margin-left:2px">
 
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="" class="table table-bordered table-striped" style="width:100%;">
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 50px;">#</th>
@@ -94,7 +94,7 @@
                     <tr>
                     <td class="text-center"><?php echo count_id();?></td>
                     <td class="text-center" >
-                    <?php echo $sale['SPM'];?>/<?php echo $sale['no_sptjb'];?>
+                    <?php echo $sale['SPM'];?>-<?php echo $sale['no_sptjb'];?>
                     </td>
                     <td class="text-center">    
                         <?php echo rupiah($sale['nominal'])?>
@@ -123,7 +123,7 @@
       </div>
       <div class="panel-body" style="width:100%">
         <div class="row" style="width:100%; margin-left:2px">
-            <table id="example1" class="table table-bordered table-striped" >
+            <table id="tabel" class="table table-bordered table-striped"  style="width:100%">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>

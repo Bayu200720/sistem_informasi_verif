@@ -21,12 +21,12 @@
         <div class="panel-body" style="width:100%;">
           <div class="row" style="width:100%; margin-left:2px">
 
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="tabel" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="text-center" style="width: 50px;">#</th>
+                        <th class="text-center" >#</th>
                         <th class="text-center" >No SPTJB-SPM </th>
-                        <th class="text-center" style="width: 100px;"> Jumlah </th>
+                        <th class="text-center" > Jumlah </th>
                     </tr>
                     </thead>
                 <tbody>
@@ -66,7 +66,7 @@
       </div>
       <div class="panel-body" style="width:100%">
         <div class="row" style="width:100%; margin-left:2px">
-            <table id="example1" class="table table-bordered table-striped" >
+            <table id="tabel" class="table table-bordered table-striped" >
                         <thead>
                         <tr>
                             <th class="text-center">#</th>

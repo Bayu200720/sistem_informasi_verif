@@ -46,26 +46,28 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
             <a href="add_pengajuan.php?id=<?=$idi;?>" class="btn btn-primary">Add pengajuan</a>
           </div>
         </div>
-        <div class="panel-body">
-          <table class="table table-bordered table-striped">
+        <div class="panel-body" style="width:100%">
+          <table id="tabel" class="table table-bordered table-striped" style="width:100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th class="text-center"> SPM/Jenis Pengajuan </th>
-                <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
-                <th class="text-center" style="width: 15%;"> Status SPM </th>
+                <th class="text-center" >#</th>
+                <th class="text-center"> SPM </th>
+                <th class="text-center"> Jenis Pengajuan </th>
+                <th class="text-center"> Status Verifikasi </th> 
+                <th class="text-center"> Status SPM </th>
                 <th class="text-center">Berkas SPM</th>             
-                <th class="text-center" style="width: 15%;"> Status KPPN </th> 
-                <th class="text-center" style="width: 15%;"> Status SP2D </th>
-                <th class="text-center" style="width: 15%;"> Status Pengambilan Uang </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
+                <th class="text-center"> Status KPPN </th> 
+                <th class="text-center"> Status SP2D </th>
+                <th class="text-center"> Status Pengambilan Uang </th>
+                <th class="text-center"> Actions </th>
              </tr>
             </thead>
            <tbody>
              <?php foreach ($sales as $sale):?>
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
-               <td><?php echo remove_junk($sale['SPM']); ?>/<?php $jenis = find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['keterangan']?></td>
+               <td><?php echo remove_junk($sale['SPM']); ?></td>
+               <td><?php $jenis = find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['keterangan']?></td>
                <td class="text-center"><?php if($sale['status_verifikasi']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
              <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?></span><?php } ?>
             <?php $verif = find_all_global('verifikasi',$sale['id'],'id_pengajuan');if($verif[0]['id_pengajuan']!=NULL){?>

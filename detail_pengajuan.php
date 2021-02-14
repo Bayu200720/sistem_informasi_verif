@@ -241,8 +241,8 @@ if($_GET['s']=='kasubok'){
             <?php } ?>     
           </div>
         </div>
-        <div class="panel-body">
-          <table id="example1" class="table table-bordered table-striped">
+        <div class="panel-body" style="width:100%">
+          <table id="tabel" class="table table-bordered table-striped" style="width:100%">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
@@ -338,8 +338,7 @@ if($_GET['s']=='kasubok'){
                 <th class="text-center"> </th> 
                 <th class="text-center"> </th>
                 <th class="text-center"> </th>
-                <th class="text-center"> </th>
-                
+                <th class="text-center"> </th>    
                 <th class="text-center">Status Verifikasi Kasubbbag Verifiaksi  </th>
                 <th class="text-center"> 
                       <?php $v=find_by_id('pengajuan',$_GET['id']);
@@ -349,7 +348,7 @@ if($_GET['s']=='kasubok'){
                           <a href="detail_pengajuan.php?id=<?=$_GET['id']?>&s=kasubbatal" class="btn btn-danger">Batalkan</a>
                         <?php } ?>
                 </th>
-                <th class="text-center">  </th>
+                <th class="text-center"></th>
              </tr>
             <?php } ?>
          </table>
@@ -358,6 +357,8 @@ if($_GET['s']=='kasubok'){
     </div>
   </div>
 <?php include_once('layouts/footer.php'); ?>
+
+
 <!-- Modal Edit verifikasi-->
 <div class="modal fade" id="PenolakanKPPN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

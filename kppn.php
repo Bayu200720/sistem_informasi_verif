@@ -98,18 +98,18 @@ if(isset($_POST['update_sp2d'])){
             
           </div>
         </div>
-        <div class="panel-body">
-               <table id="example1" class="table table-bordered table-striped">
+        <div class="panel-body" style="width:100%">
+               <table id="tabel" class="table table-bordered table-striped" style="width:100%">
                   <thead>
                     <tr>
-                      <th class="text-center" style="width: 50px;">#</th>
+                      <th class="text-center">#</th>
                       <th class="text-center" > SPM </th>
                       <th class="text-center" > Jenis Pengajuan</th>
                       <th class="text-center" > Satker </th>
                       <th class="text-center" > Tanggal </th>
                       <th class="text-center" > Nominal Pengajuan </th>
                       
-                      <th class="text-center" style="width: 100px;"> Actions </th>
+                      <th class="text-center"> Actions </th>
                   </tr>
                   </thead>
                 <tbody>

@@ -165,11 +165,11 @@ $sales = find_all_global('pencairan',0,'status');
           <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input Panjar</a>
           </div>
         </div>
-        <div class="panel-body">
-          <table class="table table-bordered table-striped">
+        <div class="panel-body"  style="width: 100%;">
+          <table id="tabel" class="table table-bordered table-striped" style="width: 100%;">
             <thead>
               <tr>
-              <th class="text-center" style="width: 50px;">Checkbox</th>
+              <th class="text-center">Checkbox</th>
                 <th class="text-center" style="width: 50px;">#</th>
                 <th> SPM </th>
                 <th> Jensi Pengajuan </th>

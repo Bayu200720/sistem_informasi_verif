@@ -158,5 +158,26 @@
   </div>
 
 
-
 <?php include_once('layouts/footer.php'); ?>
+
+<script>
+
+var rupiah = document.getElementById('rupiah');
+  rupiah.addEventListener('keyup', function(e){
+    // tambahkan 'Rp.' pada saat form di ketik
+    // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+    rupiah.value = formatRupiah1(this.value, 'Rp. ');
+  });
+
+  var pph = document.getElementById('pph');
+		pph.addEventListener('keyup', function(e){
+			// tambahkan 'Rp.' pada saat form di ketik
+			// gunakan fungsi formatpph() untuk mengubah angka yang di ketik menjadi format angka
+			pph.value = formatRupiah1(this.value, 'Rp. ');
+		});
+
+    var ppn = document.getElementById('ppn');
+		ppn.addEventListener('keyup', function(e){
+			ppn.value = formatRupiah1(this.value, 'Rp. ');
+		});
+</script>
