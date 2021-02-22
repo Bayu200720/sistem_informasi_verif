@@ -271,7 +271,7 @@ if($_GET['s']=='kasubok'){
                <td class="text-center"><?php echo rupiah($sale['nominal']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['pph']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['ppn']); ?></td>
-               <td class="text-center"><?php echo $sale['tanggal']; ?></td>
+               <td class="text-center"><?php echo $sale['tanggal_dp']; ?></td>
                <td class="text-center"><?php echo $sale['keterangan'];  ?></td>
                <td class="text-center">
                <?php  if($user['user_level'] != 6 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
@@ -285,19 +285,19 @@ if($_GET['s']=='kasubok'){
                <?php if($user['user_level'] != 2 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
                   <div class="btn-group">
                      <a href="edit_detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-edit">Edit</span>
                      </a>
 
-                     <a href="transaksi_db.php?id=<?php echo (int)$sale['id_sptjb_api'];?>&id_dp=<?=(int)$sale['id'];?>" class="btn btn-sucess btn-xs"  title="Detail API" data-toggle="tooltip">
+                     <!-- <a href="transaksi_db.php?id=<?php echo (int)$sale['id_sptjb_api'];?>&id_dp=<?=(int)$sale['id'];?>" class="btn btn-sucess btn-xs"  title="Detail API" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
-                     </a>
+                     </a> -->
 
-                     <a href="transaksi_db_a.php?id=<?=(int)$sale['id'];?>" class="btn btn-sucess btn-xs"  title="Detail SIV" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                     <a href="transaksi_db_a.php?id=<?=(int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail SIV" data-toggle="tooltip">
+                       <span class="glyphicon glyphicon-edit">Detail Kwitansi</span>
                      </a>
 
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash"></span>
+                       <span class="glyphicon glyphicon-trash">Delete</span>
                      </a>
                   </div>
                 <?php }?>
@@ -309,7 +309,6 @@ if($_GET['s']=='kasubok'){
             <tr>
                 <th class="text-center">Jumlah</th>
                 <th class="text-center">  </th>
-                <th class="text-center"> </th>
                 <th class="text-center"> </th>
                 <th class="text-center"> <?=rupiah($tot);?> </th> 
                 <th class="text-center"> <?=rupiah($tot1);?> </th>
@@ -326,6 +325,7 @@ if($_GET['s']=='kasubok'){
                   <?php } ?>
                 </th>
                 <th class="text-center">  </th>
+                <th class="text-center"> </th>
              </tr>
              <?php $user = find_by_id('users',$_SESSION['user_id']);
               //var_dump($user['user_level']);

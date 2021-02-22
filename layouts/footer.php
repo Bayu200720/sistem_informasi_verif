@@ -16,12 +16,23 @@
   <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script> -->
   <script>
 
+   
+
     function Tampil(a){
         $('#Body_dp').load('detail_p.php?id='+a);
         $('#Detail_Nodin').modal('show');
     }
 
-    function simpan_dp(a){
+    function AddT(a){
+        $('#Body_dp').load('add_transaksi.php?id='+a);
+        $('#Detail_Nodin').modal('show');
+    }
+    function EditT(a){
+        $('#Body_et').load('edit_transaksi.php?id='+a);
+        $('#EditT').modal('show');
+    }
+
+    function simpan_dp(){
         var spm = $('#spm').val();
         var jenis = $('#jenis').val();
         alert(spm);

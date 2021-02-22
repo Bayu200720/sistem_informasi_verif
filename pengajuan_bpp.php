@@ -40,7 +40,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>All Pengajuan</span>
+            <span>All Nodin / All Pengajuan</span>
           </strong>
           <div class="pull-right">
             <a href="add_pengajuan.php?id=<?=$idi;?>" class="btn btn-primary">Add pengajuan</a>
@@ -114,35 +114,17 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                  <span class="label label-success">Sudah Diambil <?php $user = find_by_id('users',(int)$sale['status_sp2d']);?></span><?php } ?>
             </td>
 
-            
-
-            <!-- <td class="text-center"><?php if($sale['upload']==''){?><a href="media.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
-             <a href="uploads/products/<?=$sale['upload']?>" class="btn btn-success" target="_blank">Preview</a>
-             <a href="batal_upload.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
-             <?php } ?>
-            </td>
-            <td class="text-center"><?php if($sale['upload_pertanggungjawaban']==''){?><a href="media_pertanggungjawaban.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
-             <a href="uploads/pertanggungjawaban/<?=$sale['upload_pertanggungjawaban']?>" class="btn btn-success" target="_blank">Preview</a>
-             <a href="batal_uploadPj.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
-             <?php } ?>
-            </td>
-
-            <td class="text-center"><?php if($sale['upload_adk']==''){?><a href="media_adk.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
-             <a href="uploads/adk/<?=$sale['upload_adk']?>" class="btn btn-success" target="_blank">Download</a>
-             <a href="pengajuan_bpp.php?id=<?=$sale['id']?>&s=hapus_adk" class="btn btn-danger">Hapus</a>
-             <?php } ?>
-            </td> -->
 
                <td class="text-center">
                   <div class="btn-group">
                      <a href="edit_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-edit">Edit</span>
                      </a>
                      <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-edit">SPTJB</span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash"></span>
+                       <span class="glyphicon glyphicon-trash">Hapus</span>
                      </a>
                   </div>
                </td>

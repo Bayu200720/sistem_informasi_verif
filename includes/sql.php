@@ -24,6 +24,19 @@ function find_pengajuanok()
     //         return null;
    
 }
+
+//find pengajuan yg status pengajuan 1
+function find_pengajuanok_tgl($tgl1,$tgl2)
+{
+  global $db;
+  return find_by_sql("SELECT p.id as id,p.SPM as SPM,p.status_verifikasi as status_verifikasi,p.status_kppn as status_kppn,p.status_spm as status_spm,p.status_sp2d as status_sp2d,p.upload as upload,p.id_nodin as id_nodin, p.sp2d as sp2d,p.created_at as created_at,p.verifikasi_kasubbag_v as verifikasi_kasubbag_v,p.id_jenis_pengajuan as id_jenis_pengajuan,p.penolakan_kppn as penolakan_kppn,p.file_spm as file_spm,p.file_sp2d as file_sp2d,p.upload_adk as upload_adk,p.upload_pertanggungjawaban as upload_pertanggungjawaban, p.status_pengambilan_uang as status_pengambilan_uang  FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and n.tanggal between '".$tgl1."' and '".$tgl2."' ORDER BY p.id DESC");
+    // $sql = $db->query("SELECT * FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 ORDER BY p.id DESC");
+    //       if($result = $db->fetch_assoc($sql))
+    //         return $result;
+    //       else
+    //         return null;
+   
+}
 /*--------------------------------------------------------------*/
 /* Function for find all database table pengajuan dan detail pengajuan
 /*--------------------------------------------------------------*/

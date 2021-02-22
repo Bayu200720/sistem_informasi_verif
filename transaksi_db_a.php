@@ -18,8 +18,156 @@
     }  
   ?>
 <?php
-//$sales = find_detail($_GET['id']);
-//$id_pengajuan = $_GET['id'];
+
+if(isset($_GET['status'])){
+  if($_GET['status'] == 'del'){
+  
+    $id  = remove_junk($db->escape($_GET['id']));
+    $transaksi= find_by_id('detail_transaksi',$id);
+
+    $id_dp  = $transaksi['id_detail_pengajuan'];
+  // var_dump($id_dp);exit();
+  
+    $keterangan   = remove_junk($db->escape($_POST['keterangan']));
+    $query  = "DELETE FROM detail_transaksi WHERE id ='{$id}'";
+ 
+    if($db->query($query)){
+      $session->msg('s',"Detail Transaksi Deleted ");
+      redirect('transaksi_db_a.php?id='.$id_dp, false);
+    } else {
+      $session->msg('d',' Sorry failed to Deleted!');
+      redirect('transaksi_db_a.php?id='.$id_dp, false);
+    }
+
+  } else{
+    $session->msg("d", $errors);
+    redirect('transaksi_db_a.php?id='.$id_dp,false);
+  }
+}
+
+if(isset($_POST['edit_transaksi'])){
+  $req_fields = array('penerima','nominal','pph','ppn','tanggal');
+  validate_fields($req_fields);
+  var_dump($_POST);
+  $teks5 = $_POST['nominal'];
+ $nominal = preg_replace("/[^0-9]/", "", $teks5);
+
+  if(empty($errors)){
+    $penerima  = remove_junk($db->escape($_POST['penerima']));
+    $tanggal  = remove_junk($db->escape($_POST['tanggal']));
+    $nominal  = remove_junk($db->escape($nominal));
+    $nip  = remove_junk($db->escape($_POST['id']));
+    $id_t  = remove_junk($db->escape($_POST['id_t']));
+    $id_dp  = remove_junk($db->escape($_POST['id_dp']));
+    $keterangan  = remove_junk($db->escape($_POST['keterangan']));
+
+    if($db->escape($_POST['pph'])==''){
+     $pph=0;
+    }else{
+     $pph = preg_replace("/[^0-9]/", "", $_POST['pph']);
+    }
+    if($db->escape($_POST['ppn'])==''){
+     $ppn=0;
+    }else{
+     $ppn = preg_replace("/[^0-9]/", "", $_POST['ppn']);
+    }
+
+    if($_POST['pph1'] == 'pph5p'){
+     $pph = $nominal * 5/100;
+   }else if($_POST['pph1']== 'pph15p'){
+     $pph = $nominal * 15/100;
+   }else if($_POST['pph1']== 'pph2p'){
+     $pph = $nominal * 2/100;
+   }
+
+    $keterangan   = remove_junk($db->escape($_POST['keterangan']));
+    $id_dp = remove_junk($db->escape($_POST['id_dp']));
+    $query  = "UPDATE detail_transaksi SET";
+    $query .=" penerima='{$penerima}',nominal ='{$nominal}',uraian='{$keterangan}',pph='{$pph}',ppn='{$ppn}',tanggal_transaksi='{$tanggal}',id_penerima='{$nip}'";
+    $query .=" WHERE id='{$id_t}'";
+ 
+    if($db->query($query)){
+      $session->msg('s',"Detail Transaksi Updated ");
+      redirect('transaksi_db_a.php?id='.$id_dp, false);
+    } else {
+      $session->msg('d',' Sorry failed to Updated!');
+      redirect('transaksi_db_a.php?id='.$id_dp, false);
+    }
+
+  } else{
+    $session->msg("d", $errors);
+    redirect('transaksi_db_a.php?id='.$id_dp,false);
+  }
+}
+
+
+if(isset($_POST['add_transaksi'])){
+  $req_fields = array('penerima','nominal','pph','ppn','tanggal');
+  validate_fields($req_fields);
+  var_dump($_POST);
+  $teks5 = $_POST['nominal'];
+ $nominal = preg_replace("/[^0-9]/", "", $teks5);
+ 
+
+
+  if(empty($errors)){
+    $penerima  = remove_junk($db->escape($_POST['penerima']));
+    $tanggal  = remove_junk($db->escape($_POST['tanggal']));
+    $nominal  = remove_junk($db->escape($nominal));
+    $nip  = remove_junk($db->escape($_POST['id']));
+    $id_dp  = remove_junk($db->escape($_POST['id_dp']));
+    $keterangan  = remove_junk($db->escape($_POST['keterangan']));
+
+   
+
+    if($db->escape($_POST['pph'])==''){
+     $pph=0;
+    }else{
+     $pph = preg_replace("/[^0-9]/", "", $_POST['pph']);
+   // $pph  = remove_junk($db->escape($_POST['pph']));
+    }
+    if($db->escape($_POST['ppn'])==''){
+     $ppn=0;
+    }else{
+     $ppn = preg_replace("/[^0-9]/", "", $_POST['ppn']);
+    //$ppn  = remove_junk($db->escape($_POST['ppn']));
+    }
+
+    if($_POST['pph1'] == 'pph5p'){
+     $pph = $nominal * 5/100;
+   }else if($_POST['pph1']== 'pph15p'){
+     $pph = $nominal * 15/100;
+   }else if($_POST['pph1']== 'pph2p'){
+     $pph = $nominal * 2/100;
+   }else if($_POST['pph']=='pph'){
+     $pph = 0;
+   }
+   //var_dump($_POST['pph1']);
+   //var_dump($pph);exit();
+
+    $keterangan   = remove_junk($db->escape($_POST['keterangan']));
+    $id_dp = remove_junk($db->escape($_POST['id_dp']));
+    $query  = "INSERT INTO detail_transaksi (";
+    $query .=" id_detail_pengajuan,penerima,nominal,uraian,pph,ppn,tanggal_transaksi,id_penerima";
+    $query .=") VALUES (";
+    $query .=" '{$id_dp}','{$penerima}', '{$nominal}', '{$keterangan}','{$pph}','{$ppn}','{$tanggal}','{$nip}'";
+    $query .=")";
+    //var_dump($query);exit();
+    if($db->query($query)){
+      $session->msg('s',"Detail Transaksi added ");
+      redirect('transaksi_db_a.php?id='.$id_dp, false);
+    } else {
+      $session->msg('d',' Sorry failed to added!');
+      redirect('transaksi_db_a.php?id='.$id_dp, false);
+    }
+
+  } else{
+    $session->msg("d", $errors);
+    redirect('transaksi_db_a.php?id='.$id_dp,false);
+  }
+
+}
+
 if($_GET['status'] == 'h'){
     $id =$_GET['id'];
     $query="DELETE FROM detail_transaksi WHERE id_detail_pengajuan =".$_GET['id'];
@@ -64,6 +212,7 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
               <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
                 
               <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
+              <a onclick="AddT(<?=$_GET['id'];?>)" class="btn btn-primary">Add Transaksi</a>
               <a onclick="return confirm('Yakin Hapus!!')" href="transaksi_db_a.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
               <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
               <a href="uploads/data_excle/data_detail.csv" class="btn btn-success">Excel</a>
@@ -115,12 +264,15 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
                 <span class="label label-danger"><?=$sale['keterangan_verifikasi'];?></span>
                <?php } ?>
                </td>
-               <td class="text-center"><?php echo $sale['id_transaksi_api'];  ?>
+               <td class="text-center">
                <?php if($user['user_level'] != 2 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
                   <div class="btn-group">
-                     <!-- <a href="transaksi_detail.php?id=<?php echo (int)$sale[0]['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
+                     <a onclick="EditT(<?=$sale['id'];?>)" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
-                     </a> -->
+                     </a>
+                     <a onclick="return confirm('Yakin Hapus !');" href="transaksi_db_a.php?id=<?php echo (int)$sale['id'];?>&id_dp=<?=$sale['id_detail_pengajuan'];?>&status=del" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                       <span class="glyphicon glyphicon-edit"></span>
+                     </a>
                      
                   </div>
                 <?php }?>
@@ -179,6 +331,44 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
     </div>
   </div>
 <?php include_once('layouts/footer.php'); ?>
+
+
+     <!-- Modal Detail ADD Transaksi-->
+     <div class="modal fade" id="Detail_Nodin" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
+  <div class="modal-dialog modal-xl" style="width:50vw">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Transkasi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="Body_dp" style="width:100%;">
+      
+    </div>
+    </div>
+  </div>
+</div>
+
+     <!-- Modal Edit Transaksi-->
+     <div class="modal fade" id="EditT" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
+  <div class="modal-dialog modal-xl" style="width:50vw">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Transkasi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="Body_et" style="width:100%;">
+      
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- Modal Edit verifikasi-->
 <div class="modal fade" id="PenolakanKPPN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

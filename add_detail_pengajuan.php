@@ -24,6 +24,8 @@
      $nominal  = remove_junk($db->escape($nominal));
       $akun  = remove_junk($db->escape($_POST['id_akun']));
 
+    
+
      if($db->escape($_POST['pph'])==''){
       $pph=0;
      }else{
@@ -36,6 +38,18 @@
       $ppn = preg_replace("/[^0-9]/", "", $_POST['ppn']);
      //$ppn  = remove_junk($db->escape($_POST['ppn']));
      }
+
+     if($_POST['pph1'] == 'pph5p'){
+      $pph = $nominal * 5/100;
+    }else if($_POST['pph1']== 'pph15p'){
+      $pph = $nominal * 15/100;
+    }else if($_POST['pph1']== 'pph2p'){
+      $pph = $nominal * 2/100;
+    }else if($_POST['pph1']=='pph'){
+      $pph=0;
+    }
+    //var_dump($_POST['pph1']);
+    //var_dump($pph);exit();
 
      $keterangan   = remove_junk($db->escape($_POST['keterangan']));
      $date    = make_date();
@@ -84,7 +98,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   SPTJB</span>
-                  <input type="text" class="form-control" name="no_sptjb" placeholder="NO SPTJB">
+                  <input type="text" class="form-control" name="no_sptjb" placeholder="NO SPTJB" required>
                </div>
               </div>
 
@@ -93,7 +107,7 @@
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   Akun</span>
-                  <select class="form-control" name="id_akun">
+                  <select class="form-control" name="id_akun" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $user=find_by_id('users',$_SESSION['user_id']); $jenis = find_all_global('akun',$user['id_satker'],'id_satker');//var_dump($jenis);exit();?>
                     <?php  foreach ($jenis as $j): ?>
@@ -109,7 +123,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   Nominal</span>
-                  <input type="text" id="rupiah" class="form-control" name="nominal" placeholder="Nominal">
+                  <input type="text" id="rupiah" class="form-control" name="nominal" placeholder="Nominal" required>
                </div>
               </div>
 
@@ -118,7 +132,22 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   Tanggal</span>
-                  <input type="date" id="rupiah" class="form-control" name="tanggal" placeholder="tanggal">
+                  <input type="date" id="rupiah" class="form-control" name="tanggal" placeholder="tanggal" required>
+               </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-text">
+                  <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph2p">                 
+                    <i > PPH 23 2%</i> 
+                    <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph15p">                 
+                    <i > PPH 21 15%</i> 
+                    <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph5p">                 
+                    <i > PPH 21 5%</i>
+                    <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph">                 
+                    <i > None</i> 
+                </div>
                </div>
               </div>
 
@@ -127,7 +156,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                    PPH</span>
-                  <input type="text" id="pph" class="form-control" name="pph" placeholder="pph" value="0" placeholder="PPH">
+                  <input type="text" id="pph" class="form-control" name="pph" placeholder="pph" value="0" placeholder="PPH" >
                </div>
               </div>
 
@@ -136,7 +165,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   PPN</span>
-                  <input type="text" id="ppn" class="form-control" name="ppn" placeholder="ppn" value="0">
+                  <input type="text" id="ppn" class="form-control" name="ppn" placeholder="ppn" value="0" >
                </div>
               </div>
 
@@ -145,7 +174,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   Keterangan</span>
-                  <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                  <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" required>
                </div>
               </div>
 

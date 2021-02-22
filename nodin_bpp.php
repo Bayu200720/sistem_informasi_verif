@@ -243,15 +243,15 @@ if($_GET['status']=='delete_nodin'){
                 <td class="text-center">
                       <div class="btn-group">
 
-                      <a onclick="Tampil(<?=$sale['id'];?>)" class="btn btn-primary btn-xs"  title="Detail nodin">
-                          <span class="glyphicon glyphicon-edit"></span>
+                      <a onclick="Tampil(<?=$sale['id'];?>)" class="btn btn-success btn-xs"  title="Detail nodin">
+                          <span class="glyphicon glyphicon-edit">Show</span>
                         </a>
                         <a href="#" title="Edit" <?php $nodin = find_by_id('nodin',$sale['id']);?> class="btn btn-warning btn-xs" id="editnodin" data-toggle="modal"  title="Edit nodin"
                         data-target="#UpdateNodinPengajuan" data-id='<?=$nodin['id'];?>' data-tanggal='<?=$nodin['tanggal'];?>' data-pp='<?=$nodin['p_pengajuan'];?>' data-no_nodin='<?=$nodin['no_nodin'];?>'>
-                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="glyphicon glyphicon-edit">Edit</span>
                         </a>
                         <a href="pengajuan_bpp.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail nodin" data-toggle="tooltip">
-                          <span class="glyphicon glyphicon-edit"></span>
+                          <span class="glyphicon glyphicon-edit">Detail</span>
                         </a>
 
                         <?php $pengj = count_by_id_nodin('pengajuan',$sale['id']); if($pengj['total'] < 1 ){ ?>  
@@ -275,6 +275,8 @@ if($_GET['status']=='delete_nodin'){
   </div>
 
 
+
+
      <!-- Modal Detail Pengajuan-->
 <div class="modal fade" id="Detail_Nodin" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
   <div class="modal-dialog modal-xl" style="width:90vw">
@@ -293,8 +295,9 @@ if($_GET['status']=='delete_nodin'){
 </div>
 
 
+  
        <!-- Modal input nodin-->
-  <div class="modal fade" id="DT_p" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
+  <div class="modal fade" id="DT_p" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -307,12 +310,12 @@ if($_GET['status']=='delete_nodin'){
       <div class="modal-body">
             <div class="form-group">
               <label for="exampleInputEmail1">SPM</label>
-              <input type="text" class="form-control" id="" name="spm" placeholder="SPM">
+              <input type="text" class="form-control" id="spm" name="spm" placeholder="SPM">
             </div>
 
             <div class="form-group">
               <label for="exampleInputEmail1">Jenis Pengajuan</label>
-                      <select class="form-control" name="id_jenis_pengajuan">
+                      <select class="form-control" id="jenis" name="id_jenis_pengajuan">
                             <option value="">Pilih Jenis Pengajuan</option>
                             <?php $jenis = find_all('jenis_pengajuan');?>
                           <?php  foreach ($jenis as $j): ?>
@@ -333,6 +336,9 @@ if($_GET['status']=='delete_nodin'){
 
 
 
+
+
+
    <!-- Modal input nodin-->
 <div class="modal fade" id="NodinPengajuan" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
   <div class="modal-dialog">
@@ -347,7 +353,7 @@ if($_GET['status']=='delete_nodin'){
       <div class="modal-body">
        <div class="form-group">
         <label for="exampleInputEmail1">Tanggal</label>
-        <input type="date" class="form-control" id="nodin" name="tanggal" placeholder="tanggal">
+        <input type="date" class="form-control" id="nodin" name="tanggal" placeholder="tanggal" required> 
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Nomor Nodin</label>
@@ -355,12 +361,12 @@ if($_GET['status']=='delete_nodin'){
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Pegawai Pengajuan</label>
-        <input type="text" class="form-control" id="nodin" name="p_pengajuan" placeholder="Pegawai Pengajuan">
+        <input type="text" class="form-control" id="nodin" name="p_pengajuan" placeholder="Pegawai Pengajuan" required>
         <input type="hidden" class="form-control" id="id" value="<?php $users=find_by_id('users',$_SESSION['user_id']);echo $users['id_satker'] ;?>" name="id_satker" >
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Jenis Pengajuan</label>
-                <select class="form-control" name="id_jenis">
+                <select class="form-control" name="id_jenis" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $jenis = find_all('jenis');?>
                     <?php  foreach ($jenis as $j): ?>
@@ -378,6 +384,8 @@ if($_GET['status']=='delete_nodin'){
     </div>
   </div>
 </div>
+
+
 
  <!-- Modal Edit nodin-->
  <div class="modal fade" id="UpdateNodinPengajuan" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">

@@ -11,9 +11,19 @@
    }else{ //echo "3";exit();
      page_require_level(3); 
    }
+
+   //ver_dump($_POST); exit();
+
+
 ?>
 <?php
 $sales = find_pengajuanok();
+
+if(isset($_POST['cari'])){
+  $sql = "select * from nodin where tanggal between '".$_POST['tgl1']."' and '".$_POST['tgl2']."'";
+  echo $sql;
+  $sales= find_pengajuanok_tgl($_POST['tgl1'],$_POST['tgl2']);
+ }
 //var_dump($sales);exit();
 //print_r($sales);exit();//find_all('pengajuan');
 $id = find_all_global('pengajuan',$_GET['id'],'id_nodin');
@@ -34,11 +44,19 @@ $idi= $_GET['id'];
             <span>All Pengajuan</span>
           </strong>
           <div class="pull-right">
-            
+              <form action="pengajuan_verif.php" method="POST" >
+          
+                    <input type="date"  name="tgl1">
+              
+                    <input type="date"   name="tgl2"> 
+              
+                    <input type="submit" class="btn btn-primary" name="cari" value="Cari">
+                
+              </form>
           </div>
         </div>
         <div class="panel-body">
-          <table id="example1" class="table table-bordered table-striped">
+          <table id="tabel" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>

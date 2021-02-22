@@ -67,7 +67,7 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Add New Pengajuan</span>
+            <span>All Nodin / All Pengajuan / Add New Pengajuan</span>
          </strong>
         </div>
         <div class="panel-body">
@@ -78,7 +78,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="spm" placeholder="SPM">
+                  <input type="text" class="form-control" name="spm" placeholder="SPM" required>
                   <input type="hidden" class="form-control" value="<?=$_GET['id'];?>" name="id" placeholder="SPM">
                </div>
               </div>
@@ -88,7 +88,7 @@
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   Jenis Pegajuan</span>
-                  <select class="form-control" name="id_jenis_pengajuan">
+                  <select class="form-control" name="id_jenis_pengajuan" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $jenis = find_all('jenis_pengajuan');?>
                     <?php  foreach ($jenis as $j): ?>

@@ -100,7 +100,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
             <span>All Pengajuan</span>
           </strong>
           <div class="pull-right">
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#DT_p">Add pengajuan</a>
+            <!-- <a href="#" class="btn btn-primary" onclick="addPengajuan()">Add pengajuan</a> -->
           </div>
         </div>
         <div class="panel-body" style="width:100%">
@@ -194,6 +194,56 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
   </div>
 
 
+
+
+
+<script>
+    function addPengajuan(){
+         alert("okk");
+      $('#DT_p').modal('show');
+    }
+
+</script>
+
+   <!-- Modal input nodin-->
+   <div class="modal fade" id="DT_p" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Pengajuan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="detail_p.php?status=ada" method="POST">
+      <div class="modal-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">SPM</label>
+              <input type="text" class="form-control" id="spm" name="spm" placeholder="SPM">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Jenis Pengajuan</label>
+                      <select class="form-control" id="jenis" name="id_jenis_pengajuan">
+                            <option value="">Pilih Jenis Pengajuan</option>
+                            <?php $jenis = find_all('jenis_pengajuan');?>
+                          <?php  foreach ($jenis as $j): ?>
+                            <option value="<?php echo (int)$j['id'] ?>">
+                              <?php echo $j['keterangan'] ?></option>
+                          <?php endforeach; ?>
+                      </select>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" onclick="simpan_dp()" name="add_pengajuan" value="Save">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
@@ -207,6 +257,8 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
   <script src="libs/js/dataTable/responsive.bootstrap4.min.js"></script>
 
 <script>
+
+
 $(document).ready(function() {
       dataTable();
     });

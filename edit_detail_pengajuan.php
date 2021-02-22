@@ -39,6 +39,17 @@
      $tanggal   = remove_junk($db->escape($_POST['tanggal']));
      $date    = make_date();
      $id_pengajuan = remove_junk($db->escape($_GET['id']));
+
+     if($_POST['pph1'] == 'pph5p'){
+      $pph = $nominal * 5/100;
+    }else if($_POST['pph1']== 'pph15p'){
+      $pph = $nominal * 15/100;
+    }else if($_POST['pph1']== 'pph2p'){
+      $pph = $nominal * 2/100;
+    }else if($_POST['pph1']=='pph'){
+      $pph=0;
+    }
+
      $query  = "UPDATE detail_pengajuan SET";
      $query .=" no_sptjb='{$no_sptjb}',nominal='{$nominal}',id_akun='{$akun}',keterangan='{$keterangan}',pph='{$pph}',ppn='{$ppn}',tanggal_dp='{$tanggal}'";
      $query .=" WHERE id= '{$id_pengajuan}'";
@@ -115,6 +126,21 @@
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
                   <input type="date" id="e_tanggal" class="form-control" name="tanggal" placeholder="tanggal" value="<?=$detail['tanggal']?>">
+               </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-text">
+                  <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph2p">                 
+                    <i > PPH 23 2%</i> 
+                    <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph15p">                 
+                    <i > PPH 21 15%</i> 
+                    <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph5p">                 
+                    <i > PPH 21 5%</i>
+                    <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph">                 
+                    <i > None</i> 
+                </div>
                </div>
               </div>
 
