@@ -40,10 +40,10 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>All Nodin / All Pengajuan</span>
+            <span><a href="nodin_bpp.php">All Nodin</a> / <a href="pengajuan_bpp.php?id=<?=$_GET['id']?>">All Pengajuan</a></span>
           </strong>
           <div class="pull-right">
-            <a href="add_pengajuan.php?id=<?=$idi;?>" class="btn btn-primary">Add pengajuan</a>
+            <a href="add_pengajuan.php?id=<?=$idi;?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add</a>
           </div>
         </div>
         <div class="panel-body" style="width:100%">
@@ -118,13 +118,13 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                <td class="text-center">
                   <div class="btn-group">
                      <a href="edit_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit">Edit</span>
+                       <span class="glyphicon glyphicon-pencil"></span>
                      </a>
                      <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit">SPTJB</span>
+                       <span class="glyphicon glyphicon-eye-open"></span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash">Hapus</span>
+                       <span class="glyphicon glyphicon-trash"></span>
                      </a>
                   </div>
                </td>

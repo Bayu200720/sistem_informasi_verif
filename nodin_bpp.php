@@ -197,10 +197,10 @@ if($_GET['status']=='delete_nodin'){
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>All Nodin</span>
+            <span><a href="nodin_bpp.php">All Nodin</a></span>
           </strong>
           <div class="pull-right">
-          <a href="#" onclick="showT('DT_p')" class="btn btn-primary" id="nodin">Tambah</a>
+          <a href="#" onclick="showT('DT_p')" class="btn btn-primary" id="nodin"><span class="glyphicon glyphicon-plus"></span>ADD</a>
           </div>
         </div>
         <div class="panel-body" style="width:100%"> 
@@ -228,7 +228,7 @@ if($_GET['status']=='delete_nodin'){
                <td class="text-center"><?php echo $sale['no_nodin']; ?></td>
 
                 <td class="text-center">
-                <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary" target="_BLANK">Cetak</a>
+                <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary" target="_BLANK"><span class="glyphicon glyphicon-print"></span></a>
                 </td>
                 <td class="text-center">
                       <?php if($sale['status_pengajuan'] == 1){?>
@@ -242,16 +242,15 @@ if($_GET['status']=='delete_nodin'){
 
                 <td class="text-center">
                       <div class="btn-group">
-
                       <a onclick="Tampil(<?=$sale['id'];?>)" class="btn btn-success btn-xs"  title="Detail nodin">
-                          <span class="glyphicon glyphicon-edit">Show</span>
+                          <span class="glyphicon glyphicon-eye-open"></span>
                         </a>
                         <a href="#" title="Edit" <?php $nodin = find_by_id('nodin',$sale['id']);?> class="btn btn-warning btn-xs" id="editnodin" data-toggle="modal"  title="Edit nodin"
                         data-target="#UpdateNodinPengajuan" data-id='<?=$nodin['id'];?>' data-tanggal='<?=$nodin['tanggal'];?>' data-pp='<?=$nodin['p_pengajuan'];?>' data-no_nodin='<?=$nodin['no_nodin'];?>'>
-                        <span class="glyphicon glyphicon-edit">Edit</span>
+                        <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                         <a href="pengajuan_bpp.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail nodin" data-toggle="tooltip">
-                          <span class="glyphicon glyphicon-edit">Detail</span>
+                          <span class="glyphicon glyphicon-eye-open"></span>
                         </a>
 
                         <?php $pengj = count_by_id_nodin('pengajuan',$sale['id']); if($pengj['total'] < 1 ){ ?>  

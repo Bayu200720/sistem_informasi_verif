@@ -221,19 +221,20 @@ if($_GET['s']=='kasubok'){
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>All Detail Pengajuan</span>
+            <?php //$id_Dpengajuan=$_GET['id']; $d_pengajuan = find_all_global('detail_pengajuan',$id_Dpengajuan,'id'); //var_dump($d_pengajuan);exit();?>
+            <span><a href="nodin_bpp.php">All Nodin</a> / <a href="pengajuan_bpp.php?id=<?=$sales1[0]['id_nodin']?>">All Pengajuan</a> /<a href="detail_pengajuan.php?id=<?=$_GET['id']?>">All Detail Pengajuan</a></span>
           </strong>
           <div class="pull-right">
             <?php $user1=find_by_id('users',$_SESSION['user_id']);  if( $user1['user_level'] != '3'){?>
 
               
               <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
-                <a href="add_detail_pengajuan.php?id=<?=$_GET['id'];?>" class="btn btn-primary">Add Detail Pengajuan</a>
-              <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
-              <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
+                <a href="add_detail_pengajuan.php?id=<?=$_GET['id'];?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add</a>
+              <!-- <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning"><span class="glyphicon glyphicon-chevron-left"></span></a> -->
+              <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import <img src="uploads/users/excel.png" height="20"/></a>
               
-              <a href="uploads/data_excle/data.csv" class="btn btn-success" target="_blank">Excel</a><!-- <a href="excle.php" class="btn btn-success">Excle</a> -->
-              <a onclick="return confirm('Yakin Hapus!!!')" href="detail_pengajuan.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
+              <a href="uploads/data_excle/data.csv" class="btn btn-success" target="_blank"><img src="uploads/users/excel.png" height="20"/></a><!-- <a href="excle.php" class="btn btn-success">Excle</a> -->
+              <a onclick="return confirm('Yakin Hapus!!!')" href="detail_pengajuan.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
               <?php }else{ ?>
                 <!-- <a href="pengajuan_verif.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a> -->
               <?php } ?>
@@ -285,7 +286,7 @@ if($_GET['s']=='kasubok'){
                <?php if($user['user_level'] != 2 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
                   <div class="btn-group">
                      <a href="edit_detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit">Edit</span>
+                       <span class="glyphicon glyphicon-pencil"></span>
                      </a>
 
                      <!-- <a href="transaksi_db.php?id=<?php echo (int)$sale['id_sptjb_api'];?>&id_dp=<?=(int)$sale['id'];?>" class="btn btn-sucess btn-xs"  title="Detail API" data-toggle="tooltip">
@@ -293,11 +294,11 @@ if($_GET['s']=='kasubok'){
                      </a> -->
 
                      <a href="transaksi_db_a.php?id=<?=(int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail SIV" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit">Detail Kwitansi</span>
+                       <span class="glyphicon glyphicon-eye-open"></span>
                      </a>
 
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash">Delete</span>
+                       <span class="glyphicon glyphicon-trash"></span>
                      </a>
                   </div>
                 <?php }?>

@@ -190,6 +190,8 @@ if($_GET['status'] == 'h'){
 }
 
 $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
+$dpn = find_all_global('detail_pengajuan',$_GET['id'],'id');
+$pengajuan1 = find_all_global('pengajuan',$dpn[0]['id_pengajuan'],'id');
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -204,16 +206,16 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Detail Transaksi SIV</span>
+            <span><a href="nodin_bpp.php">All Nodin</a> / <a href="pengajuan_bpp.php?id=<?=$pengajuan1[0]['id_nodin']?>">All Pengajuan</a> /<a href="detail_pengajuan.php?id=<?=$dpn[0]['id_pengajuan']?>">All Detail Pengajuan</a> / <a href="transaksi_db_a.php?id=<?=$_GET['id']?>">Detail Transaksi</a></span>
           </strong>
           <div class="pull-right">
             <?php $user1=find_by_id('users',$_SESSION['user_id']);  if( $user1['user_level'] != '3'){?>
 
               <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
                 
-              <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
-              <a onclick="AddT(<?=$_GET['id'];?>)" class="btn btn-primary">Add Transaksi</a>
-              <a onclick="return confirm('Yakin Hapus!!')" href="transaksi_db_a.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger">Delete All</a>
+              <!-- <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning"><span class="glyphicon glyphicon-chevron-left"></span></a> -->
+              <a onclick="AddT(<?=$_GET['id'];?>)" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add</a>
+              <a onclick="return confirm('Yakin Hapus!!')" href="transaksi_db_a.php?id=<?=$_GET['id'];?>&status=h" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
               <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
               <a href="uploads/data_excle/data_detail.csv" class="btn btn-success">Excel</a>
               <?php }else{ ?>
@@ -223,20 +225,20 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
             <?php } ?>     
           </div>
         </div>
-        <div class="panel-body">
-          <table class="table table-bordered table-striped">
+        <div class="panel-body" style="width:100%">
+          <table id="tabel" class="table table-bordered table-striped" style="width:100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th class="text-center" style="width: 15%;"> Nama </th>
-                <th class="text-center" style="width: 15%;"> ID</th>
-                <th class="text-center" style="width: 15%;"> Nominal </th> 
-                <th class="text-center" style="width: 15%;"> PPH </th>
-                <th class="text-center" style="width: 15%;"> PPN </th> 
-                <th class="text-center" style="width: 15%;"> Tanggal Transaksi</th>           
-                <th class="text-center" style="width: 15%;"> Keterangan </th>
-                <th class="text-center" style="width: 15%;"> Kekurangan Verifikasi </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
+                <th class="text-center" >#</th>
+                <th class="text-center" > Nama </th>
+                <th class="text-center" > ID</th>
+                <th class="text-center" > Nominal </th> 
+                <th class="text-center" > PPH </th>
+                <th class="text-center" > PPN </th> 
+                <th class="text-center" > Tanggal Transaksi</th>           
+                <th class="text-center" > Keterangan </th>
+                <th class="text-center" > Kekurangan Verifikasi </th>
+                <th class="text-center"> Actions </th>
              </tr>
             </thead>
            <tbody>
@@ -268,10 +270,10 @@ $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
                <?php if($user['user_level'] != 2 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
                   <div class="btn-group">
                      <a onclick="EditT(<?=$sale['id'];?>)" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-pencil"></span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus !');" href="transaksi_db_a.php?id=<?php echo (int)$sale['id'];?>&id_dp=<?=$sale['id_detail_pengajuan'];?>&status=del" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-trash"></span>
                      </a>
                      
                   </div>
