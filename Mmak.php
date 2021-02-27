@@ -144,20 +144,20 @@ if($_GET['status']=='delete_akun'){
           <span>All MAK</span>
         </strong>
         <div class="pull-right">
-          <a href="#" class="btn btn-primary" id="mak" data-toggle="modal" data-target="#TambahMAK">Tambah</a>
-          <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
+          <a href="#" class="btn btn-primary" id="mak" data-toggle="modal" data-target="#TambahMAK"><span class="glyphicon glyphicon-plus">ADD</span></a>
+          <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" ><span class="glyphicon glyphicon-upload"></span></a>
         </div>
       </div>
       <div class="panel-body" style="width:100%">
         <table id="tabel" class="table table-bordered table-striped" style="width:100%;">
           <thead>
             <tr>
-              <th class="text-center" style="width: 5%;">#</th>
-              <th class="text-center" style="width: 15%;"> Tahun</th>
-              <th class="text-center" style="width: 25%;"> Kode </th>
-              <th class="text-center" style="width: 40%;"> Uraian </th>
-              <th class="text-center" style="width: 40%;"> Satker </th>
-              <th class="text-center" style="width: 15%;"> Actions </th>
+              <th class="text-center" >#</th>
+              <th class="text-center" > Tahun</th>
+              <th class="text-center" > Kode </th>
+              <th class="text-center" > Uraian </th>
+              <th class="text-center" > Satker </th>
+              <th class="text-center"> Actions </th>
             </tr>
           </thead>
           <tbody>
@@ -172,7 +172,7 @@ if($_GET['status']=='delete_akun'){
                 <div class="btn-group">
                  <a href="#" title="Edit" <?php $akun = find_by_id('akun',$sale['id']);?> class="btn btn-warning btn-xs" id="editakun" data-toggle="modal" 
                    data-target="#UpdateMAK" data-id='<?=$akun['id'];?>' data-tahun='<?=$akun['tahun'];?>' data-kode='<?=$akun['mak'];?>' data-uraian='<?=$akun['keterangan'];?>'>
-                   <span class="glyphicon glyphicon-edit"></span>
+                   <span class="glyphicon glyphicon-pencil"></span>
                  </a>
                  <a onclick="return confirm('Yakin Hapus?')" href="Mmak.php?id=<?php echo (int)$sale['id'];?>&status=delete_akun" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                    <span class="glyphicon glyphicon-trash"></span>
@@ -236,6 +236,34 @@ if($_GET['status']=='delete_akun'){
 </div>
 
 
+<!-- Modal Upload-->
+<div class="modal fade" id="UploadCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import Data MAK</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="import.php" name="upload_excel" method="POST" enctype="multipart/form-data">
+        <div class="modal-body">
+         <div class="form-group">
+          <label for="exampleInputEmail1">Masukkan File CSV</label>
+          <input type="file" class="form-control" id="sptb" name="file" placeholder="sptb"> 
+        </div>
+        <input type="hidden" class="form-control" id="id" name="id" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" name="ImportMAK" value="Upload">
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+
 <!-- Modal input nodin-->
 <div class="modal fade" id="TambahMAK" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
   <div class="modal-dialog">
@@ -284,30 +312,4 @@ if($_GET['status']=='delete_akun'){
 
 
 
-<!-- Modal Upload-->
-<div class="modal fade" id="UploadCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Import Data MAK</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="import.php" name="upload_excel" method="POST" enctype="multipart/form-data">
-        <div class="modal-body">
-         <div class="form-group">
-          <label for="exampleInputEmail1">Masukkan File CSV</label>
-          <input type="file" class="form-control" id="sptb" name="file" placeholder="sptb"> 
-        </div>
-        <input type="hidden" class="form-control" id="id" name="id" >
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" name="ImportMAK" value="Upload">
-      </div>
-    </form>
-  </div>
-</div>
-</div>
 <?php include_once('layouts/footer.php'); ?>

@@ -162,7 +162,7 @@ $sales = find_all_global('pencairan',0,'status');
             <span>All Pencairan</span>
           </strong>
           <div class="pull-right">
-          <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input Panjar</a>
+          <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'><span class="glyphicon glyphicon-plus"></span>Panjar</a>
           </div>
         </div>
         <div class="panel-body"  style="width: 100%;">
@@ -197,7 +197,7 @@ $sales = find_all_global('pencairan',0,'status');
                        <div class="btn-group">
                        
                            <a href="#" id="editpencairan" data-toggle="modal" data-target="#EditPanjar" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['keterangan'];?>' data-tanggal='<?=$sale['tanggal'];?>' data-nominal='<?=$sale['nominal'];?>' data-spm='<?=$sale['spm'];?>' class="btn btn-warning btn-xs"  title="Edit" >
-                             <span class="glyphicon glyphicon-edit"></span>
+                             <span class="glyphicon glyphicon-pencil"></span>
                            </a>
                            <a onclick="return confirm('Yakin Hapus?')" href="pencairan.php?id=<?php echo (int)$sale['id'];?>&status=pencairan" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                              <span class="glyphicon glyphicon-trash"></span>

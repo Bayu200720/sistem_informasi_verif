@@ -71,6 +71,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                <td class="text-center"><?php if($sale['status_verifikasi']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
              <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?></span><?php } ?>
             <?php $verif = find_all_global('verifikasi',$sale['id'],'id_pengajuan');if($verif[0]['id_pengajuan']!=NULL){?>
+          
                <a href="<?php 
                   if($sale['id_jenis_pengajuan']==1){
                     echo "verif_LSsppd.php?id=".$sale['id_nodin']."&v=".$sale['id'];
@@ -87,7 +88,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
             
                   }
                 
-                ?>" class="btn btn-warning">Kekurangan</a>
+                ?>" class="btn btn-warning" style="margin: 20px;">Kekurangan</a>
             <?php } ?>
             </td>
             

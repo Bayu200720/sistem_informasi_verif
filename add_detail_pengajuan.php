@@ -104,9 +104,10 @@
 
               <div class="form-group">
                 <div class="input-group">
+               
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  Akun</span>
+                  Nominal</span>      
                   <select class="form-control" name="id_akun" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $user=find_by_id('users',$_SESSION['user_id']); $jenis = find_all_global('akun',$user['id_satker'],'id_satker');//var_dump($jenis);exit();?>

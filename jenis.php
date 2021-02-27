@@ -23,16 +23,16 @@ $sales = find_all('jenis');
             <span>All Jenis Pengajuan</span>
           </strong>
           <div class="pull-right">
-            <a href="add_jenis.php" class="btn btn-primary">Add Jensi pengajuan</a>
+            <a href="add_jenis.php" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Jenis pengajuan</a>
           </div>
         </div>
-        <div class="panel-body">
-          <table class="table table-bordered table-striped">
+        <div class="panel-body" width="100%">
+          <table id="tabel" class="table table-bordered table-striped" width="100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th class="text-center" style="width: 15%;"> Keterangan</th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
+                <th class="text-center" >#</th>
+                <th class="text-center" > Keterangan</th>
+                <th class="text-center" > Action </th>
              </tr>
             </thead>
            <tbody>
@@ -43,7 +43,7 @@ $sales = find_all('jenis');
                <td class="text-center">
                   <div class="btn-group">
                      <a href="edit_jenis.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-pencil"></span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_jenis.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>

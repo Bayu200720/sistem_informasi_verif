@@ -3,7 +3,6 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   $user = find_by_id('users',$_SESSION['user_id']);
-  var_dump($user['user_level']);
    if($user['user_level'] == 2){ //echo "ok 3";exit();
    page_require_level(3); 
    }else if($user['user_level'] == 4 ){ //echo "7";exit();
@@ -127,9 +126,9 @@ if(isset($_POST['update_sp2d'])){
                   
                     <td class="text-center">
                         <div class="btn-group">
-                          <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success btn-xs" title="Detail status Pengajuan" data-toggle="tooltip" > <span class="glyphicon glyphicon-edit"></span></a>
+                          <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success btn-xs" title="Detail status Pengajuan" data-toggle="tooltip" > <span class="glyphicon glyphicon-folder-open"></span></a>
                           <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                            <span class="glyphicon glyphicon-edit"></span>
+                            <span class="glyphicon glyphicon-eye-open"></span>
                           </a>
                   
                         </div>

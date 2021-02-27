@@ -3,7 +3,6 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   $user = find_by_id('users',$_SESSION['user_id']);
-  var_dump($user['user_level']);
    if($user['user_level'] == 2){ //echo "ok 3";exit();
    page_require_level(3); 
    }else if($user['user_level'] == 7 ){ //echo "7";exit();
@@ -35,18 +34,18 @@ $idi= $_GET['id'];
             
           </div>
         </div>
-        <div class="panel-body">
-          <table id="example1" class="table table-bordered table-striped">
+        <div class="panel-body" width="100%">
+          <table id="tabel" class="table table-bordered table-striped" width="100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                <th class="text-center" >#</th>
                 <th class="text-center" > SPM </th>
                 <th class="text-center" > Satker </th>
                 <th class="text-center" > Jenis Pengajuan </th>
                 <th class="text-center" > Nominal Pengajuan </th>
-                <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
-                <th class="text-center" style="width: 15%;"> Upload </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
+                <th class="text-center" > Status Verifikasi </th> 
+                <th class="text-center" > Upload </th>
+                <th class="text-center" > Actions </th>
              </tr>
             </thead>
            <tbody>
@@ -96,10 +95,10 @@ $idi= $_GET['id'];
                <td class="text-center">
                   <div class="btn-group">
                      <a href="edit_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-pencil"></span>
                      </a>
                      <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-eye-open"></span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>
@@ -110,40 +109,18 @@ $idi= $_GET['id'];
              <?php $tot+=$tp['jum']; endforeach;?>
            </tbody>
            <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                <th class="text-center" >#</th>
                 <th class="text-center" > SPM </th>
                 <th class="text-center" > Satker </th>
                 <th class="text-center" > Jenis Pengajuan </th>
                 <th class="text-center" > <?=rupiah($tot);?> </th>
-                <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
-                <th class="text-center" style="width: 15%;"> Upload </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
-             </tr>
+                <th class="text-center" > Status Verifikasi </th> 
+                <th class="text-center" > Upload </th>
+                <th class="text-center" > Actions </th>
+            </tr>
          </table>
         </div>
       </div>
     </div>
   </div>
 <?php include_once('layouts/footer.php'); ?>
-
-<!-- jQuery -->
-<script src="libs/js/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="libs/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="libs/js/jquery.dataTables.js"></script>
-<script src="libs/js/dataTables.bootstrap4.js"></script>
-
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-  });
-</script>

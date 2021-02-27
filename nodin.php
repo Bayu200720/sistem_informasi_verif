@@ -102,11 +102,11 @@ $sales = find_all('nodin');
             <span>All Nodin</span>
           </strong>
           <div class="pull-right">
-          <a href="#" class="btn btn-primary" id="nodin" data-toggle="modal" data-target="#NodinPengajuan">Tambah</a>
+          <a href="#" class="btn btn-primary" id="nodin" data-toggle="modal" data-target="#NodinPengajuan"><span class="glyphicon glyphicon-plus">ADD</span></a>
           </div>
         </div>
-        <div class="panel-body">
-          <table class="table table-bordered table-striped">
+        <div class="panel-body" width="100%">
+          <table id="tabel" class="table table-bordered table-striped" width="100%">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
@@ -130,7 +130,7 @@ $sales = find_all('nodin');
                <td class="text-center"><?php echo $sale['no_nodin']; ?></td>
 
             <td class="text-center">
-             <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary">Cetak</a>
+             <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span></a>
             </td>
                <td class="text-center">
                   <div class="btn-group">
@@ -139,10 +139,10 @@ $sales = find_all('nodin');
                      </a>
                      <a href="#" title="Edit" <?php $nodin = find_by_id('nodin',$sale['id']);?> class="btn btn-warning btn-xs" id="editnodin" data-toggle="modal" 
                      data-target="#UpdateNodinPengajuan" data-id='<?=$nodin['id'];?>' data-tanggal='<?=$nodin['tanggal'];?>' data-pp='<?=$nodin['p_pengajuan'];?>' data-no_nodin='<?=$nodin['no_nodin'];?>'>
-                     <span class="glyphicon glyphicon-edit"></span>
+                     <span class="glyphicon glyphicon-pencil"></span>
                      </a>
                      <a href="pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail nodin" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-eye-open"></span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_nodin.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>

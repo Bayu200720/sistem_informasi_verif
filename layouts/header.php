@@ -20,7 +20,9 @@
       
         <style>
     body {
-        background: url('uploads/users/undraw_Scrum_board_re_wk7v.png');
+      //background: url('uploads/users/undraw_Scrum_board_re_wk7v.png');
+       background-color:powderblue;
+        
 		background-size:cover;
         background-attachment: fixed;
         background-repeat: no-repeat;
@@ -35,7 +37,7 @@
       <div class="logo pull-left"> SI MONITORING PENGAJUAN </div>
       <div class="header-content">
       <div class="header-date pull-left">
-        <strong><?php date_default_timezone_set('Asia/Jakarta'); echo date("F j, Y, g:i a");?></strong>
+        <strong><?php date_default_timezone_set('Asia/Jakarta'); echo tanggal_indo(date("Y-m-d"),true);?></strong>
       </div>
       <div class="pull-right clearfix">
         <ul class="info-menu list-inline list-unstyled">

@@ -20,19 +20,19 @@ $sales = find_all('satker');
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>All satke</span>
+            <span>All satker</span>
           </strong>
           <div class="pull-right">
-            <a href="add_satker.php" class="btn btn-primary">Add Satker</a>
+            <a href="add_satker.php" class="btn btn-primary"><span class="glyphicon glyphicon-plus">Add</a>
           </div>
         </div>
-        <div class="panel-body">
-          <table class="table table-bordered table-striped">
+        <div class="panel-body" width="100%">
+          <table id="tabel" class="table table-bordered table-striped" width="100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th class="text-center" style="width: 100px;"> Keterangan</th>
-                <th class="text-center" style="width: 15%;"> Actions </th>
+                <th class="text-center" >#</th>
+                <th class="text-center" > Keterangan</th>
+                <th class="text-center" > Action </th>
              </tr>
             </thead>
            <tbody>
@@ -43,7 +43,7 @@ $sales = find_all('satker');
                <td class="text-center">
                   <div class="btn-group">
                      <a href="edit_satker.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-pencil"></span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_satker.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>

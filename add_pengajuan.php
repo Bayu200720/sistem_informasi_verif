@@ -87,7 +87,7 @@
                 <div class="input-group">
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  Jenis Pegajuan</span>
+                  </span>
                   <select class="form-control" name="id_jenis_pengajuan" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $jenis = find_all('jenis_pengajuan');?>

@@ -77,7 +77,7 @@
         <div class="panel-body" style="width:100%;">
           <div class="row" style="width:100%; margin-left:2px">
 
-                <table id="" class="table table-bordered table-striped" style="width:100%;">
+                <table  class="table table-bordered table-striped" style="width:100%;">
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 50px;">#</th>
@@ -123,7 +123,7 @@
       </div>
       <div class="panel-body" style="width:100%">
         <div class="row" style="width:100%; margin-left:2px">
-            <table id="tabel" class="table table-bordered table-striped"  style="width:100%">
+            <table  class="table table-bordered table-striped"  style="width:100%">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>

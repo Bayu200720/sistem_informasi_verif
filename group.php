@@ -22,7 +22,7 @@
        <a href="add_group.php" class="btn btn-info pull-right btn-sm"> Add New Group</a>
     </div>
      <div class="panel-body">
-      <table class="table table-bordered">
+      <table id="tabel" class="table table-bordered">
         <thead>
           <tr>
             <th class="text-center" style="width: 50px;">#</th>
