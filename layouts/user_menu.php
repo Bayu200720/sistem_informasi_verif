@@ -16,4 +16,11 @@
          <li><a href="add_pengajuan.php">Add Pengajuan</a> </li>
      </ul>
   </li>
+  <li>
+    <a href="edit_account.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Setting</span>
+      </a>
+      
+  </li>
 </ul>

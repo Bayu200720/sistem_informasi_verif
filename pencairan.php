@@ -38,7 +38,7 @@ $status= $_GET['status'];
 
 
 if(isset($_POST['cetak'])){
-   // var_dump($_POST['id']);exit();
+    //var_dump($_POST['id']);exit();
     $req_fields = array('nominal', 'tanggal','id_satker' );
     validate_fields($req_fields);
         if(isset($_POST['id'])){
@@ -166,7 +166,7 @@ $sales = find_all_global('pencairan',0,'status');
           </div>
         </div>
         <div class="panel-body"  style="width: 100%;">
-          <table id="tabel" class="table table-bordered table-striped" style="width: 100%;">
+          <table class="table table-bordered table-striped" style="width: 100%;">
             <thead>
               <tr>
               <th class="text-center">Checkbox</th>
@@ -183,31 +183,31 @@ $sales = find_all_global('pencairan',0,'status');
            <tbody>
              <?php foreach ($sales as $sale):?>
              <tr>
-             <form action="" method="POST">
-               <td><input type="checkbox" name="id[]" value="<?php echo $sale['id'];?>"></td>
-               <td class="text-center"><?php echo count_id();?></td>
-               <td><?php echo remove_junk($sale['spm']); ?></td>
-               <td class="text-center"><?php $pengajuan= find_by_id('pengajuan',$sale['id_pengajuan']);$nodin=find_by_id('nodin',$pengajuan['id_nodin']);
-               $jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']; ?></td>
-               <td class="text-center"><?=$sale['tanggal']; ?></td>
-               <td class="text-center"><?=rupiah($sale['nominal']);?></td>
-               <td class="text-center"><?php $satker = find_by_id('satker',$sale['id_satker']); echo $satker['keterangan'];?></td>
-               <td class="text-center"><?=$sale['keterangan'];?></td>
-            <td class="text-center">
-                 <div class="btn-group">
-                 
-                     <a href="#" id="editpencairan" data-toggle="modal" data-target="#EditPanjar" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['keterangan'];?>' data-tanggal='<?=$sale['tanggal'];?>' data-nominal='<?=$sale['nominal'];?>' data-spm='<?=$sale['spm'];?>' class="btn btn-warning btn-xs"  title="Edit" >
-                       <span class="glyphicon glyphicon-edit"></span>
-                     </a>
-                     <a onclick="return confirm('Yakin Hapus?')" href="pencairan.php?id=<?php echo (int)$sale['id'];?>&status=pencairan" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash"></span>
-                     </a>
-                  </div>
-            </td>
+               <form action="" method="POST">
+                 <td><input type="checkbox" name="id[]" value="<?php echo $sale['id'];?>"></td>
+                 <td class="text-center"><?php echo count_id();?></td>
+                 <td><?php echo remove_junk($sale['spm']); ?></td>
+                 <td class="text-center"><?php $pengajuan= find_by_id('pengajuan',$sale['id_pengajuan']);$nodin=find_by_id('nodin',$pengajuan['id_nodin']);
+                 $jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']; ?></td>
+                 <td class="text-center"><?=$sale['tanggal']; ?></td>
+                 <td class="text-center"><?=rupiah($sale['nominal']);?></td>
+                 <td class="text-center"><?php $satker = find_by_id('satker',$sale['id_satker']); echo $satker['keterangan'];?></td>
+                 <td class="text-center"><?=$sale['keterangan'];?></td>
+                  <td class="text-center">
+                       <div class="btn-group">
+                       
+                           <a href="#" id="editpencairan" data-toggle="modal" data-target="#EditPanjar" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['keterangan'];?>' data-tanggal='<?=$sale['tanggal'];?>' data-nominal='<?=$sale['nominal'];?>' data-spm='<?=$sale['spm'];?>' class="btn btn-warning btn-xs"  title="Edit" >
+                             <span class="glyphicon glyphicon-edit"></span>
+                           </a>
+                           <a onclick="return confirm('Yakin Hapus?')" href="pencairan.php?id=<?php echo (int)$sale['id'];?>&status=pencairan" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                             <span class="glyphicon glyphicon-trash"></span>
+                           </a>
+                        </div>
+                  </td>
                 
              </tr>
             <?php endforeach;?>
-            <input type="submit" name="cetak" class="btn btn-success" value="Cetak">
+                <input type="submit" name="cetak" class="btn btn-success" value="Cetak"/>
             </form>
            </tbody>
          </table>

@@ -61,7 +61,7 @@ $sales = find_all_group_by_satker('pencairan','id_satker',2021);
               <td class="text-center">
                   <div class="btn-group">
                      
-                     <a href="detail_bku.php?id=<?php echo (int)$sale['id_satker'];?>" class="btn btn-primary btn-xs"  title="Detail BKU" data-toggle="tooltip">
+                     <a href="detail_BKU.php?id=<?php echo (int)$sale['id_satker'];?>" class="btn btn-primary btn-xs"  title="Detail BKU" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
             

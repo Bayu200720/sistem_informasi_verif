@@ -21,7 +21,7 @@
        <span>MAK</span>
       </a>
       <ul class="nav submenu">
-         <li><a href="Mak.php">Manage MAK</a> </li>
+         <li><a href="mak.php">Manage MAK</a> </li>
      </ul>
   </li>
 
@@ -35,6 +35,12 @@
     <a href="bku_bpp.php" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
        <span>BKU</span>
+      </a> 
+  </li>
+  <li>
+    <a href="Pertanggungjawaban.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Pertanggungjawaban</span>
       </a> 
   </li>
 </ul>

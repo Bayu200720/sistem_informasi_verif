@@ -13,6 +13,8 @@ class  Media {
   public $pertanggungjawabanPath = SITE_ROOT.DS.'..'.DS.'uploads/pertanggungjawaban';
   public $sp2d = SITE_ROOT.DS.'..'.DS.'uploads/sp2d';
   public $adk = SITE_ROOT.DS.'..'.DS.'uploads/adk';
+  public $kekuranganPath = SITE_ROOT.DS.'..'.DS.'uploads/kekurangan';
+  
 
 
 
@@ -30,7 +32,8 @@ class  Media {
   public$upload_extensions = array(
    'pdf',
    'doc',
-   'spp'
+   'spp',
+   'rar'
   );
   public function file_ext($filename){
      $ext = strtolower(substr( $filename, strrpos( $filename, '.' ) + 1 ) );
@@ -155,6 +158,42 @@ class  Media {
     }
 
   }
+  
+    //function for process upload kekurangan
+  public function process_kekurangan($id){
+    if(!empty($this->errors)){
+        return false;
+      }
+    if(empty($this->fileName) || empty($this->fileTempPath)){
+        $this->errors[] = "The file location was not available.";
+        return false;
+      }
+
+    if(!is_writable($this->kekuranganPath)){
+        $this->errors[] = $this->kekuranganPath." Must be writable!!!.";
+        return false;
+      }
+
+    if(file_exists($this->kekuranganPath."/".$this->fileName)){
+      $this->errors[] = "The file {$this->fileName} already exists.";
+      return false;
+    }
+    
+    if(move_uploaded_file($this->fileTempPath,$this->kekuranganPath.'/'.$this->fileName))
+    {
+
+      if($this->insert_kk($id)){
+        unset($this->fileTempPath);
+        return true;
+      }
+
+    } else {
+
+      $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.";
+      return false;
+    }
+
+  }
 
     //function for process upload adk
     public function process_adk($id){
@@ -194,7 +233,6 @@ class  Media {
 
   //process sp2d
   
-  //function for process upload pertanggungjawaban
   public function process_sp2d($id){
     if(!empty($this->errors)){
         return false;
@@ -204,8 +242,8 @@ class  Media {
         return false;
       }
 
-    if(!is_writable($this->productPath)){
-        $this->errors[] = $this->sp2d." Must be writable!!!.";
+    if(!is_writable($this->sp2d)){
+        $this->errors[] = $this->sp2d." Must be writable ok!!!.";
         return false;
       }
 
@@ -224,11 +262,13 @@ class  Media {
 
     } else {
 
-      $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.";
+      $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder ok.";
       return false;
     }
 
   }
+
+
 
 
 
@@ -253,7 +293,6 @@ class  Media {
     $this->errors[] = "The file {$this->fileName} already exists.";
     return false;
   }
-  //$h =$this->$spmPath.'/'.$this->fileName; var_dump($h); exit();
   
   if(move_uploaded_file($this->fileTempPath,$this->spmPath.'/'.$this->fileName))
   {
@@ -265,10 +304,8 @@ class  Media {
 
   } else {
 
-    
-    //$h = $this->$productPath;
 
-    $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.".$h;
+    $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.";
     return false;
   }
 
@@ -360,6 +397,18 @@ private function insert_sp2d($id){
 return ($db->query($sql) ? true : false);
 
 }
+  
+    /*--------------------------------------------------------------*/
+/* Function for insert kekurangan
+/*--------------------------------------------------------------*/
+private function insert_kk($id){
+
+  global $db;
+  $sql  = "UPDATE pengajuan SET upload_kekurangan ='{$db->escape($this->fileName)}' WHERE id= '{$db->escape($id)}'";
+return ($db->query($sql) ? true : false);
+
+}
+
 
   /*--------------------------------------------------------------*/
 /* Function for insert adk spp

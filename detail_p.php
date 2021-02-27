@@ -19,71 +19,7 @@ $id = find_all_global('pengajuan',$_GET['id'],'id_nodin');
 $pengajuan = find_by_id('pengajuan',(int)$_GET['id']);
 $idi= $_GET['id'];
 
- if($_GET['status']== 'ada'){
-  echo "ok";exit();
-}
 
-if(isset($_POST['add_pengajuan'])){
-    echo "ok";exit();
-  }
-
-if(isset($_POST['add_pengajuan'])){
-    $req_fields = array('spm','id_jenis_pengajuan');
-    validate_fields($req_fields);
-    if(empty($errors)){
-      $spm  = remove_junk($db->escape($_POST['spm']));
-      $id_jenis   = remove_junk($db->escape($_POST['id_jenis']));
-      $tanggal   = remove_junk($db->escape($_POST['tanggal']));
-      $id_satker = remove_junk($db->escape($_POST['id_satker']));
-      $p_pengajuan = remove_junk($db->escape($_POST['p_pengajuan']));
-      $user_id   = remove_junk($db->escape($_SESSION['user_id']));
-      $id_nodin = remove_junk($db->escape($_POST['id']));
-      $id_jenis_pengajuan = remove_junk($db->escape($_POST['id_jenis_pengajuan']));
-      $date    = make_date();
-      $query  = "INSERT INTO pengajuan (";
-      $query .=" SPM,id_nodin,id_jenis_pengajuan ";
-      $query .=") VALUES (";
-      $query .=" '{$spm}','{$id_nodin}',{$id_jenis_pengajuan}";
-      $query .=")";
-      $result =$db->query($query);
-      //var_dump($result);exit();
-   
-      if($result){
-        $session->msg('s',"Pengajuan added ");
-        if($user['user_level']==2){
-         redirect('nodin_bpp.php', false);
-        }else{
-        redirect('nodin_bpp.php?id='.$id_nodin.'', false);
-        }
-      } else {
-        $session->msg('d',' Sorry failed to added!,make sure the SPM number is not the same');
-        if($user['user_level']==2){
-         redirect('nodin_bpp.php', false);
-       }else{
-         redirect('nodin_bpp.php?id='.$id_nodin.'', false);
-       }
-      }
- 
-    } else{
-      $session->msg("d", $errors);
-         redirect('nodin.php?id='.$id_nodin.'', false);
-    }
-  }
- 
-
-if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
-      $query  = "UPDATE pengajuan SET ";
-      $query .= "upload_adk=''";
-      $query .= "WHERE id='{$idi}'";
-     // echo $query; exit();
-      $result = $db->query($query);
-      $session->msg('s',' Berhasil di Batalkan');
-      if($user['user_level']==5){
-    redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin']);
-    }else{
-    redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin'], false);
-    }
-}
 
 ?>
 <div class="row">
@@ -152,7 +88,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
              <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_spm']);echo $user['name'];?></span><?php } ?>
             </td>
             <td class="text-center">
-                <a href="detail_dokumen.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload Dokumen</a>
+               
             </td>
 
             <td class="text-center">
@@ -173,15 +109,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
 
                <td class="text-center">
                   <div class="btn-group">
-                     <a href="edit_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
-                     </a>
-                     <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
-                     </a>
-                     <a onclick="return confirm('Yakin Hapus?')" href="delete_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-trash"></span>
-                     </a>
+                    
                   </div>
                </td>
              </tr>
@@ -195,53 +123,6 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
 
 
 
-
-
-<script>
-    function addPengajuan(){
-         alert("okk");
-      $('#DT_p').modal('show');
-    }
-
-</script>
-
-   <!-- Modal input nodin-->
-   <div class="modal fade" id="DT_p" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Pengajuan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="detail_p.php?status=ada" method="POST">
-      <div class="modal-body">
-            <div class="form-group">
-              <label for="exampleInputEmail1">SPM</label>
-              <input type="text" class="form-control" id="spm" name="spm" placeholder="SPM">
-            </div>
-
-            <div class="form-group">
-              <label for="exampleInputEmail1">Jenis Pengajuan</label>
-                      <select class="form-control" id="jenis" name="id_jenis_pengajuan">
-                            <option value="">Pilih Jenis Pengajuan</option>
-                            <?php $jenis = find_all('jenis_pengajuan');?>
-                          <?php  foreach ($jenis as $j): ?>
-                            <option value="<?php echo (int)$j['id'] ?>">
-                              <?php echo $j['keterangan'] ?></option>
-                          <?php endforeach; ?>
-                      </select>
-            </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" onclick="simpan_dp()" name="add_pengajuan" value="Save">
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

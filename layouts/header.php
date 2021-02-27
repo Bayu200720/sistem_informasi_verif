@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="libs/css/dataTable/responsive.bootstrap4.min.css">
     <!-- <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css" rel="stylesheet"> -->
+      
+        <style>
+    body {
+        background: url('uploads/users/undraw_Scrum_board_re_wk7v.png');
+		background-size:cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+		background-position: top right;      
+    }
+        </style>
     
   </head>
   <body>

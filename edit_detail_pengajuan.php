@@ -91,8 +91,8 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="no_sptjb" placeholder="NO SPTJB" value="<?=$detail['no_sptjb']?>">
+                  SPTJB </span>
+                  <input type="text" class="form-control" name="no_sptjb" placeholder="NO SPTJB" value="<?=$detail['no_sptjb']?>" required>
                </div>
               </div>
 
@@ -101,7 +101,7 @@
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   Akun</span>
-                  <select class="form-control" name="id_akun">
+                  <select class="form-control" name="id_akun" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $user=find_by_id('users',$_SESSION['user_id']); $jenis = find_all_global('akun',$user['id_satker'],'id_satker');
                     foreach ($jenis as $j): ?>
@@ -115,8 +115,8 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" id="e_nominal" class="form-control" name="nominal" placeholder="Nominal" value="<?=$detail['nominal']?>">
+                  Nominal</span>
+                  <input type="text" id="e_nominal" class="form-control" name="nominal" placeholder="Nominal" value="<?=$detail['nominal']?>" required>
                </div>
               </div>
 
@@ -124,8 +124,8 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="date" id="e_tanggal" class="form-control" name="tanggal" placeholder="tanggal" value="<?=$detail['tanggal']?>">
+                  Tanggal</span>
+                  <input type="date" id="e_tanggal" class="form-control" name="tanggal" placeholder="tanggal" value="<?=$detail['tanggal_dp']?>" required>
                </div>
               </div>
 
@@ -148,7 +148,7 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
+                  PPh</span>
                   <input type="text" id="e_pph" class="form-control" name="pph" placeholder="pph" value="<?=$detail['pph']?>">
                </div>
               </div>
@@ -157,7 +157,7 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
+                  PPn</span>
                   <input type="text" id="e_ppn" class="form-control" name="ppn" placeholder="ppn" value="<?=$detail['ppn']?>">
                </div>
               </div>
@@ -166,8 +166,8 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" value="<?=$detail['keterangan']?>">
+                   Keterangan</span>
+                 <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" value="<?=$detail['keterangan']?>">
                </div>
               </div>
 

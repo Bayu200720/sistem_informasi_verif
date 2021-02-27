@@ -211,7 +211,7 @@ if($_GET['s']=='kasubok'){
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <?php echo display_msg($msg); ?>
   </div>
 </div>
@@ -221,8 +221,11 @@ if($_GET['s']=='kasubok'){
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <?php //$id_Dpengajuan=$_GET['id']; $d_pengajuan = find_all_global('detail_pengajuan',$id_Dpengajuan,'id'); //var_dump($d_pengajuan);exit();?>
+            <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
             <span><a href="nodin_bpp.php">All Nodin</a> / <a href="pengajuan_bpp.php?id=<?=$sales1[0]['id_nodin']?>">All Pengajuan</a> /<a href="detail_pengajuan.php?id=<?=$_GET['id']?>">All Detail Pengajuan</a></span>
+          <?php }else{ ?>
+              <span> <a href="pengajuan_verif.php">All Pengajuan</a> / All Detail Pengajuan</span>
+          <?php } ?>
           </strong>
           <div class="pull-right">
             <?php $user1=find_by_id('users',$_SESSION['user_id']);  if( $user1['user_level'] != '3'){?>
@@ -374,7 +377,7 @@ if($_GET['s']=='kasubok'){
       <div class="modal-body">
        <div class="form-group">
         <label for="exampleInputEmail1">Masukkan Kekurangan</label>
-        <input type="text" class="form-control" id="verifikasi" name="verifikasi" placeholder="verifikasi"> 
+        <input type="text" class="form-control" id="verifikasi" name="verifikasi" placeholder="verifikasi" required> 
        </div>
        <input type="hidden" class="form-control" id="id" name="id" >
       </div>

@@ -29,7 +29,7 @@
      $query .=" '{$spm}','{$id_nodin}',{$id_jenis_pengajuan}";
      $query .=")";
      $result =$db->query($query);
-     //var_dump($result);exit();
+     
   
      if($result){
        $session->msg('s',"Pengajuan added ");
@@ -79,7 +79,7 @@
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
                   <input type="text" class="form-control" name="spm" placeholder="SPM" required>
-                  <input type="hidden" class="form-control" value="<?=$_GET['id'];?>" name="id" placeholder="SPM">
+                  <input type="hidden" class="form-control" value="<?=$_GET['id'];?>" name="id" placeholder="SPM" >
                </div>
               </div>
 

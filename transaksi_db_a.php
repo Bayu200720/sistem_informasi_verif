@@ -20,6 +20,32 @@
 <?php
 
 if(isset($_GET['status'])){
+if($_GET['status'] === 'h'){
+  //exit();
+    $id =$_GET['id'];
+    $query="DELETE FROM detail_transaksi WHERE id_detail_pengajuan =".$_GET['id']; 
+    //echo $query; exit();
+    $hasil=$db->query($query);  
+    if($hasil){
+        $session->msg('s',"Delete Success ");
+        if($user['user_level']==2){
+        redirect('transaksi_db_a.php?id='.$id, false);
+        }else{
+        redirect('transaksi_db_a.php?id='.$id, false);
+        }
+    } else {
+        $session->msg('d',' Sorry failed to added!');
+        if($user['user_level']==2){
+        redirect('transaksi_db_a.php?id='.$id, false);
+    }else{
+        redirect('transaksi_db_a.php?id='.$id, false);
+    }
+    }    
+  }
+}
+
+
+if(isset($_GET['status'])){
   if($_GET['status'] == 'del'){
   
     $id  = remove_junk($db->escape($_GET['id']));
@@ -168,26 +194,6 @@ if(isset($_POST['add_transaksi'])){
 
 }
 
-if($_GET['status'] == 'h'){
-    $id =$_GET['id'];
-    $query="DELETE FROM detail_transaksi WHERE id_detail_pengajuan =".$_GET['id'];
-    $hasil=$db->query($query);  
-    if($hasil){
-        $session->msg('s',"Delete Success ");
-        if($user['user_level']==2){
-        redirect('transaksi_db_a.php?id='.$id, false);
-        }else{
-        redirect('transaksi_db_a.php?id='.$id, false);
-        }
-    } else {
-        $session->msg('d',' Sorry failed to added!');
-        if($user['user_level']==2){
-        redirect('transaksi_db_a.php?id='.$id, false);
-    }else{
-        redirect('transaksi_db_a.php?id='.$id, false);
-    }
-    }    
-}
 
 $sales = find_all_global('detail_transaksi',$_GET['id'],'id_detail_pengajuan');
 $dpn = find_all_global('detail_pengajuan',$_GET['id'],'id');
@@ -196,7 +202,7 @@ $pengajuan1 = find_all_global('pengajuan',$dpn[0]['id_pengajuan'],'id');
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <?php echo display_msg($msg); ?>
   </div>
 </div>

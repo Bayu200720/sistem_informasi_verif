@@ -17,13 +17,50 @@ function find_pengajuanok()
 {
   global $db;
   return find_by_sql("SELECT p.id as id,p.SPM as SPM,p.status_verifikasi as status_verifikasi,p.status_kppn as status_kppn,p.status_spm as status_spm,p.status_sp2d as status_sp2d,p.upload as upload,p.id_nodin as id_nodin, p.sp2d as sp2d,p.created_at as created_at,p.verifikasi_kasubbag_v as verifikasi_kasubbag_v,p.id_jenis_pengajuan as id_jenis_pengajuan,p.penolakan_kppn as penolakan_kppn,p.file_spm as file_spm,p.file_sp2d as file_sp2d,p.upload_adk as upload_adk,p.upload_pertanggungjawaban as upload_pertanggungjawaban, p.status_pengambilan_uang as status_pengambilan_uang  FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 ORDER BY p.id DESC");
-    // $sql = $db->query("SELECT * FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 ORDER BY p.id DESC");
-    //       if($result = $db->fetch_assoc($sql))
-    //         return $result;
-    //       else
-    //         return null;
+    
    
 }
+
+function find_nodin_j_pengajuan($tahun,$id_satker)
+{
+  global $db;
+  return find_by_sql("SELECT p.status_pj as status_pj,p.upload_pertanggungjawaban as upload_pertanggungjawaban,p.upload_kekurangan as upload_kekurangan,p.SPM as SPM,p.id as id,p.id_jenis_pengajuan as id_jenis_pengajuan,n.id_satker as id_satker FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and n.tahun='{$tahun}' and id_satker='{$id_satker}' ORDER BY p.id DESC");
+   
+}
+function find_nodin_j_pengajuan_count($tahun,$id_satker)
+{
+  global $db;
+  return find_by_sql("SELECT count(*) as status FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and n.tahun='{$tahun}' and id_satker='{$id_satker}' and status_pj < 0 ORDER BY p.id DESC");
+   
+}
+
+function find_status_custome_count($tahun,$key)
+{
+  global $db;
+  return find_by_sql("SELECT count(*) as status FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and n.tahun='{$tahun}' and p.{$key} = 0 ");   
+}
+
+
+function find_nodin_j_pengajuan_j_dt_count($tahun,$id_satker,$id_nodin)
+{
+  global $db;
+  return find_by_sql("SELECT count(*) as status FROM `pengajuan` p,nodin n,detail_pengajuan dp WHERE p.id_nodin = n.id and p.id = dp.id_pengajuan and n.tahun='{$tahun}' and n.id_satker='{$id_satker}' and n.id = '{$id_nodin}'  ORDER BY p.id DESC");
+   
+}
+function find_cair_j_kcair($spm)
+{
+  global $db;
+  return find_by_sql("SELECT * FROM `pencairan` p,k_cair k WHERE p.status = k.id and p.spm='{$spm}'");
+   
+}
+
+function update_status_jp($hari,$spm)
+{
+  global $db;
+  return find_by_sql("UPDATE pengajuan SET status_pj = '{$hari}' WHERE SPM ='{$spm}'");
+   
+}
+
 
 //find pengajuan yg status pengajuan 1
 function find_pengajuanok_tgl($tgl1,$tgl2)

@@ -136,8 +136,8 @@ if($_GET['status']=='delete_akun'){
           <span>All MAK</span>
         </strong>
         <div class="pull-right">
-          <a href="#" class="btn btn-primary" id="mak" data-toggle="modal" data-target="#TambahMAK">Tambah</a>
-          <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>
+         <!-- <a href="#" class="btn btn-primary" id="mak" data-toggle="modal" data-target="#TambahMAK">Tambah</a>
+          <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" >Import Data</a>-->
         </div>
       </div>
       <div class="panel-body" style="width:100%">
@@ -161,13 +161,13 @@ if($_GET['status']=='delete_akun'){
 
                <td class="text-center">
                 <div class="btn-group">
-                 <a href="#" title="Edit" <?php $akun = find_by_id('akun',$sale['id']);?> class="btn btn-warning btn-xs" id="editakun" data-toggle="modal" 
+                 <!--<a href="#" title="Edit" <?php $akun = find_by_id('akun',$sale['id']);?> class="btn btn-warning btn-xs" id="editakun" data-toggle="modal" 
                    data-target="#UpdateMAK" data-id='<?=$akun['id'];?>' data-tahun='<?=$akun['tahun'];?>' data-kode='<?=$akun['mak'];?>' data-uraian='<?=$akun['keterangan'];?>'>
                    <span class="glyphicon glyphicon-edit"></span>
                  </a>
                  <a onclick="return confirm('Yakin Hapus?')" href="mak.php?id=<?php echo (int)$sale['id'];?>&status=delete_akun" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                    <span class="glyphicon glyphicon-trash"></span>
-                 </a>
+                 </a>-->
                </div>
              </td>
            </tr>

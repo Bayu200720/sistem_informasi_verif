@@ -75,7 +75,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="spm" placeholder="SPM" value="<?=$pengajuan['SPM'];?>">
+                  <input type="text" class="form-control" name="spm" placeholder="SPM" value="<?=$pengajuan['SPM'];?>" required>
                </div>
               </div>
 
@@ -84,7 +84,7 @@
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   Jenis Pegajuan</span>
-                  <select class="form-control" name="id_jenis_pengajuan">
+                  <select class="form-control" name="id_jenis_pengajuan" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $jenis = find_all('jenis_pengajuan');?>
                     <?php  foreach ($jenis as $j): ?>

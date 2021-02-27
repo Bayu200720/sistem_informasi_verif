@@ -12,8 +12,6 @@
      page_require_level(3); 
    }
 
-   //ver_dump($_POST); exit();
-
 
 ?>
 <?php
@@ -65,7 +63,7 @@ $idi= $_GET['id'];
                 <th class="text-center" > Satker </th>
                 <th class="text-center" > Tanggal </th>
                 <th class="text-center" > Nominal Pengajuan </th>
-                
+                <th class="text-center" > Status </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
              </tr>
             </thead>
@@ -81,12 +79,21 @@ $idi= $_GET['id'];
               <td class="text-center" ><?php $nodin=find_by_id('nodin',$sale['id_nodin']);$satker=find_by_id('satker',$nodin['id_satker']); echo $satker['keterangan']?></td>
               <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']);echo $nodin['tanggal']; ?></td>
               <td class="text-center" ><?php $tp=find_NominalPengajuan($sale['id']);echo rupiah($tp['jum']);?></td>
-             
+              <td class="text-center" >
+                	<?php if($sale['status_verifikasi'] == 0){
+                				echo "<span class='glyphicon glyphicon-remove-circle'></span>Belom Terverifikasi ";
+							}else{
+  								echo "<span class='glyphicon glyphicon-ok-circle'></span>Terverifikasi ";
+							}	
+                		
+                	?>
+               
+              </td>
                <td class="text-center">
                   <div class="btn-group">
-                     <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success btn-xs" title="Detail status Pengajuan" data-toggle="tooltip" > <span class="glyphicon glyphicon-edit"></span></a>
+                     <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success btn-xs" title="Detail status Pengajuan" data-toggle="tooltip" > <span class="glyphicon glyphicon-folder-open"></span></a>
                      <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
-                       <span class="glyphicon glyphicon-edit"></span>
+                       <span class="glyphicon glyphicon-eye-open"></span>
                      </a>
             
                   </div>
@@ -102,10 +109,15 @@ $idi= $_GET['id'];
                 <th class="text-center" >  </th>
                 <th class="text-center" >  <?=rupiah($tot);?> </th>
                 <th class="text-center" > </th>
+                <th class="text-center" > </th>
              </tr>
          </table>
         </div>
       </div>
     </div>
   </div>
+
+
+
+
 <?php include_once('layouts/footer.php'); ?>

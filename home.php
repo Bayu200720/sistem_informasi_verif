@@ -21,3 +21,33 @@
  </div>
 </div>
 <?php include_once('layouts/footer.php'); ?>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+		$('#Body_dp').load('notif.php');
+        $('#Detail_Nodin').modal('show');
+    
+    });
+</script>
+
+     <!-- Modal Detail Pengajuan-->
+<div class="modal fade" id="Detail_Nodin" tabindex="-1" role="dialog" aria-labelledby="nodin" aria-hidden="true">
+  <div class="modal-dialog modal-xl" style="width:90vw">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pemberitahuan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="Body_dp" style="width:100%;">
+      
+    </div>
+    </div>
+  </div>
+</div>
+
+
+

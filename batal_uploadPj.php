@@ -8,20 +8,36 @@
   $user = find_by_id('users',(int)$_SESSION['user_id']);
   if(!$pengajuan){
     $session->msg("d","Missing Pengajuan id.");
-        if($user['user_level']==5){
-       redirect('detail_dokumen.php?id='.$pengajuan['id']);
+     if($user['user_level']==5){
+       redirect('Pertanggungjawaban.php?id='.$pengajuan['id']);
      }else{
-    redirect('detail_dokumen.php?id='.$pengajuan['id']);
-        }
+    	redirect('Pertanggungjawaban.php?id='.$pengajuan['id']);
+     }
   }
-  $query  = "UPDATE pengajuan SET ";
-        $query .= "upload_pertanggungjawaban=''";
-        $query .= "WHERE id='{$pengajuan["id"]}'";
-        $result = $db->query($query);
-        $session->msg('s',' Berhasil di Batalkan');
-         if($user['user_level']==5){
-       redirect('detail_dokumen.php?id='.$pengajuan['id']);
-     }else{
-      redirect('detail_dokumen.php?id='.$pengajuan['id'], false);
+
+	if(isset($_GET['status'])){
+        if($_GET['status'] == 'H_kurang'){
+          $query  = "UPDATE pengajuan SET ";
+          $query .= "upload_kekurangan=''";
+          $query .= "WHERE id='{$pengajuan["id"]}'";
+          $result = $db->query($query);
+          $session->msg('s',' Berhasil di Batalkan');
+           if($user['user_level']==5){
+        		 redirect('Pertanggungjawaban.php?id='.$pengajuan['id']);
+       		}else{
+        		redirect('Pertanggungjawaban.php?id='.$pengajuan['id'], false);
+     		 }
+        }
+    }else{
+        $query  = "UPDATE pengajuan SET ";
+              $query .= "upload_pertanggungjawaban=''";
+              $query .= "WHERE id='{$pengajuan["id"]}'";
+              $result = $db->query($query);
+              $session->msg('s',' Berhasil di Batalkan');
+               if($user['user_level']==5){
+            		 redirect('Pertanggungjawaban.php?id='.$pengajuan['id']);
+          		 }else{
+           			 redirect('Pertanggungjawaban.php?id='.$pengajuan['id'], false);
+         		 }
     }
 ?>

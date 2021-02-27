@@ -51,6 +51,13 @@
          <li><a href="pengajuan_v_admin1.php">Manage Verifiaksi</a> </li>
      </ul>
   </li>
+    <li>
+    <a href="Mmak.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>MAK</span>
+      </a>
+     
+  </li>
    
 
 </ul>

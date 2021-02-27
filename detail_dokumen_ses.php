@@ -151,9 +151,7 @@ if(isset($_POST['cair'])){
 
   if(isset($_POST['upload'])) {
     $id = $_POST['id'];
-    //var_dump($_FILES['file_upload']);
      $pengajuan = find_by_id('pengajuan',$id);
-    // var_dump($_FILES);exit(); 
   $photo = new Media();
   $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
    if($photo->process_sp2d($id)){
@@ -202,9 +200,8 @@ if(isset($_POST['cair'])){
   
   if(isset($_POST['upload_spm'])) {
     $id = $_POST['id'];
-    //var_dump($_FILES['file_upload']);
      $pengajuan = find_by_id('pengajuan',$id);
-    // var_dump($_FILES);exit(); 
+
   $photo = new Media();
   $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
    if($photo->process_spm($id)){
@@ -254,7 +251,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
 
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <?php echo display_msg($msg); ?>
   </div>
 </div>
@@ -414,11 +411,11 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                 </td>
                 <td class="text-center">
 
-                    <?php  $user = find_by_id('users',$_SESSION['user_id']); if($sale['status_spm']==0 and $user['user_level'] == 3){?>
+                    <?php  $user = find_by_id('users',$_SESSION['user_id']); if($sale['status_spm']==0 and $user['user_level'] == 3 and $sale['verifikasi_kasubbag_v'] == 1){?>
                               <a href="update_spm.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a>         
                     <?php }else if($sale['status_spm'] != 0 and $user['user_level'] == 3){ ?>          
                               <a href="batal_spm.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
-                      <?php }else if($sale['status_spm']==0 and $user['status_verifikasi'] == 0){?>
+                      <?php }else if($sale['status_spm']==0 and $user['status_verifikasi'] == 0 ){?>
                                 <span class="label label-danger">Belom di Proses</span>
                       <?php }else{  ?>
                         <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_spm']);echo $user['name'];?></span>
@@ -538,8 +535,11 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
 
 
 
+
+
+
        <!-- Modal Upload berkas SPM-->
-       <div class="modal fade" id="uploadSPM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="uploadSPM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -564,6 +564,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
     </div>
   </div>
 </div>
+
 
 
      <!-- Modal input sp2d-->
@@ -702,7 +703,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Upload SPM</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Upload SP2D</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -723,7 +724,6 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
     </div>
   </div>
 </div>
-
 
 <!-- Modal Edit Penolakan-->
 <div class="modal fade" id="PenolakanKPPN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

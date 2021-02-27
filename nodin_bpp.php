@@ -8,6 +8,8 @@
 $user=find_by_id('users',$_SESSION['user_id']);
 $satker = find_all_global('satker',$user['id_satker'],'id');
 $sales = find_all_global_tahun('nodin',$user['id_satker'],'id_satker',$satker[0]['tahun']);
+$pengajuan = find_nodin_j_pengajuan_count($satker[0]['tahun'],$user['id_satker']);//var_dump($pengajuan);exit();
+
 
 ?>
 <?php
@@ -105,8 +107,18 @@ if($_GET['p']=='update'){
     $query .=" status_pengajuan= 1";
     $query .=" WHERE id='{$id}'";
   //echo $query;exit();
+  	
     if($db->query($query)){
       $session->msg('s',"Telah di ajukan ke bagian keuangan ");
+     // ini_set( 'display_errors', 1 );   
+   // error_reporting( E_ALL );    
+    $from = $user['email'];    
+    $to = "bayukominfo20@gmail.com";    
+    $subject = "Pengajuan SPM ".$satker[0]['keterangan'];    
+    $message = "pengajuan SPM";   
+    $headers = "From:" . $from;    
+    mail($to,$subject,$message, $headers);    
+    echo "Pesan email sudah terkirim.";
       if($user['user_level']==2){
        redirect('nodin_bpp.php', false);
       }else{
@@ -187,7 +199,7 @@ if($_GET['status']=='delete_nodin'){
 
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <?php echo display_msg($msg); ?>
   </div>
 </div>
@@ -200,7 +212,11 @@ if($_GET['status']=='delete_nodin'){
             <span><a href="nodin_bpp.php">All Nodin</a></span>
           </strong>
           <div class="pull-right">
-          <a href="#" onclick="showT('DT_p')" class="btn btn-primary" id="nodin"><span class="glyphicon glyphicon-plus"></span>ADD</a>
+            <?php if($pengajuan[0]['status'] == 0){?>
+        		  <a href="#" onclick="showT('DT_p')" class="btn btn-primary" id="nodin"><span class="glyphicon glyphicon-plus"></span>ADD</a>
+            <?php }else{ ?>
+                  <span class="btn btn-danger glyphicon glyphicon-warning-sign">upload pertanggungjawaban terlebih dahulu</span>
+            <?php } ?>
           </div>
         </div>
         <div class="panel-body" style="width:100%"> 
@@ -231,11 +247,16 @@ if($_GET['status']=='delete_nodin'){
                 <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary" target="_BLANK"><span class="glyphicon glyphicon-print"></span></a>
                 </td>
                 <td class="text-center">
-                      <?php if($sale['status_pengajuan'] == 1){?>
-                        <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success">Sudah Diajukan</a>
+                      <?php $sp= find_nodin_j_pengajuan_j_dt_count($satker[0]['tahun'],$user['id_satker'],$sale['id']); 
+							if($sp[0]['status'] == 0){ 
+ 							 echo "<span class='btn btn-danger'>isi detail transaksi dulu</span>";}else{?>
+                      <?php if($sale['status_pengajuan'] == 1){
+                                $pengajuan = find_all_global('pengajuan',$sale['id'],'id_nodin'); 
+                        ?>
+                        <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success" <?php if($pengajuan[0]['status_verifikasi'] != 0){?>disabled <?php } ?>>Sudah Diajukan</a>
                       <?php }else{ ?>
                         <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary">Ajukan</a>
-                      <?php } ?>
+                  <?php } }?>
                 
                 </td>
               
@@ -400,21 +421,21 @@ if($_GET['status']=='delete_nodin'){
       <div class="modal-body">
        <div class="form-group">
         <label for="exampleInputEmail1">Tanggal</label>
-        <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="tanggal">
+        <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="tanggal" required>
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Nomor Nodin</label>
-        <input type="text" class="form-control" id="no_nodin" name="no_nodin" placeholder="Nomor Nodin">
+        <input type="text" class="form-control" id="no_nodin" name="no_nodin" placeholder="Nomor Nodin" required>
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Pegawai Pengajuan</label>
-        <input type="text" class="form-control" id="pp" name="p_pengajuan" placeholder="Pegawai Pengajuan">
+        <input type="text" class="form-control" id="pp" name="p_pengajuan" placeholder="Pegawai Pengajuan" required>
         <input type="hidden" class="form-control" id="id" name="id" >
         <input type="hidden" class="form-control" id="id_user" value="<?php $users=find_by_id('users',$_SESSION['user_id']);echo $users['id_satker'] ;?>" name="id_satker" >
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Jenis Pengajuan</label>
-                <select class="form-control" name="id_jenis">
+                <select class="form-control" name="id_jenis" required>
                       <option value="">Pilih Jenis Pengajuan</option>
                       <?php $jenis = find_all('jenis');?>
                     <?php  foreach ($jenis as $j): ?>

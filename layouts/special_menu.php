@@ -14,4 +14,11 @@
          <li><a href="pengajuan_verif.php">Manage Pengajuan</a> </li>
      </ul>
   </li>
+  <li>
+    <a href="edit_account.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Setting</span>
+      </a>
+      
+  </li>
 </ul>
