@@ -582,10 +582,9 @@ function find_pencairan_tahun($tahun,$id_satker){
  function find_higest_saleing_product($limit){
    global $db;
    $sql  = "SELECT s.keterangan, COUNT(p.id) AS totalSold";
-   $sql .= " FROM pengajuan p";
-   $sql .= " LEFT JOIN satker s ON p.id_satker = s.id ";
-   $sql .= " GROUP BY p.id_satker";
-   $sql .= " ORDER BY SUM(p.id_satker) DESC LIMIT ".$db->escape((int)$limit);
+   $sql .= " FROM pengajuan p, satker s,nodin n WHERE n.id_satker = s.id";
+   $sql .= " and p.id_nodin =n.id GROUP BY n.id_satker";
+   $sql .= " ORDER BY SUM(n.id_satker)";
    return $db->query($sql);
  }
  /*--------------------------------------------------------------*/
