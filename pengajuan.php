@@ -24,21 +24,21 @@ $idi= $_GET['id'];
             <span>All Pengajuan</span>
           </strong>
           <div class="pull-right">
-            <a href="add_pengajuan.php?id=<?=$idi;?>" class="btn btn-primary">Add pengajuan</a>
+            <a href="add_pengajuan.php?id=<?=$idi;?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus">Add</a>
           </div>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered table-striped">
+          <table id="tabel" class="table table-bordered table-striped" width="100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                <th class="text-center" >#</th>
                 <th> SPM </th>
-                <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
-                <th class="text-center" style="width: 15%;"> Status SPM </th>              
-                <th class="text-center" style="width: 15%;"> Status KPPN </th> 
-                <th class="text-center" style="width: 15%;"> Status SP2D </th>
-                <th class="text-center" style="width: 15%;"> Upload </th>
-                <th class="text-center" style="width: 100px;"> Actions </th>
+                <th class="text-center" > Status Verifikasi </th> 
+                <th class="text-center" > Status SPM </th>              
+                <th class="text-center" > Status KPPN </th> 
+                <th class="text-center" > Status SP2D </th>
+                <th class="text-center" > Upload </th>
+                <th class="text-center" > Actions </th>
              </tr>
             </thead>
            <tbody>

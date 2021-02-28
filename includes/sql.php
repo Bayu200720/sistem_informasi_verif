@@ -569,11 +569,9 @@ function find_pencairan_tahun($tahun,$id_satker){
  function find_recent_product_added($limit){
    global $db;
    $sql   = " SELECT m.keterangan,sum(c.nominal) AS total";
-   $sql  .= " FROM pengajuan p";
-   $sql  .= " LEFT JOIN detail_pengajuan c ON c.id_pengajuan = p.id";
-   $sql  .= " LEFT JOIN satker m ON m.id = p.id_satker";
-   $sql  .= " GROUP by p.id_satker";
-   $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
+   $sql  .= " FROM nodin n, pengajuan p,detail_pengajuan c,satker m WHERE";
+   $sql  .= " c.id_pengajuan = p.id and m.id = n.id_satker";
+   $sql  .= " GROUP by n.id_satker ORDER BY p.id DESC";
    return find_by_sql($sql);
  }
  /*--------------------------------------------------------------*/
@@ -618,10 +616,9 @@ function find_pencairan_tahun($tahun,$id_satker){
 function find_recent_sale_added(){
   global $db;
   $sql  = "SELECT s.keterangan,count(p.id) as 'jumlah_SPM'";
-  $sql .= " FROM pengajuan p";
-  $sql .= " LEFT JOIN satker s ON s.id = p.id_satker WHERE status_sp2d=0";
-  $sql .= " GROUP BY p.id_satker";
-  $sql .= " ORDER BY p.id_satker DESC";
+  $sql .= " FROM nodin n LEFT JOIN pengajuan p ON n.id =p.id_nodin LEFT JOIN";
+  $sql .= " satker s ON s.id = n.id_satker WHERE status_sp2d=0";
+  $sql .= " GROUP BY n.id_satker ORDER BY n.id_satker DESC";
   return find_by_sql($sql);
 }
 /*--------------------------------------------------------------*/
