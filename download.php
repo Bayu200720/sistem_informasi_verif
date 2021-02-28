@@ -1,19 +1,19 @@
 <?php 
-  require_once('includes/load.php');
-  $user 	= find_by_id('users',$_SESSION['user_id']);
-  $satker 	= find_all_global('satker',$user['id_satker'], 'id');
-  $sales 	= find_nodin_j_pengajuan_spm($_GET['spm']);
+	require_once('includes/load.php');
+	$user 	= find_by_id('users',$_SESSION['user_id']);
+	$satker 	= find_all_global('satker',$user['id_satker'], 'id');
+	$sales 	= find_nodin_j_pengajuan_spm($_GET['spm']);
 
-	// Enter the name of directory 
+		// Enter the name of directory 
 	$pathSPM 	= "uploads/spm/";  
 	$pathSP2D 	= "uploads/sp2d/";  
 	$pathPJ 	= "uploads/pertanggungjawaban/";
 	$pathK 		= "uploads/kekurangan/";  
 
-	// Enter the name to creating zipped directory 
+		// Enter the name to creating zipped directory 
 	$zipcreated = "uploads/dokumen/Dokumen Rampung SPM ".$_GET['spm']." Tgl. ".strtotime(date('d-m-Y')).".zip"; 
 
-	// Create new zip class 
+		// Create new zip class 
 	$zip = new ZipArchive; 
 
 	if($zip->open($zipcreated, ZipArchive::CREATE ) === TRUE) {  
@@ -24,12 +24,12 @@
 		$zip ->close(); 
 	} 
 
-    $file_name = basename($zipcreated);
+	$file_name = basename($zipcreated);
 
-    header("Content-Type: application/zip");
-    header("Content-Disposition: attachment; filename=$file_name");
-    header("Content-Length: " . filesize($zipcreated));
+	header("Content-Type: application/zip");
+	header("Content-Disposition: attachment; filename=$file_name");
+	header("Content-Length: " . filesize($zipcreated));
 
-    readfile($zipcreated);
-    exit;
+	readfile($zipcreated);
+	exit;
 ?>
