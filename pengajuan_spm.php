@@ -34,7 +34,7 @@ if(isset($_POST['update_sp2d'])){
 
 if(isset($_GET['s'])){
   if($_GET['s'] == 'spm'){
-    $pengajuan = find_by_id('pengajuan',$_GET['id']);//var_dump($pengajuan);exit();
+    $pengajuan = find_by_id('pengajuan',$_GET['id']);
   $query  = "UPDATE pengajuan SET ";
         $query .= "file_spm=''";
         $query .= "WHERE id='{$pengajuan["id"]}'";
@@ -75,7 +75,7 @@ $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <?php echo display_msg($msg); ?>
   </div>
 </div>
@@ -100,7 +100,8 @@ $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
                   <th class="text-center" > Jenis Pengajuan</th>
                   <th class="text-center" > Satker </th>
                   <th class="text-center" > Tanggal </th>
-                  <th class="text-center" > Nominal Pengajuan </th> 
+                  <th class="text-center" > Nominal Pengajuan </th>
+                  <th class="text-center" > Status </th>  
                   <th class="text-center"> Actions </th>
               </tr>
               </thead>
@@ -116,6 +117,14 @@ $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
                 <td class="text-center" ><?php $nodin=find_by_id('nodin',$sale['id_nodin']);$satker=find_by_id('satker',$nodin['id_satker']); echo $satker['keterangan']?></td>
                 <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']);echo $nodin['tanggal']; ?></td>
                 <td class="text-center" ><?php $tp=find_NominalPengajuan($sale['id']);echo rupiah($tp['jum']);?></td>
+                <td class="text-center" >
+                	<?php if($sale['status_spm'] == 0){
+                           echo "<span class='glyphicon glyphicon-remove-circle'></span>Belom Proses ";
+                      }else{
+                          echo "<span class='glyphicon glyphicon-ok-circle'></span>Telah di Proses ";
+                      }	             		
+                	?>
+              </td>
               
                 <td class="text-center">
                     <div class="btn-group">
@@ -129,6 +138,7 @@ $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
               </tr>
               <?php $tot+=$tp['jum']; endforeach;?>
             </tbody>
+            <tfoot>
             <tr>
                   <th class="text-center" >#</th>
                   <th class="text-center" >  </th>
@@ -136,8 +146,10 @@ $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
                   <th class="text-center" >  </th>
                   <th class="text-center" >  </th>
                   <th class="text-center" >  <?=rupiah($tot);?> </th>
+                  <th class="text-center" > Status </th>
                   <th class="text-center" > </th>
               </tr>
+              </tfoot>
           </table>
         </div>
       </div>

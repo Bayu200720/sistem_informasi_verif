@@ -9,8 +9,8 @@
  $c_SPM       = count_by_id('pengajuan');
  $c_sptjb          = count_by_id('detail_pengajuan');
  $c_user          = count_by_id('users');
- $products_sold   = find_higest_saleing_product('10');
- $recent_products = find_recent_product_added('10');
+ $products_sold   = find_higest_saleing_product();
+ $recent_products = find_recent_product_added();
  $recent_sales    = find_recent_sale_added()
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -99,10 +99,10 @@
               <tr>
                 <td><?php echo count_id();?></td>
                 <td><?php echo remove_junk(first_character($product_sold['keterangan'])); ?></td>
-                <td><?php echo (int)$product_sold['totalSold']; ?></td>
+                <td><?php echo (int)$product_sold['total_spm']; ?></td>
                 
               </tr>
-            <?php $tot2+=$product_sold['totalSold'];  endforeach; ?>
+            <?php $tot2+=$product_sold['total_spm'];  endforeach; ?>
             <tr>
                <td class="text-center"></td>
                <td class="text-center">Jumlah</td>

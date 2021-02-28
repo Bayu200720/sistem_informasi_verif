@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V1</title>
+	<title>Login SIV</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="libs/Login_v1/images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="uploads/users/kominfo.jpg"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="libs/Login_v1/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->

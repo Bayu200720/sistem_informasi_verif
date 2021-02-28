@@ -97,7 +97,7 @@
                       ?>
 
                     </td>
-                    <td><a class="btn btn-primary" href="download.php?spm=<?= $sale['SPM'] ?>" title="Download"><i class="glyphicon glyphicon-download"></i></a></td>
+                    <td class="text-center"><a class="btn btn-primary" href="download.php?spm=<?= $sale['SPM'] ?>" title="Download"><i class="glyphicon glyphicon-download"></i></a></td>
                   </tr>
                 <?php endforeach;?>
               </tbody>

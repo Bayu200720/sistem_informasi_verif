@@ -11,7 +11,7 @@
 	$pathK 		= "uploads/kekurangan/";  
 
 		// Enter the name to creating zipped directory 
-	$zipcreated = "uploads/dokumen/Dokumen Rampung SPM ".$_GET['spm']." Tgl. ".strtotime(date('d-m-Y')).".zip"; 
+	$zipcreated = "uploads/dokumen/Dokumen_RampungSPM_".$_GET['spm']." Tgl. ".strtotime(date('d-m-Y')).".zip"; 
 
 		// Create new zip class 
 	$zip = new ZipArchive; 

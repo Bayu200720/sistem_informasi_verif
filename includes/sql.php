@@ -35,6 +35,26 @@ function find_nodin_j_pengajuan_spm($spm)
    
 }
 
+function find_allSPM_satker($id_satker,$tahun)
+{
+  global $db;
+  return find_by_sql("SELECT * FROM `nodin`n,pengajuan p,detail_pengajuan dp WHERE p.id_nodin = n.id and n.id_satker ='{$id_satker}' and dp.id_pengajuan=p.id and n.tahun='{$tahun}' ORDER BY n.id DESC");
+   
+}
+
+function find_count_statusVerif_tahun($status,$isi,$id_satker,$tahun)
+{
+  global $db;
+  return find_by_sql("SELECT count(*) as jml from nodin n,pengajuan p where n.id = p.id_nodin and p.{$status} = '{$isi}' and n.id_satker ='{$id_satker}' and n.tahun='{$tahun}'");
+   
+}
+function find_count_statusVerif_tahun_keuangan($status,$isi,$tahun)
+{
+  global $db;
+  return find_by_sql("SELECT count(*) as jml from nodin n,pengajuan p where n.id = p.id_nodin and p.{$status} = '{$isi}' and n.tahun='{$tahun}'");
+   
+}
+
 function find_nodin_j_pengajuan_count($tahun,$id_satker)
 {
   global $db;
@@ -574,23 +594,17 @@ function find_pencairan_tahun($tahun,$id_satker){
   /*--------------------------------------------------------------*/
   /* Function for Display Recent product Added
   /*--------------------------------------------------------------*/
- function find_recent_product_added($limit){
+ function find_recent_product_added(){
    global $db;
-   $sql   = " SELECT m.keterangan,sum(c.nominal) AS total";
-   $sql  .= " FROM nodin n, pengajuan p,detail_pengajuan c,satker m WHERE";
-   $sql  .= " c.id_pengajuan = p.id and m.id = n.id_satker";
-   $sql  .= " GROUP by n.id_satker ORDER BY p.id DESC";
+   $sql   = " SELECT s.keterangan as keterangan,sum(nominal) as total FROM `nodin`n,pengajuan p,detail_pengajuan dp,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and dp.id_pengajuan=p.id and p.status_sp2d!=0 group by n.id_satker";
    return find_by_sql($sql);
  }
  /*--------------------------------------------------------------*/
  /* Function for Find Highest saleing Product
  /*--------------------------------------------------------------*/
- function find_higest_saleing_product($limit){
+ function find_higest_saleing_product(){
    global $db;
-   $sql  = "SELECT s.keterangan, COUNT(p.id) AS totalSold";
-   $sql .= " FROM pengajuan p, satker s,nodin n WHERE n.id_satker = s.id";
-   $sql .= " and p.id_nodin =n.id GROUP BY n.id_satker";
-   $sql .= " ORDER BY SUM(n.id_satker)";
+   $sql  = "SELECT s.keterangan as keterangan,count(*) as total_spm FROM `nodin`n,pengajuan p,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and p.status_sp2d!=0 group by n.id_satker";
    return $db->query($sql);
  }
  /*--------------------------------------------------------------*/
@@ -623,10 +637,7 @@ function find_pencairan_tahun($tahun,$id_satker){
  /*--------------------------------------------------------------*/
 function find_recent_sale_added(){
   global $db;
-  $sql  = "SELECT s.keterangan,count(p.id) as 'jumlah_SPM'";
-  $sql .= " FROM nodin n LEFT JOIN pengajuan p ON n.id =p.id_nodin LEFT JOIN";
-  $sql .= " satker s ON s.id = n.id_satker WHERE status_sp2d=0";
-  $sql .= " GROUP BY n.id_satker ORDER BY n.id_satker DESC";
+  $sql  = "SELECT s.keterangan as keterangan,count(*) as jumlah_SPM FROM `nodin`n,pengajuan p,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and p.status_sp2d=0 group by n.id_satker";
   return find_by_sql($sql);
 }
 /*--------------------------------------------------------------*/

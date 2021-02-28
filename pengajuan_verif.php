@@ -19,7 +19,6 @@ $sales = find_pengajuanok();
 
 if(isset($_POST['cari'])){
   $sql = "select * from nodin where tanggal between '".$_POST['tgl1']."' and '".$_POST['tgl2']."'";
-  echo $sql;
   $sales= find_pengajuanok_tgl($_POST['tgl1'],$_POST['tgl2']);
  }
 //var_dump($sales);exit();
@@ -54,7 +53,7 @@ $idi= $_GET['id'];
           </div>
         </div>
         <div class="panel-body">
-          <table id="tabel" class="table table-bordered table-striped">
+          <table id="tabel" class="table table-bordered table-striped" width="100%">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
@@ -64,6 +63,7 @@ $idi= $_GET['id'];
                 <th class="text-center" > Tanggal </th>
                 <th class="text-center" > Nominal Pengajuan </th>
                 <th class="text-center" > Status </th>
+                <th class="text-center" > Validasi Kasubbag </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
              </tr>
             </thead>
@@ -81,13 +81,19 @@ $idi= $_GET['id'];
               <td class="text-center" ><?php $tp=find_NominalPengajuan($sale['id']);echo rupiah($tp['jum']);?></td>
               <td class="text-center" >
                 	<?php if($sale['status_verifikasi'] == 0){
-                				echo "<span class='glyphicon glyphicon-remove-circle'></span>Belom Terverifikasi ";
-							}else{
-  								echo "<span class='glyphicon glyphicon-ok-circle'></span>Terverifikasi ";
-							}	
-                		
+                           echo "<span class='glyphicon glyphicon-remove-circle'></span>Belom Terverifikasi ";
+                      }else{
+                          echo "<span class='glyphicon glyphicon-ok-circle'></span>Terverifikasi ";
+                      }	             		
                 	?>
-               
+              </td>
+              <td class="text-center" >
+                	<?php if($sale['verifikasi_kasubbag_v'] == ''){
+                           echo "<span class='glyphicon glyphicon-remove-circle'></span>Belom Tervalidasi ";
+                      }else{
+                          echo "<span class='glyphicon glyphicon-ok-circle'></span>Tervalidasi ";
+                      }	             		
+                	?>
               </td>
                <td class="text-center">
                   <div class="btn-group">
@@ -101,6 +107,7 @@ $idi= $_GET['id'];
              </tr>
              <?php $tot+=$tp['jum']; endforeach;?>
            </tbody>
+           <tfoot>
            <tr>
                 <th class="text-center" >#</th>
                 <th class="text-center" >  </th>
@@ -110,7 +117,9 @@ $idi= $_GET['id'];
                 <th class="text-center" >  <?=rupiah($tot);?> </th>
                 <th class="text-center" > </th>
                 <th class="text-center" > </th>
+                <th class="text-center" > </th>
              </tr>
+             <tfoot>
          </table>
         </div>
       </div>

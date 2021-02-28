@@ -212,6 +212,7 @@ if($_GET['status']=='delete_nodin'){
             <span><a href="nodin_bpp.php">All Nodin</a></span>
           </strong>
           <div class="pull-right">
+          <a href="allSPM.php" class="btn btn-primary" id="nodin"></span>ALL SPM</a>
             <?php if($pengajuan[0]['status'] == 0){?>
         		  <a href="#" onclick="showT('DT_p')" class="btn btn-primary" id="nodin"><span class="glyphicon glyphicon-plus"></span>ADD</a>
             <?php }else{ ?>
