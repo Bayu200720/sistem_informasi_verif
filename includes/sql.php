@@ -27,6 +27,14 @@ function find_nodin_j_pengajuan($tahun,$id_satker)
   return find_by_sql("SELECT p.status_pj as status_pj,p.upload_pertanggungjawaban as upload_pertanggungjawaban,p.upload_kekurangan as upload_kekurangan,p.SPM as SPM,p.id as id,p.id_jenis_pengajuan as id_jenis_pengajuan,n.id_satker as id_satker FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and n.tahun='{$tahun}' and id_satker='{$id_satker}' ORDER BY p.id DESC");
    
 }
+
+function find_nodin_j_pengajuan_spm($spm)
+{
+  global $db;
+  return find_by_sql("SELECT p.upload, p.file_spm, p.file_sp2d, p.upload_kekurangan, p.upload_pertanggungjawaban FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and p.SPM='{$spm}' ORDER BY p.id DESC");
+   
+}
+
 function find_nodin_j_pengajuan_count($tahun,$id_satker)
 {
   global $db;
