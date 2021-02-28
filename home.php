@@ -32,7 +32,7 @@
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top">  </h2>
-          <p class="text-muted">Users</p>
+          <p class="text-muted">SPM Belom di Verifikasi</p>
         </div>
        </div>
     </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> </h2>
-          <p class="text-muted">SPM</p>
+          <p class="text-muted">SPM Terverifikasi</p>
         </div>
        </div>
     </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> </h2>
-          <p class="text-muted">Satker</p>
+          <p class="text-muted">Pertanggungjawaban Belom di Upload</p>
         </div>
        </div>
     </div>
