@@ -231,7 +231,7 @@ if($_GET['s']=='kasubok'){
             <?php $user1=find_by_id('users',$_SESSION['user_id']);  if( $user1['user_level'] != '3'){?>
 
               
-              <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
+              <?php $user=find_by_id('users',$_SESSION['user_id']);  if( $user['user_level']== '6' or $user['user_level']== '5'){?>
                 <a href="add_detail_pengajuan.php?id=<?=$_GET['id'];?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add</a>
               <!-- <a href="nodin_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning"><span class="glyphicon glyphicon-chevron-left"></span></a> -->
               <a href="#" class="btn btn-success" id="import"  data-toggle="modal" data-target="#UploadCSV" data-id="<?=$_GET['id'];?>" ><span class="glyphicon glyphicon-upload"></span> <img src="uploads/users/excel.png" height="20"/></a>

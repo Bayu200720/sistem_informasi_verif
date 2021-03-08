@@ -27,6 +27,12 @@ function find_nodin_j_pengajuan($tahun,$id_satker)
   return find_by_sql("SELECT p.status_pj as status_pj,p.upload_pertanggungjawaban as upload_pertanggungjawaban,p.upload_kekurangan as upload_kekurangan,p.SPM as SPM,p.id as id,p.id_jenis_pengajuan as id_jenis_pengajuan,n.id_satker as id_satker FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and n.tahun='{$tahun}' and id_satker='{$id_satker}' ORDER BY p.id DESC");
    
 }
+function find_nodin_j_pengajuan_kv($tahun)
+{
+  global $db;
+  return find_by_sql("SELECT p.status_pj as status_pj,p.upload_pertanggungjawaban as upload_pertanggungjawaban,p.upload_kekurangan as upload_kekurangan,p.SPM as SPM,p.id as id,p.id_jenis_pengajuan as id_jenis_pengajuan,n.id_satker as id_satker FROM `pengajuan` p,nodin n WHERE p.id_nodin = n.id and n.status_pengajuan=1 and n.tahun='{$tahun}' ORDER BY p.id DESC");
+   
+}
 
 function find_nodin_j_pengajuan_spm($spm)
 {
@@ -599,6 +605,12 @@ function find_pencairan_tahun($tahun,$id_satker){
    $sql   = " SELECT s.keterangan as keterangan,sum(nominal) as total FROM `nodin`n,pengajuan p,detail_pengajuan dp,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and dp.id_pengajuan=p.id and p.status_sp2d!=0 group by n.id_satker";
    return find_by_sql($sql);
  }
+
+ function find_realisasi_bpp($id_satker,$tahun){
+  global $db;
+  $sql   = " SELECT s.keterangan as keterangan,sum(nominal) as total FROM `nodin`n,pengajuan p,detail_pengajuan dp,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and dp.id_pengajuan=p.id and p.status_sp2d!=0 and n.id_satker='{$id_satker}' and n.tahun='{$tahun}'";
+  return find_by_sql($sql);
+}
  /*--------------------------------------------------------------*/
  /* Function for Find Highest saleing Product
  /*--------------------------------------------------------------*/
@@ -607,6 +619,17 @@ function find_pencairan_tahun($tahun,$id_satker){
    $sql  = "SELECT s.keterangan as keterangan,count(*) as total_spm FROM `nodin`n,pengajuan p,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and p.status_sp2d!=0 group by n.id_satker";
    return $db->query($sql);
  }
+
+ function spm_proses($id_satker){
+  global $db;
+  $sql  = "SELECT s.keterangan as keterangan, count(*) as total_spm FROM `nodin`n,pengajuan p,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and p.status_sp2d!=0 and n.id_satker='{$id_satker}'";
+  return find_by_sql($sql);
+}
+function spm_blm_proses($id_satker){
+  global $db;
+  $sql  = "SELECT s.keterangan as keterangan, count(*) as total_spm FROM `nodin`n,pengajuan p,satker s WHERE s.id=n.id_satker and p.id_nodin = n.id and p.status_sp2d=0 and n.id_satker='{$id_satker}'";
+  return find_by_sql($sql);
+}
  /*--------------------------------------------------------------*/
  /* Function for find all sales
  /*--------------------------------------------------------------*/

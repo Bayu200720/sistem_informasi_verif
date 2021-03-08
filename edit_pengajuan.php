@@ -27,9 +27,9 @@
      if($db->query($query)){
        $session->msg('s',"Pengajuan berhasil di edit ");
        if($user['user_level']==2){
-        redirect('nodin_bpp.php?id='.$pengajuan['id_nodin'], false);
+        redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin'], false);
       }else{
-       redirect('nodin_bpp.php?id='.$pengajuan['id_nodin'], false);
+       redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin'], false);
       }
      } else {
        $session->msg('d',' Sorry failed to edit!');
@@ -85,7 +85,7 @@
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
                   <select class="form-control" name="id_jenis_pengajuan" required>
-                      <option value="">Pilih Jenis Pengajuan</option>
+                      <option value="<?=$pengajuan['id_jenis_pengajuan'];?>"><?php $jenis=find_by_id('jenis_pengajuan',$pengajuan['id_jenis_pengajuan']); echo $jenis['keterangan']?></option>
                       <?php $jenis = find_all('jenis_pengajuan');?>
                     <?php  foreach ($jenis as $j): ?>
                       <option value="<?php echo (int)$j['id'] ?>">

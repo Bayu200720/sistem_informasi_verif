@@ -40,4 +40,27 @@
        <span>BKU</span>
       </a>
   </li>
+  <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Revolving</span>
+      </a>
+      <ul class="nav submenu">
+         <li><a href="nodin_bpp.php">Manage Pengajuan</a> </li>
+     </ul>
+  </li>
+  <li>
+    <a href="Pertanggungjawaban.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Dokuemn PJ</span>
+      
+            <?php 
+              $user=find_by_id('users',$_SESSION['user_id']); 
+              $pj= find_count_statusVerif_tahun('upload_pertanggungjawaban','',$user['id_satker'],$user['tahun']); 
+                    if($pj[0]['jml'] > 0){
+                      echo '<span class="badge">'.$pj[0]['jml'].'</span>';
+                      }
+            ?>
+      </a> 
+  </li>
 </ul>

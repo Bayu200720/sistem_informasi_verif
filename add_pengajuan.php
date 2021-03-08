@@ -34,22 +34,22 @@
      if($result){
        $session->msg('s',"Pengajuan added ");
        if($user['user_level']==2){
-        redirect('nodin_bpp.php', false);
+        redirect('pengajuan_bpp.php='.$id_nodin.'', false);
        }else{
-       redirect('nodin_bpp.php?id='.$id_nodin.'', false);
+       redirect('pengajuan_bpp.php?id='.$id_nodin.'', false);
        }
      } else {
        $session->msg('d',' Sorry failed to added!,make sure the SPM number is not the same');
        if($user['user_level']==2){
-        redirect('nodin_bpp.php', false);
+        redirect('pengajuan_bpp.php='.$id_nodin.'', false);
       }else{
-        redirect('nodin_bpp.php?id='.$id_nodin.'', false);
+        redirect('pengajuan_bpp.php?id='.$id_nodin.'', false);
       }
      }
 
    } else{
      $session->msg("d", $errors);
-        redirect('nodin.php?id='.$id_nodin.'', false);
+        redirect('pengajuan_bpp.php?id='.$id_nodin.'', false);
    }
 
  }

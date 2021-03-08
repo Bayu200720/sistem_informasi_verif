@@ -33,4 +33,11 @@
       </a>
       
   </li>
+  <li>
+    <a href="pj_bpp.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Dokumen PJ</span>
+      </a>
+      
+  </li>
 </ul>

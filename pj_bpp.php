@@ -2,11 +2,11 @@
 $page_title = 'All SPM';
 require_once('includes/load.php');
     // Checkin What level user has permission to view this page
-page_require_level(6);
+page_require_level(7);
 $user=find_by_id('users',$_SESSION['user_id']);
 $satker = find_all_global('satker',$user['id_satker'],'id');
 $sales1 = find_all_global_tahun('nodin',$user['id_satker'],'id_satker',$satker[0]['tahun']);
-$sales = find_nodin_j_pengajuan($satker[0]['tahun'],$user['id_satker']);
+$sales = find_nodin_j_pengajuan_kv($satker[0]['tahun']);
 ?>
 
 <?php include_once('layouts/header.php'); ?>

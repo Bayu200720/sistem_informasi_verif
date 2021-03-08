@@ -39,7 +39,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
             <span>Detail Dokumen</span>
           </strong>
           <div class="pull-right">
-                <a href="pengajuan_bpp.php?id=<?= $_GET['ids'] ?>" class="btn btn-warning">Back</a>
+                <a href="pengajuan_bpp.php?id=<?=$sales[0]['id_nodin'] ?>" class="btn btn-warning">Back</a>
           </div>
         </div>
         <div class="panel-body">
