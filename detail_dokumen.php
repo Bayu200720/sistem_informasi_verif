@@ -2,7 +2,13 @@
   $page_title = 'All Nodin';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(6);
+  if($user['user_level'] == 3){ 
+    page_require_level(3);
+  }else if($user['user_level'] == 8){
+    page_require_level(8);
+  }else if($user['user_level'] == 6){
+    page_require_level(6);
+  } 
 ?>
 <?php
 $user=find_by_id('users',$_SESSION['user_id']);

@@ -90,6 +90,8 @@
          <?php include_once('bendahara_menu.php');?>
       <?php elseif($user['user_level'] === '6'): ?>
          <?php include_once('bpp_menu.php');?>
+      <?php elseif($user['user_level'] === '8'): ?>
+         <?php include_once('pimpinan.php');?>
       <?php endif;?>
 
    </div>
