@@ -149,3 +149,4 @@ echo $s['keterangan'];
   
 </body>
 </html>
+<script language="javascript">window.print();</script>

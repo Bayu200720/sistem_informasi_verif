@@ -125,9 +125,9 @@ if($_GET['p']=='batal'){
                       <?php if($sale['approvel_atasan'] == 1){
                                 $pengajuan = find_all_global('nodin',$sale['id'],'id'); 
                         ?>
-                        <a href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success" <?php if($pengajuan[0]['status_verifikasi'] != 0){?>disabled <?php } ?>>Sudah Diapprovel</a>
-                      <?php }else{ ?>
-                        <a href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary">Approvel</a>
+                        <a onclick="return confirm('Apakah anda yakin untuk membatalkan Approvel?');" href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success" <?php if($pengajuan[0]['status_verifikasi'] != 0){?>disabled <?php } ?>>Sudah Diapprovel</a>
+                      <?php }else if($sale['approvel_atasan'] == 2){ ?>
+                        <a onclick="return confirm('Apakah anda yakin untuk Approvel?');" href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary">Approvel</a>
                       <?php } ?>
                 
                 </td>

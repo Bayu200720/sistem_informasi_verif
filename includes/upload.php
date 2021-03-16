@@ -6,6 +6,7 @@ class  Media {
   public $fileName;
   public $fileType;
   public $fileTempPath;
+  public $fileAdkSpm;
   //Set destination for upload
   public $spmPath = SITE_ROOT.DS.'..'.DS.'uploads/spm';
   public $userPath = SITE_ROOT.DS.'..'.DS.'uploads/users';
@@ -14,6 +15,7 @@ class  Media {
   public $sp2d = SITE_ROOT.DS.'..'.DS.'uploads/sp2d';
   public $adk = SITE_ROOT.DS.'..'.DS.'uploads/adk';
   public $kekuranganPath = SITE_ROOT.DS.'..'.DS.'uploads/kekurangan';
+  public $Adk_spm = SITE_ROOT.DS.'..'.DS.'uploads/adk_spm';
   
 
 
@@ -231,6 +233,40 @@ class  Media {
   
     }
 
+    public function process_adk_spm($id){
+      if(!empty($this->errors)){
+          return false;
+        }
+      if(empty($this->fileName) || empty($this->fileTempPath)){
+          $this->errors[] = "The file location was not available.";
+          return false;
+        }
+  
+      if(!is_writable($this->Adk_spm)){
+          $this->errors[] = $this->$Adk_spm." Must be writable!!!.";
+          return false;
+        }
+  
+      if(file_exists($this->Adk_spm."/".$this->fileName)){
+        $this->errors[] = "The file {$this->fileName} already exists.";
+        return false;
+      }
+      if(move_uploaded_file($this->fileTempPath,$this->Adk_spm.'/'.$this->fileName))
+      {
+  
+        if($this->insert_adk_spm($id)){
+          unset($this->fileTempPath);
+          return true;
+        }
+  
+      } else {
+  
+        $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.";
+        return false;
+      }
+  
+    }
+
   //process sp2d
   
   public function process_sp2d($id){
@@ -417,6 +453,14 @@ private function insert_adk($id){
 
   global $db;
   $sql  = "UPDATE pengajuan SET upload_adk ='{$db->escape($this->fileName)}' WHERE id= '{$db->escape($id)}'";
+return ($db->query($sql) ? true : false);
+
+}
+
+private function insert_adk_spm($id){
+
+  global $db;
+  $sql  = "UPDATE pengajuan SET upload_adk_spm ='{$db->escape($this->fileName)}' WHERE id= '{$db->escape($id)}'";
 return ($db->query($sql) ? true : false);
 
 }

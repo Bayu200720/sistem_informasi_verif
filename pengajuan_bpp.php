@@ -71,12 +71,22 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
             </thead>
            <tbody>
              <?php foreach ($sales as $sale):?>
-             <tr>
+             <tr class="text-center"> 
                <td class="text-center"><?php echo count_id();?></td>
                <td><?php echo remove_junk($sale['SPM']); ?></td>
                <td><?php $jenis = find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['keterangan']?></td>
                <td class="text-center"><?php if($sale['status_verifikasi']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
              <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?></span><?php } ?>
+
+             <?php $p = find_by_filed('pengajuan',$sale['id'],'id');  
+                        if($p['verifikasi_kasubbag_v']==1){   ?>
+                        <span class="label label-success">Terverifikasi Kasubbag verifikator</span>
+                        <?php }else if($p['verifikasi_kasubbag_v']==2){ ?>
+                        <span class="label label-danger">Ditolak Kasubbag verifikator</span>
+                        <?php }else{ ?>
+                          <span class="label label-warning"> Kasubbag belom verifikasi</span>
+                        <?php } ?>
+                        
             <?php $verif = find_all_global('verifikasi',$sale['id'],'id_pengajuan');if($verif[0]['id_pengajuan']!=NULL){?>
           
                <a href="<?php 
@@ -95,7 +105,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
             
                   }
                 
-                ?>" class="btn btn-warning" style="margin: 20px;">Kekurangan</a>
+                ?>" class="btn btn-warning" style="margin: 20px;" target="_BLANK">Kekurangan</a>
             <?php } ?>
             </td>
             

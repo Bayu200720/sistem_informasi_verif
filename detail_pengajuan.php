@@ -143,7 +143,6 @@ if($_GET['s']=='batal'){
   $verif = find_by_id('verifikasi',$_GET['id']);
   $id_verif = $_GET['id'];
   $update ="UPDATE `verifikasi` SET `status_pengajuan`= '' WHERE `id` =".$id_verif;
-    // echo $update; exit();
 
     if($db->query($update)){
       $session->msg('s',"Sukses verifikasi di batalkan ");
@@ -193,6 +192,29 @@ if($_GET['s']=='kasubok'){
 
     if($db->query($update)){
       $session->msg('s',"Sukses verifikasi Terima ");
+      if($user['user_level']==2){
+       redirect('detail_pengajuan.php?id='.$id_pengajuan, false);
+      }else{
+      redirect('detail_pengajuan.php?id='.$id_pengajuan, false);
+      }
+    } else {
+      $session->msg('d',' Sorry failed to Insert!');
+      if($user['user_level']==2){
+       redirect('detail_pengajuan.php?id='.$id_pengajuan, false);
+     }else{
+        redirect('detail_pengajuan.php?id='.$id_pengajuan, false);
+     }
+    }
+}
+
+if($_GET['s']=='tolak'){
+  $pengajuan = find_by_id('pengajuan',$_GET['id']);
+  $id_pengajuan = $_GET['id'];
+  $update ="UPDATE `pengajuan` SET `verifikasi_kasubbag_v`= '2' WHERE `id` =".$id_pengajuan;
+    // echo $update; exit();
+
+    if($db->query($update)){
+      $session->msg('s',"Sukses verifikasi Tolak ");
       if($user['user_level']==2){
        redirect('detail_pengajuan.php?id='.$id_pengajuan, false);
       }else{
@@ -310,6 +332,7 @@ if($_GET['s']=='kasubok'){
 
              <?php $tot+=$sale['nominal']; $tot1+=$sale['pph']; $tot2+=$sale['ppn']; endforeach;?>
            </tbody>
+           
             <tr>
                 <th class="text-center">Jumlah</th>
                 <th class="text-center">  </th>
@@ -323,6 +346,7 @@ if($_GET['s']=='kasubok'){
                       <?php $v=find_all_global('verifikasi',$_GET['id'],'id_pengajuan');
                         if($v[0]['status_pengajuan']==''){?>
                            <a href="detail_pengajuan.php?id=<?=$v[0]['id']?>&s=ok" class="btn btn-success">Terima</a>
+                           
                         <?php }else{ ?>
                           <a href="detail_pengajuan.php?id=<?=$v[0]['id']?>&s=batal" class="btn btn-danger">Batalkan</a>
                         <?php } ?>
@@ -348,6 +372,7 @@ if($_GET['s']=='kasubok'){
                       <?php $v=find_by_id('pengajuan',$_GET['id']);
                         if($v['verifikasi_kasubbag_v']==''){?>
                            <a href="detail_pengajuan.php?id=<?=$_GET['id']?>&s=kasubok" class="btn btn-success">Terima</a>
+                           <a href="detail_pengajuan.php?id=<?=$_GET['id']?>&s=tolak" class="btn btn-danger">Tolak</a>
                         <?php }else{ ?>
                           <a href="detail_pengajuan.php?id=<?=$_GET['id']?>&s=kasubbatal" class="btn btn-danger">Batalkan</a>
                         <?php } ?>

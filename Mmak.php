@@ -14,18 +14,19 @@ $sales = find_all_global('akun',$tahun,'tahun');
 ?>
 <?php
 if(isset($_POST['submit_mak'])){
- $req_fields = array('tahun','kode','id_satker','uraian');
+ $req_fields = array('tahun','kode','id_satker','uraian','nominal');
  validate_fields($req_fields);
  if(empty($errors)){
    $tahun   = remove_junk($db->escape($_POST['tahun']));
    $kode = remove_junk($db->escape($_POST['kode']));
    $id_satker = remove_junk($db->escape($_POST['id_satker']));
    $uraian = remove_junk($db->escape($_POST['uraian']));
+   $nominal = remove_junk($db->escape($_POST['nominal']));
    $date    = make_date();
    $query  = "INSERT INTO akun (";
-   $query .=" tahun,mak,keterangan,id_satker";
+   $query .=" tahun,mak,keterangan,id_satker,nominal";
    $query .=") VALUES (";
-   $query .=" '{$tahun}','{$kode}','{$uraian}','{$id_satker}'";
+   $query .=" '{$tahun}','{$kode}','{$uraian}','{$id_satker}','{$nominal}'";
    $query .=")";
    if($db->query($query)){
      $session->msg('s',"MAK added ");
@@ -51,7 +52,7 @@ if(isset($_POST['submit_mak'])){
 }
 
 if(isset($_POST['update_mak'])){
-  $req_fields = array('tahun','kode','uraian','id');
+  $req_fields = array('tahun','kode','uraian','id','nominal');
   validate_fields($req_fields);
   if(empty($errors)){
     $id   = remove_junk($db->escape($_POST['id'])); 
@@ -59,6 +60,7 @@ if(isset($_POST['update_mak'])){
     $kode = remove_junk($db->escape($_POST['kode']));
     $uraian = remove_junk($db->escape($_POST['uraian']));
     $id_satker = remove_junk($db->escape($_POST['id_satker']));
+    $nominal = remove_junk($db->escape($_POST['nominal']));
     
     if($id_satker==''){
       $akun=find_all_global(akun,$id,'id');
@@ -66,7 +68,7 @@ if(isset($_POST['update_mak'])){
     }
     $date    = make_date();
     $query  = "UPDATE akun SET ";
-    $query .=" tahun='{$tahun}',mak='{$kode}',keterangan='{$uraian}',id_satker='{$id_satker}'";
+    $query .=" tahun='{$tahun}',mak='{$kode}',keterangan='{$uraian}',id_satker='{$id_satker}',nominal='{$nominal}'";
     $query .=" WHERE id='{$id}'";
     if($db->query($query)){
       $session->msg('s',"MAK Update");
@@ -157,6 +159,7 @@ if($_GET['status']=='delete_akun'){
               <th class="text-center" > Kode </th>
               <th class="text-center" > Uraian </th>
               <th class="text-center" > Satker </th>
+              <th class="text-center" > Nominal </th>
               <th class="text-center"> Actions </th>
             </tr>
           </thead>
@@ -168,6 +171,7 @@ if($_GET['status']=='delete_akun'){
                <td class="text-center"><?php echo $sale['mak'];  ?></td>
                <td class="text-center"><?php echo $sale['keterangan']; ?></td>
                <td class="text-center"><?php $satker1=find_all_global('satker',$sale['id_satker'],'id');echo  $satker1[0]['keterangan'] ;  ?></td>  
+               <td class="text-center"><?php echo rupiah($sale['nominal']); ?></td> 
                <td class="text-center">
                 <div class="btn-group">
                  <a href="#" title="Edit" <?php $akun = find_by_id('akun',$sale['id']);?> class="btn btn-warning btn-xs" id="editakun" data-toggle="modal" 
@@ -212,6 +216,10 @@ if($_GET['status']=='delete_akun'){
             <label for="exampleInputEmail1">Uraian</label>
             <input type="text" class="form-control" id="uraian" name="uraian" placeholder="Uraian">
             <input type="hidden" class="form-control" id="id" name="id" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Nominal</label>
+            <input type="number" class="form-control" id="nominal" name="nominal" placeholder="Nominal">
           </div>
           <div class="form-group">
               <label for="exampleInputEmail1">Satker</label>  
@@ -288,6 +296,10 @@ if($_GET['status']=='delete_akun'){
             <label for="exampleInputEmail1">Uraian</label>
             <input type="text" class="form-control" id="uraian" name="uraian" placeholder="Uraian">
            
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Nominal</label>
+            <input type="number" class="form-control" id="nominal" name="nominal" placeholder="Nominal">
           </div>
           <div class="form-group">
               <label for="exampleInputEmail1">Satker</label>  
