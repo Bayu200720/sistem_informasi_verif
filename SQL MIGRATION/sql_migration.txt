@@ -1,0 +1,16 @@
+/* 1 */
+CREATE TABLE db_pengajuan.master_panjar (
+	id INT auto_increment NOT NULL,
+	name VARCHAR(100) NULL,
+	CONSTRAINT master_panjar_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_general_ci;
+
+
+/* 2 */
+INSERT INTO db_pengajuan.master_panjar (name)
+	VALUES ('Panjar GU');
+INSERT INTO db_pengajuan.master_panjar (name)
+	VALUES ('Panjar');
