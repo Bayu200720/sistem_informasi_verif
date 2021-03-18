@@ -135,6 +135,42 @@ if($_GET['p']=='update'){
 
 }
 
+if($_GET['p']=='update_approval'){
+
+  $id   = remove_junk($db->escape($_GET['id']));
+
+  $query  = "UPDATE nodin SET ";
+  $query .=" 	approvel_atasan= 2";
+  $query .=" WHERE id='{$id}'";
+//echo $query;exit();
+  
+  if($db->query($query)){
+    $session->msg('s',"Telah di ajukan ke bagian keuangan ");
+   // ini_set( 'display_errors', 1 );   
+ // error_reporting( E_ALL );    
+  $from = $user['email'];    
+  $to = "bayukominfo20@gmail.com";    
+  $subject = "Pengajuan SPM ".$satker[0]['keterangan'];    
+  $message = "pengajuan SPM";   
+  $headers = "From:" . $from;    
+  mail($to,$subject,$message, $headers);    
+  echo "Pesan email sudah terkirim.";
+    if($user['user_level']==2){
+     redirect('nodin_bpp.php', false);
+    }else{
+    redirect('nodin_bpp.php', false);
+    }
+  } else {
+    $session->msg('d',' Sorry failed to Pengajuan!');
+    if($user['user_level']==2){
+     redirect('nodin_bpp.php', false);
+   }else{
+      redirect('nodin_bpp.php', false);
+   }
+  }
+
+}
+
 if($_GET['p']=='batal'){
 
   $id   = remove_junk($db->escape($_GET['id']));
@@ -248,6 +284,21 @@ if($_GET['status']=='delete_nodin'){
                 <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary" target="_BLANK"><span class="glyphicon glyphicon-print"></span></a>
                 </td>
                 <td class="text-center">
+
+                <?php if($sale['approvel_atasan'] == 1){
+                                $pengajuan = find_all_global('pengajuan',$sale['id'],'id_nodin'); 
+                        ?>
+                        <a class="btn btn-success" disabled>Sudah Diapprovel</a>
+                      <?php }else if($sale['approvel_atasan'] == 2){?>
+                        <a href="" class="btn btn-warning" disabled>Menunggu Approval</a>
+                      <?php }else{ ?>
+                        <a onclick="return confirm('Apakah Anda Yakin ingin mengajuan Approval?')" href="nodin_bpp.php?id=<?=$sale['id']?>&key=
+                                                                                                         &p=update_approval" class="btn btn-primary">Ajukan Approval</a>
+                  <?php } ?>
+
+
+                        
+
                       <?php $sp= find_nodin_j_pengajuan_j_dt_count($satker[0]['tahun'],$user['id_satker'],$sale['id']); 
 							if($sp[0]['status'] == 0){ 
  							 echo "<span class='btn btn-danger'>isi detail transaksi dulu</span>";}else{?>
@@ -256,7 +307,7 @@ if($_GET['status']=='delete_nodin'){
                         ?>
                         <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success" <?php if($pengajuan[0]['status_verifikasi'] != 0){?>disabled <?php } ?>>Sudah Diajukan</a>
                       <?php }else{ ?>
-                        <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary">Ajukan</a>
+                        <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary" <?php if($sale['approvel_atasan'] != 1){echo "disabled";}?>>Ajukan</a>
                   <?php } }?>
                 
                 </td>

@@ -64,6 +64,8 @@ $idi= $_GET['id'];
                 <th class="text-center" > Nominal Pengajuan </th>
                 <th class="text-center" > Status </th>
                 <th class="text-center" > Validasi Kasubbag </th>
+                <th class="text-center" > Lembar Verif </th>
+                <th class="text-center" > Waktu </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
              </tr>
             </thead>
@@ -87,6 +89,7 @@ $idi= $_GET['id'];
                       }	             		
                 	?>
               </td>
+              
               <td class="text-center" >
                 	<?php if($sale['verifikasi_kasubbag_v'] == ''){
                            echo "<span class='glyphicon glyphicon-remove-circle'></span>Belom Tervalidasi ";
@@ -95,6 +98,30 @@ $idi= $_GET['id'];
                       }	             		
                 	?>
               </td>
+              <td class="text-center" >
+              <?php $verif = find_all_global('verifikasi',$sale['id'],'id_pengajuan');if($verif[0]['id_pengajuan']!=NULL){?>
+          
+          <a href="<?php 
+             if($sale['id_jenis_pengajuan']==1){
+               echo "verif_LSsppd.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+             }else if($sale['id_jenis_pengajuan']==2){
+               echo "verif_sppdLn.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+             }else if($sale['id_jenis_pengajuan']==3){
+               echo "verif_LSHonor.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+             }else if($sale['id_jenis_pengajuan']==4){
+               echo "verif_LSjasprof.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+             }else if($sale['id_jenis_pengajuan']==5){
+               echo "verif_LSkur50.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+             }else{
+               echo "verif_GU.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+       
+             }
+           
+           ?>" class="btn btn-warning" style="margin: 20px;" target="_BLANK">Form Verif</a>
+       <?php } ?> 
+              
+              </td>
+              <td class="text-center"><?php echo $sale['created_at']?></td>
                <td class="text-center">
                   <div class="btn-group">
                      <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>" class="btn btn-success btn-xs" title="Detail status Pengajuan" data-toggle="tooltip" > <span class="glyphicon glyphicon-folder-open"></span></a>
@@ -115,6 +142,8 @@ $idi= $_GET['id'];
                 <th class="text-center" >  </th>
                 <th class="text-center" >  </th>
                 <th class="text-center" >  <?=rupiah($tot);?> </th>
+                <th class="text-center" > </th>
+                <th class="text-center" > </th>
                 <th class="text-center" > </th>
                 <th class="text-center" > </th>
                 <th class="text-center" > </th>

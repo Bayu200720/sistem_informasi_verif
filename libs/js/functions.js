@@ -11,6 +11,11 @@ $(document).on('click','#UploadSPM',function(){
   var id=$(this).data('id');
   $('.modal-body #id').val(id);   
 });
+$(document).on('click','#Upload_adkSPM',function(){
+  var id=$(this).data('id');
+  $('.modal-body #id').val(id);   
+});
+
 
 $(document).on('click','#penolakan',function(){
   var id=$(this).data('id');

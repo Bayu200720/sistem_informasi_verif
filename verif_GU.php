@@ -12,7 +12,7 @@
  
 ?>
 <style type="text/css">
-<!--
+
 table td {padding-left:3px;}
 .halman{
 							page-break-after: always;
@@ -24,7 +24,7 @@ table td {padding-left:3px;}
 
 }
 .style28 {font-size: 12px}
--->
+
 </style>
 
 <div class="halman" align=center> 
@@ -183,4 +183,4 @@ table td {padding-left:3px;}
 
 </div>
 
-<script language="javascript">//window.print();</script>
+<script language="javascript">window.print();</script>

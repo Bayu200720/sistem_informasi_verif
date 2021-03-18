@@ -131,6 +131,25 @@ if(isset($_POST['cair'])){
     }
   }
 
+  if(isset($_GET['s']) and $_GET['s'] == 'adk_spm_batal'){
+    //var_dump($_GET); echo "ok";exit();
+    if($_GET['s'] == 'adk_spm_batal'){
+     
+      $pengajuan = find_by_id('pengajuan',$_GET['id']);//var_dump($pengajuan);exit();
+    $query  = "UPDATE pengajuan SET ";
+          $query .= "upload_adk_spm=''";
+          $query .= "WHERE id='{$pengajuan["id"]}'";
+          $result = $db->query($query);
+          $session->msg('s',' Berhasil di Batalkan');
+          
+        redirect('detail_dokumen_ses.php?id='.$pengajuan['id']);
+    }else{
+      $session->msg('d',' Gagal di batalkan!');
+        redirect('detail_dokumen_ses.php'.$pengajuan['id'], false);
+    }
+  }
+
+
   if(isset($_GET['s']) and $_GET['s'] == 'sp2d'){
    
     if($_GET['s'] == 'sp2d'){
@@ -221,6 +240,30 @@ if(isset($_POST['cair'])){
    }
   
   }
+
+  if(isset($_POST['upload_adk_spm'])) {
+    $id = $_POST['id'];
+     $pengajuan = find_by_id('pengajuan',$id);
+
+  $photo = new Media();
+  $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
+   if($photo->process_adk_spm($id)){
+       $session->msg('s','dokumen has been uploaded.');
+           if($user['user_level']==5){
+          redirect('detail_dokumen_ses.php', false);
+       }else{
+       redirect('detail_dokumen_ses.php?id='.$pengajuan['id']);
+      }
+   } else{
+     $session->msg('d',join($photo->errors));
+     if($user['user_level']==5){
+          redirect('detail_dokumen_ses.php?id='.$pengajuan['id'], false);
+       }else{
+       redirect('detail_dokumen_ses.php?id='.$pengajuan['id']);
+      }
+   }
+  
+  }
 ?>
 <?php
 
@@ -278,6 +321,7 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                
                 <th class="text-center"> Upload Dokumen Pengajuan</th>
                 <th class="text-center"> ADK SPP </th>
+                <th class="text-center"> ADK SPM </th>
                 <th class="text-center"> SPM yang Telah di Proses</th>
                 <th class="text-center"> Dokumen SP2D</th>
                 <th class="text-center"> SP2D</th>
@@ -312,6 +356,20 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                         <?php }else{?>
                         
                             <?php if($sale['file_spm']!=''){?><a href="uploads/spm/<?=$sale['file_spm']?>" class="btn btn-success" target="_blank">Preview</a><?php } ?>
+                        <?php } ?>
+                    </td>
+                    <td class="text-center">
+                        <?php if($user['user_level'] == 3){?>
+                            <?php if($sale['upload_adk_spm']==''){?>
+                            <a href="#" class="btn btn-primary" id="Upload_adkSPM" data-toggle="modal" data-target="#uploadAdkSPM" data-id='<?=$sale['id'];?>'>Upload File</a>     
+                                <?php }else{ ?>
+                                <a href="uploads/adk_spm/<?=$sale['upload_adk_spm']?>" class="btn btn-success" target="_blank">Preview</a>
+                                
+                                <a href="detail_dokumen_ses.php?id=<?=$sale['id']?>&s=adk_spm_batal" class="btn btn-danger">Batal</a>
+                                <?php } ?>
+                        <?php }else{?>
+                        
+                            <?php if($sale['upload_adk_spm']!=''){?><a href="uploads/adk_spm/<?=$sale['upload_adk_spm']?>" class="btn btn-success" target="_blank">Preview</a><?php } ?>
                         <?php } ?>
                     </td>
                     <td class="text-center">
@@ -394,10 +452,11 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                         <?php $p = find_by_filed('pengajuan',$sale['id'],'id');  
                         if($p['verifikasi_kasubbag_v']==1){   ?>
                         <span class="label label-success">Terverifikasi Kasubbag verifikator</span>
-                        <?php }else{ ?>
+                        <?php }else if($p['verifikasi_kasubbag_v']==2){ ?>
                         <span class="label label-danger">Ditolak Kasubbag verifikator</span>
+                        <?php }else{ ?>
+                          <span class="label label-warning"> Kasubbag belom verifikasi</span>
                         <?php } ?>
-                            
                         <?php  $user = find_by_id('users',$_SESSION['user_id']); if($user['user_level'] == 2  or $user['user_level'] == 7){  ?>
                                 <a href="<?php $jenis= find_by_id('jenis_pengajuan',$sale['id_jenis_pengajuan']); echo $jenis['link'];?>.php?id=<?=$sale['id']?>" class="btn btn-success">Edit</a>
                                     <br>
@@ -564,6 +623,34 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
     </div>
   </div>
 </div>
+
+      <!-- Modal Upload berkas SPM-->
+      <div class="modal fade" id="uploadAdkSPM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload ADK SPM</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" method="POST" enctype="multipart/form-data">
+      <div class="modal-body">
+       <div class="form-group">
+        <label for="exampleInputEmail1">Upload File</label>
+        <input type="file" class="form-control" id="sp2d" name="file_upload" placeholder="SP2D">
+        <input type="hidden" class="form-control" id="id" name="id" >
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" name="upload_adk_spm" value="Save">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 
