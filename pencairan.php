@@ -68,6 +68,7 @@ if(isset($_POST['pencairan'])){
           $nominal     = $db->escape($_POST['nominal']);
           $id_satker     = $db->escape($_POST['id_satker']);
           $keterangan     = $db->escape($_POST['keterangan']);
+          // print_r($uraian);exit();
           
           $sql  = "INSERT INTO pencairan(spm,nominal,tanggal,keterangan,id_satker) VALUES ('{$uraian}',{$nominal},'{$tanggal}','{$keterangan}',{$id_satker})";
           $result = $db->query($sql);
@@ -196,7 +197,7 @@ $sales = find_all_global('pencairan',0,'status');
             <td class="text-center">
                  <div class="btn-group">
                  
-                     <a href="#" id="editpencairan" data-toggle="modal" data-target="#EditPanjar" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['keterangan'];?>' data-tanggal='<?=$sale['tanggal'];?>' data-nominal='<?=$sale['nominal'];?>' data-spm='<?=$sale['spm'];?>' class="btn btn-warning btn-xs"  title="Edit" >
+                     <a href="#" id="editpencairan" data-toggle="modal" data-target="#EditPanjar" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['keterangan'];?>' data-tanggal='<?=$sale['tanggal'];?>' data-nominal='<?=$sale['nominal'];?>' data-spm='<?=$sale['spm'];?>' data-id_satker="<?=$sale['id_satker']?>" data-uraian="<?=$sale['spm']?>" class="btn btn-warning btn-xs" class="btn-edit" title="Edit" >
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
                      <a onclick="return confirm('Yakin Hapus?')" href="pencairan.php?id=<?php echo (int)$sale['id'];?>&status=pencairan" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
@@ -233,7 +234,13 @@ $sales = find_all_global('pencairan',0,'status');
         <div class="modal-body">
           <div class="form-group">
                 <label for="exampleInputEmail1">Uraian</label>
-                <input type="text" class="form-control" id="uraian" name="uraian" placeholder="uraian">
+                <select name="uraian" id="uraian" class="form-control">
+                  <?php 
+                    $data = find_all('master_panjar');
+                    foreach($data as $key => $value):?>
+                      <option value="<?php echo $value['name'] ?>"><?php echo $value['name'] ?></option>
+                  <?php endforeach;?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Tanggal</label>
@@ -283,8 +290,14 @@ $sales = find_all_global('pencairan',0,'status');
       <div class="modal-body">
         
       <div class="form-group">
-                <label for="exampleInputEmail1">Uraian</label>
-                <input type="text" class="form-control" id="uraian" name="uraian" placeholder="uraian">
+          <label for="exampleInputEmail1">Uraian</label>
+          <select name="uraian" class="form-control">
+            <?php 
+              $data = find_all('master_panjar');
+              foreach($data as $key => $value):?>
+                <option value="<?php echo $value['name'] ?>"><?php echo $value['name'] ?></option>
+            <?php endforeach;?>
+          </select>
         </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Tanggal</label>
@@ -321,3 +334,11 @@ $sales = find_all_global('pencairan',0,'status');
 
 <?php include_once('layouts/footer.php'); ?>
 
+<script>
+  $(document).ready(function(){
+    $('.btn-edit').on('click', function(){
+      $('#id_satker').val($(this).data('id_satker'));
+      $('#uraian').val($(this).data('uraian'));
+    });
+  })
+</script>
