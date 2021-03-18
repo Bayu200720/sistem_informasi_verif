@@ -32,6 +32,16 @@
       </a> 
   </li>
   <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>BKU PUM</span>
+      </a>
+      <ul class="nav submenu">
+         <li><a href="bpp_pencatatan.php">Pencatatan</a> </li>
+         <li><a href="bpp_pencatatan.php">SPTJB</a> </li>
+     </ul>
+  </li>
+  <li>
     <a href="bku_bpp.php" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
        <span>BKU</span>
