@@ -31,6 +31,11 @@
        <span>Setting</span>
       </a> 
   </li>
+  <?php
+  $user = find_by_id('users',$_SESSION['user_id']); 
+    if($user['id_satker'] == 1 ||$user['id_satker'] == 2 || $user['id_satker'] == 3 || $user['id_satker'] == 4 ||$user['id_satker'] == 14):
+
+  ?>
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
@@ -38,9 +43,12 @@
       </a>
       <ul class="nav submenu">
          <li><a href="bpp_pencatatan.php">Pencatatan</a> </li>
-         <li><a href="bpp_pencatatan.php">SPTJB</a> </li>
+         <li><a href="bpp_sptjb.php">SPTJB</a> </li>
      </ul>
   </li>
+  <?php 
+    endif;
+  ?>
   <li>
     <a href="bku_bpp.php" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>

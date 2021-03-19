@@ -22,17 +22,18 @@
           $sql .= " pengembalian='{$nominal}'";
           $sql .= " WHERE id ='{$p_id}'";
           $result = $db->query($sql);
-          if( $result && $db->affected_rows() === 1){
+          if( $result){
                    //$h= update_product_qty_ok($p_id);
-                      $session->msg('s',"SP2D updated.");
-                    redirect("bku_bpp.php?id=". $p_id, false);
+                      $session->msg('s',"Pencatatan updated.");
+                    
+                     header("Refresh:0");
                   } else {
                     $session->msg('d',' Sorry failed to updated!');
-                    redirect('bku_bpp.php', false);
+                    header("Refresh:0");
                   }
         } else {
            $session->msg("d", $errors);
-           redirect('bku_bpp.php',false);
+           header("Refresh:0");
         }
   }
 
@@ -42,22 +43,25 @@
         if(empty($errors)){
           $p_id      = $db->escape($_POST['id']);
           $tanggal     = $db->escape($_POST['tanggal']);
+          $nominal     = $db->escape($_POST['nominal']);
           
           $sql  = "UPDATE pencairan SET";
-          $sql .= " tanggal_pengembalian='{$tanggal}'";
+          $sql .= " tanggal_pengembalian='{$tanggal}',";
+          $sql .= " pengembalian='{$nominal}'";
           $sql .= " WHERE id ='{$p_id}'";
+          // print_r($sql);exit();
           $result = $db->query($sql);
-          if( $result && $db->affected_rows() === 1){
+          if( $result){
                    //$h= update_product_qty_ok($p_id);
-                      $session->msg('s',"SP2D updated.");
-                    redirect("bku_bpp.php?id=". $p_id, false);
+                      $session->msg('s',"Pencatatan updated.");
+                      header("Refresh:0");
                   } else {
                     $session->msg('d',' Sorry failed to updated!');
-                    redirect('bku_bpp.php', false);
+                    header("Refresh:0");
                   }
         } else {
            $session->msg("d", $errors);
-           redirect('bku_bpp.php',false);
+           header("Refresh:0");
         }
   }
   
@@ -70,7 +74,7 @@
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <span class="glyphicon glyphicon-edit"></span>
-        <span>Pencatatan</span>
+        <span>Pencatatan </span>
       </div>
       <div class="panel-body" style="width:100%">
         <div class="row" style="width:100%; margin-left:2px">
@@ -79,9 +83,8 @@
                         <tr>
                             <th class="text-center">Jenis Panjar</th>
                             <th class="text-center">Tanggal Pencairan </th>
-                            <th class="text-center"> Jumlah </th>
-                            <th class="text-center">Tanggal Pengembalian </th>
-                            <th class="text-center"> Jumlah </th>
+                            <th class="text-center"> Nominal </th>
+                            <th class="text-center">Keterangan </th>
                         </tr>
                         </thead>
                     <tbody>
@@ -100,18 +103,10 @@
                             </td>
                             <td class="text-center" >
                                     <?php if($sale['tanggal_pengembalian'] == ''){?>
-                                        <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input Tanggal Pengembalian</a>
+                                        <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input Pengembalian</a>
                                     <?php }else{?>
-                                        <a href="#" class="btn btn-warning" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['tanggal_pengembalian'];?>'><?=$sale['tanggal_pengembalian'];?></a> 
+                                        <a href="#" class="btn btn-warning nominal" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['tanggal_pengembalian'];?>' data-nominal='<?=$sale['pengembalian'];?>'><?=$sale['tanggal_pengembalian'];?></a> 
                                     <?php } ?>
-                            </td>
-                            <td class="text-center">
-                                  <?php if($sale['pengembalian'] == 0){?>
-                                        <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal1" data-id='<?=$sale['id'];?>'>Input Pengembalian</a>
-                                    <?php }else{?>
-                                        <a href="#" class="btn btn-warning" id="editsp2d" data-toggle="modal" data-target="#exampleModal1" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['pengembalian'];?>'><?=rupiah($sale['pengembalian']);?></a> 
-                                    <?php } ?>
-                                
                             </td>
                         </tr>
                         <?php $tot+=$sale['nominal']; $tot_pengmbalian+=$sale['pengembalian']; endforeach;?>
@@ -120,14 +115,12 @@
                             <th class="text-center">#</th>
                             <th class="text-center" > </th>
                             <th class="text-center"><?=rupiah($tot);?></th> 
-                            <th class="text-center" > </th>
                             <th class="text-center"><?=rupiah($tot_pengmbalian);?></th>
                     </tr>
                     <tr>
                             <th class="text-center"></th>
                             <th class="text-center" > Saldo Akhir</th>
                             <th class="text-center"><?php $uang=$tot-$tot_pengmbalian; $saldo=$uang-$tot1;?></th> 
-                            <th class="text-center" > </th>
                             <th class="text-center"><?=rupiah($saldo);?></th>
                     </tr>
                 </table>
@@ -151,8 +144,13 @@
       <form action="" method="POST">
       <div class="modal-body">
        <div class="form-group">
-        <label for="exampleInputEmail1">Masukkan Tanggal</label>
+        <label for="exampleInputEmail1">Tanggal Pengembalian</label>
         <input type="date" class="form-control" id="sp2d" name="tanggal" placeholder="tanggal">
+        <input type="hidden" class="form-control" id="id" name="id" >
+       </div>
+       <div class="form-group">
+        <label for="exampleInputEmail1">Jumlah Pengembalian</label>
+        <input type="text" class="form-control" id="nominal" name="nominal" placeholder="nominal">
         <input type="hidden" class="form-control" id="id" name="id" >
        </div>
       </div>
@@ -181,7 +179,7 @@
       <div class="modal-body">
        <div class="form-group">
         <label for="exampleInputEmail1">Edit Nominal</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" name="nominal" placeholder="nominal">
+        <input type="text" class="form-control" id="nominal" name="nominal" placeholder="nominal">
         <input type="hidden" class="form-control" id="id" name="id" >
        </div>
       </div>
@@ -195,3 +193,10 @@
 </div>
 
 <?php include_once('layouts/footer.php'); ?>
+<script>
+  $(document).ready(function(){
+    $('.nominal').on('click', function(e){
+      $('#nominal').val($(this).data('nominal'));
+    })
+  })
+</script>

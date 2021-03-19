@@ -2,7 +2,6 @@
   $page_title = 'All Pengajuan';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(5);
 ?>
 <?php
  //delete pencairan
@@ -14,23 +13,23 @@ $status= $_GET['status'];
     $d_sale = find_by_id('pencairan',(int)$_GET['id']);
 
     if(!$d_sale){
-                redirect('pencairan.php', false);
+                redirect('bpp_sptjb', false);
     }
 
     $delete_id = delete_by_id('pencairan',(int)$d_sale['id']);
     if($delete_id){
         $session->msg("s","pencairan deleted.");
         if($user['user_level']==2){
-                redirect('pencairan.php', false);
+                redirect('bpp_sptjb', false);
             }else{
-              redirect('pencairan.php');
+              redirect('bpp_sptjb');
           }
     } else {
         $session->msg("d","pencairan deletion failed.");
             if($user['user_level']==2){
-                redirect('pencairan.php', false);
+                redirect('bpp_sptjb', false);
             }else{
-              redirect('pencairan.php');
+              redirect('bpp_sptjb');
             }
     }
 
@@ -52,10 +51,10 @@ if(isset($_POST['cetak'])){
         //echo $supdate; exit();
         $db->query($supdate);
         $session->msg('s',"Pencairan updated.");
-        redirect('pencairan.php',false);
+        redirect('bpp_sptjb',false);
         } else {
            $session->msg("d", $errors);
-           redirect('pencairan.php',false);
+           redirect('bpp_sptjb',false);
         }
   }
 
@@ -75,14 +74,14 @@ if(isset($_POST['pencairan'])){
           if( $result && $db->affected_rows() === 1){
                    //$h= update_product_qty_ok($p_id);
                       $session->msg('s',"Pencairan updated.");
-                    redirect('pencairan.php', false);
+                    redirect('bpp_sptjb', false);
                   } else {
                     $session->msg('d',' Sorry failed to updated!');
-                    redirect('pencairan.php', false);
+                    redirect('bpp_sptjb', false);
                   }
         } else {
            $session->msg("d", $errors);
-           redirect('pencairan.php',false);
+           redirect('bpp_sptjb',false);
         }
   }
 
@@ -107,14 +106,14 @@ if(isset($_POST['pencairan'])){
           if( $result && $db->affected_rows() === 1){
                    //$h= update_product_qty_ok($p_id);
                       $session->msg('s',"Pencairan updated.");
-                    redirect('pencairan.php', false);
+                    redirect('bpp_sptjb', false);
                   } else {
                     $session->msg('d',' Sorry failed to updated!');
-                    redirect('pencairan.php', false);
+                    redirect('bpp_sptjb', false);
                   }
         } else {
            $session->msg("d", $errors);
-           redirect('pencairan.php',false);
+           redirect('bpp_sptjb',false);
         }
   }
 
@@ -170,24 +169,17 @@ $sales = find_all_global('pencairan',0,'status');
           <table id="tabel" class="table table-bordered table-striped" style="width: 100%;">
             <thead>
               <tr>
-              <th class="text-center">Checkbox</th>
-                <th class="text-center" style="width: 50px;">#</th>
-                <th> SPM </th>
-                <th> Jensi Pengajuan </th>
-                <th class="text-center" style="width: 15%;"> Tanggal</th>
-                <th class="text-center" style="width: 15%;"> Nominal</th>          
-                <th class="text-center" style="width: 15%;">Satker</th>
-                <th class="text-center" style="width: 15%;">Keterangan</th>
+                <th> Tanggal </th>
+                <th> Nomor SPM </th>
+                <th class="text-center" style="width: 15%;"> Nomor SPTJB</th>
+                <th class="text-center" style="width: 15%;"> Jumlah</th>          
+                <th class="text-center" style="width: 15%;">Status</th>
                 <th class="text-center" style="width: 15%;">Aksi</th>
              </tr>
             </thead>
            <tbody>
              <?php foreach ($sales as $sale):?>
              <tr>
-             <form action="" method="POST">
-               <td><input type="checkbox" name="id[]" value="<?php echo $sale['id'];?>"></td>
-               <td class="text-center"><?php echo count_id();?></td>
-               <td><?php echo remove_junk($sale['spm']); ?></td>
                <td class="text-center"><?php $pengajuan= find_by_id('pengajuan',$sale['id_pengajuan']);$nodin=find_by_id('nodin',$pengajuan['id_nodin']);
                $jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']; ?></td>
                <td class="text-center"><?=$sale['tanggal']; ?></td>
@@ -201,7 +193,7 @@ $sales = find_all_global('pencairan',0,'status');
                      <a href="#" id="editpencairan" data-toggle="modal" data-target="#EditPanjar" data-id='<?=$sale['id'];?>' data-keterangan='<?=$sale['keterangan'];?>' data-tanggal='<?=$sale['tanggal'];?>' data-nominal='<?=$sale['nominal'];?>' data-spm='<?=$sale['spm'];?>' data-id_satker="<?=$sale['id_satker']?>" data-uraian="<?=$sale['spm']?>" class="btn btn-warning btn-xs" class="btn-edit" title="Edit" >
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
-                     <a onclick="return confirm('Yakin Hapus?')" href="pencairan.php?id=<?php echo (int)$sale['id'];?>&status=pencairan" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                     <a onclick="return confirm('Yakin Hapus?')" href="bpp_sptjb?id=<?php echo (int)$sale['id'];?>&status=pencairan" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>
                      </a>
                   </div>
@@ -231,7 +223,7 @@ $sales = find_all_global('pencairan',0,'status');
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="pencairan.php" method="POST">
+      <form action="bpp_sptjb" method="POST">
         <div class="modal-body">
           <div class="form-group">
                 <label for="exampleInputEmail1">Uraian</label>
@@ -287,7 +279,7 @@ $sales = find_all_global('pencairan',0,'status');
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="pencairan.php" method="POST">
+      <form action="bpp_sptjb" method="POST">
       <div class="modal-body">
         
       <div class="form-group">
