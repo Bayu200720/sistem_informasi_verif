@@ -450,6 +450,20 @@ function tableExists($table){
     $result = find_by_sql($sql);
     return $result;
 }
+  function find_sptb_5pum_tahun($id_satker){
+    global $db;
+    $results = array();
+    $sql = "SELECT d.*, p.spm FROM detail_pengajuan d 
+            left join
+            pengajuan p on d.id_pengajuan = p.id
+            join 
+            akun a on a.id = d.id_akun
+            where a.id_satker = '{$id_satker}'
+          ";
+    $result = find_by_sql($sql);
+    // print_r($sql);exit();
+    return $result;
+}
 
 function find_pencairan_tahun($tahun,$id_satker){
   global $db;

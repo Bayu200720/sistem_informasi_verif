@@ -7,144 +7,77 @@
  //delete pencairan
  //var_dump($_GET['status']);exit();
 $status= $_GET['status'];
-//var_dump(($status === 'pencairan'));exit();
- if( isset($_GET['status']) and $status==="pencairan"){
-   // var_dump($status);exit();
-    $d_sale = find_by_id('pencairan',(int)$_GET['id']);
-
-    if(!$d_sale){
-                redirect('bpp_sptjb', false);
-    }
-
-    $delete_id = delete_by_id('pencairan',(int)$d_sale['id']);
-    if($delete_id){
-        $session->msg("s","pencairan deleted.");
-        if($user['user_level']==2){
-                redirect('bpp_sptjb', false);
-            }else{
-              redirect('bpp_sptjb');
-          }
-    } else {
-        $session->msg("d","pencairan deletion failed.");
-            if($user['user_level']==2){
-                redirect('bpp_sptjb', false);
-            }else{
-              redirect('bpp_sptjb');
-            }
-    }
-
-}
 
 
-if(isset($_POST['cetak'])){
-   // var_dump($_POST['id']);exit();
-    $req_fields = array('nominal', 'tanggal','id_satker' );
-    validate_fields($req_fields);
-        if(isset($_POST['id'])){
-          
-          $sql  = "INSERT INTO `k_cair` (`id`, `time_add`) VALUES (NULL, current_timestamp())";
-          $result = $db->query($sql);
-            $cair = find_DESC('k_cair');
-           $status= $cair['id'];
-           $id= implode(',',$_POST['id']);
-        $supdate = "UPDATE `pencairan` SET `status` = '{$status}' WHERE `id` in ($id)";
-        //echo $supdate; exit();
-        $db->query($supdate);
-        $session->msg('s',"Pencairan updated.");
-        redirect('bpp_sptjb',false);
-        } else {
-           $session->msg("d", $errors);
-           redirect('bpp_sptjb',false);
-        }
-  }
-
-if(isset($_POST['pencairan'])){
-    $req_fields = array('nominal', 'tanggal','id_satker','uraian' );
-    validate_fields($req_fields);
-        if(empty($errors)){
-          $uraian     = $db->escape($_POST['uraian']);
-          $tanggal     = $db->escape($_POST['tanggal']);
-          $nominal     = $db->escape($_POST['nominal']);
-          $id_satker     = $db->escape($_POST['id_satker']);
-          $keterangan     = $db->escape($_POST['keterangan']);
-          // print_r($uraian);exit();
-          
-          $sql  = "INSERT INTO pencairan(spm,nominal,tanggal,keterangan,id_satker) VALUES ('{$uraian}',{$nominal},'{$tanggal}','{$keterangan}',{$id_satker})";
-          $result = $db->query($sql);
-          if( $result && $db->affected_rows() === 1){
-                   //$h= update_product_qty_ok($p_id);
-                      $session->msg('s',"Pencairan updated.");
-                    redirect('bpp_sptjb', false);
-                  } else {
-                    $session->msg('d',' Sorry failed to updated!');
-                    redirect('bpp_sptjb', false);
-                  }
-        } else {
-           $session->msg("d", $errors);
-           redirect('bpp_sptjb',false);
-        }
-  }
-
+ if(isset($_POST['sptjb'])){
+   $req_fields = array('no_sptjb','nominal','id_akun','tanggal');
+   validate_fields($req_fields);
+   var_dump($_POST);
+   $teks5 = $_POST['nominal'];
+    $nominal = preg_replace("/[^0-9]/", "", $teks5);
   
+ 
 
-  if(isset($_POST['UpdatePanjar'])){
-     // var_dump($_POST); exit();
-    $req_fields = array('tanggal','id','nominal','id_satker' );
-    validate_fields($req_fields);
-        if(empty($errors)){
-          $p_id     = $db->escape($_POST['id']);
-          $uraian     = $db->escape($_POST['uraian']);
-          $nominal     = $db->escape($_POST['nominal']);
-          $tanggal     = $db->escape($_POST['tanggal']);
-          $id_satker     = $db->escape($_POST['id_satker']);
-          $keterangan     = $db->escape($_POST['keterangan']);
-          
-          $sql  = "UPDATE pencairan SET";
-          $sql .= " spm='{$uraian}',nominal='{$nominal}',tanggal='{$tanggal}',keterangan='{$keterangan}',id_satker={$id_satker}";
-          $sql .= " WHERE id ='{$p_id}'";
-          $result = $db->query($sql);
-          if( $result && $db->affected_rows() === 1){
-                   //$h= update_product_qty_ok($p_id);
-                      $session->msg('s',"Pencairan updated.");
-                    redirect('bpp_sptjb', false);
-                  } else {
-                    $session->msg('d',' Sorry failed to updated!');
-                    redirect('bpp_sptjb', false);
-                  }
-        } else {
-           $session->msg("d", $errors);
-           redirect('bpp_sptjb',false);
-        }
-  }
+  if(empty($errors)){
+     $no_sptjb  = remove_junk($db->escape($_POST['no_sptjb']));
+     $tanggal  = remove_junk($db->escape($_POST['tanggal']));
+     $nominal  = remove_junk($db->escape($nominal));
+      $akun  = remove_junk($db->escape($_POST['id_akun']));
+
+    
+
+     if($db->escape($_POST['pph'])==''){
+      $pph=0;
+     }else{
+      $pph = preg_replace("/[^0-9]/", "", $_POST['pph']);
+     }
+     if($db->escape($_POST['ppn'])==''){
+      $ppn=0;
+     }else{
+      $ppn = preg_replace("/[^0-9]/", "", $_POST['ppn']);
+     //$ppn  = remove_junk($db->escape($_POST['ppn']));
+     }
+
+    if($_POST['pph1'] == 'pph5p'){
+      $pph = $nominal * 5/100;
+    }else if($_POST['pph1']== 'pph15p'){
+      $pph = $nominal * 15/100;
+    }else if($_POST['pph1']== 'pph2p'){
+      $pph = $nominal * 2/100;
+    }else if($_POST['pph1']=='pph'){
+      $pph=0;
+    }
+    //var_dump($_POST['pph1']);
+    //var_dump($pph);exit();
+
+     $keterangan   = remove_junk($db->escape($_POST['keterangan']));
+     $date    = make_date();
+     $id_pengajuan = remove_junk($db->escape($_GET['id']));
+     $query  = "INSERT INTO detail_pengajuan (";
+     $query .=" no_sptjb,nominal,id_akun,keterangan,id_pengajuan,pph,ppn,tanggal_dp";
+     $query .=") VALUES (";
+     $query .=" '{$no_sptjb}', '{$nominal}', '{$akun}', '{$keterangan}', '{$id_pengajuan}','{$pph}','{$ppn}','{$tanggal}'";
+     $query .=")";
+     if($db->query($query)){
+       $session->msg('s',"Detail Pengajuan added ");
+       redirect('bpp_sptjb.php?id='.$_GET["id"], false);
+     } else {
+       $session->msg('d',' Sorry failed to added!');
+       redirect('bpp_sptjb.php?id='.$_GET["id"], false);
+     }
+
+   } else{
+     $session->msg("d", $errors);
+     redirect('bpp_sptjb.php?id='.$_GET["id"],false);
+   }
+
+ }
 
 
 
-if(isset($_POST['update_sp2d'])){
-  $req_fields = array('sp2d', 'id' );
-  validate_fields($req_fields);
-      if(empty($errors)){
-        $p_id     = $db->escape($_POST['id']);
-        $sp2d     = $db->escape($_POST['sp2d']);
-        
-        $sql  = "UPDATE pengajuan SET";
-        $sql .= " sp2d='{$sp2d}'";
-        $sql .= " WHERE id ='{$p_id}'";
-        $result = $db->query($sql);
-        if( $result && $db->affected_rows() === 1){
-                 //$h= update_product_qty_ok($p_id);
-                    $session->msg('s',"SP2D updated.");
-                  redirect('pengajuan_ben.php', false);
-                } else {
-                  $session->msg('d',' Sorry failed to updated!');
-                  redirect('pengajuan_ben.php', false);
-                }
-      } else {
-         $session->msg("d", $errors);
-         redirect('pengajuan_ben.php',false);
-      }
-}
+  $user = find_by_id('users',$_SESSION['user_id']); 
 
-$sales = find_all_global('pencairan',0,'status');
+$sales = find_sptb_5pum_tahun($user['id_satker']);
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -159,10 +92,10 @@ $sales = find_all_global('pencairan',0,'status');
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>All Pencairan</span>
+            <span>SPTJB</span>
           </strong>
           <div class="pull-right">
-          <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input Panjar</a>
+          <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Add SPTJB</a>
           </div>
         </div>
         <div class="panel-body"  style="width: 100%;">
@@ -180,11 +113,10 @@ $sales = find_all_global('pencairan',0,'status');
            <tbody>
              <?php foreach ($sales as $sale):?>
              <tr>
-               <td class="text-center"><?php $pengajuan= find_by_id('pengajuan',$sale['id_pengajuan']);$nodin=find_by_id('nodin',$pengajuan['id_nodin']);
-               $jenis=find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan']; ?></td>
-               <td class="text-center"><?=$sale['tanggal']; ?></td>
-               <td class="text-center"><?=rupiah($sale['nominal']);?></td>
-               <td class="text-center"><?php $satker = find_by_id('satker',$sale['id_satker']); echo $satker['keterangan'];?></td>
+               <td class="text-center"><?=$sale['tanggal_dp']?></td>
+               <td class="text-center"><?=$sale['spm']?></td>
+               <td class="text-center"><?=$sale['no_sptjb']?></td>
+               <td class="text-center"><?=rupiah($sale['nominal']); ?></td>
                <td class="text-center"><?=$sale['keterangan'];?></td>
                <td style="display: none"></td>
             <td class="text-center">
@@ -201,8 +133,6 @@ $sales = find_all_global('pencairan',0,'status');
                 
              </tr>
             <?php endforeach;?>
-            <input type="submit" name="cetak" class="btn btn-success" value="Cetak">
-            </form>
            </tbody>
          </table>
         
@@ -274,51 +204,67 @@ $sales = find_all_global('pencairan',0,'status');
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Input Panjar</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add SPTJB</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="bpp_sptjb" method="POST">
+      <form action="bpp_sptjb.php" method="POST">
       <div class="modal-body">
-        
-      <div class="form-group">
-          <label for="exampleInputEmail1">Uraian</label>
-          <select name="uraian" class="form-control">
-            <?php 
-              $data = find_all('master_panjar');
-              foreach($data as $key => $value):?>
-                <option value="<?php echo $value['name'] ?>"><?php echo $value['name'] ?></option>
-            <?php endforeach;?>
-          </select>
+      
+        <div class="form-group">
+            <label for="exampleInputEmail1">Tanggal</label>
+            <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="tanggal">
         </div>
-       <div class="form-group">
-        <label for="exampleInputEmail1">Tanggal</label>
-        <input type="date" class="form-control" id="sp2d" name="tanggal" placeholder="tanggal">
-       </div>
-       <div class="form-group">
-        <label for="exampleInputEmail1">Nominal</label>
-        <input type="text" class="form-control" id="sp2d" name="nominal" placeholder="Nominal">
-       </div>
-       <div class="form-group">
-             <label for="exampleInputEmail1">Satker</label>
-                  <select class="form-control" name="id_satker">
-                      <option value="">Pilih Satker</option>
-                      <?php $jenis = find_all('satker');?>
-                    <?php  foreach ($jenis as $j): ?>
-                      <option value="<?php echo (int)$j['id'] ?>">
-                        <?php echo $j['keterangan'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Nomor SPTJB</label>
+            <input type="number" class="form-control" id="no_sptjb" name="no_sptjb" placeholder="no_sptjb">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">MAK</label>
+            <select name="id_akun" class="form-control">
+              <?php $user=find_by_id('users',$_SESSION['user_id']); $jenis = find_all_global('akun',$user['id_satker'],'id_satker');//var_dump($jenis);exit();?>
+              <?php  foreach ($jenis as $j): ?>
+                <option value="<?php echo (int)$j['id'] ?>">
+                  <?php echo $j['id'] ?>-<?php echo $j['mak'] ?></option>
+              <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Jumlah</label>
+            <input type="number" class="form-control" id="nominal" name="nominal" placeholder="nominal">
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-text">
+              <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph2p">
+              <label for="pph2p"><i > PPH 21 5%</i> </label>
+              <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph15p">
+              <label for="pph15p"><i > PPH 21 15%</i> </label>
+              <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="pph5p">       
+              <label for="pph5p"><i > PPH 23 2%</i></label>
+              <input type="radio" name="pph1" aria-label="Checkbox for following text input" value="ppn">       
+              <label for="pph5p"><i > PPN 10%</i></label>
+          </div>
+         </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">PPH</label>
+            <input type="number" class="form-control" id="pph" name="pph" placeholder="pph">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">PPN</label>
+            <input type="number" class="form-control" id="ppn" name="ppn" placeholder="ppn">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Keterangan</label>
+            <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Keterangan</label>
-        <input type="text" class="form-control" id="sp2d" name="keterangan" placeholder="Keterangan">
-       </div>
-       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" name="pencairan" value="Save">
+        <input type="submit" class="btn btn-primary" name="sptjb" value="Save">
       </div>
       </form>
     </div>
