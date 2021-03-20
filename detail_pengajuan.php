@@ -363,6 +363,12 @@ if($_GET['s']=='tolak'){
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>
                      </a>
+                     <a onclick="return confirm('Yakin Cetak?')" href="cetak_sptjb.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-success btn-xs"  title="Sptjb" data-toggle="tooltip" target="_BLANK">
+                       <span class="glyphicon glyphicon-print"></span>
+                     </a>
+                     <a onclick="return confirm('Yakin Cetak?')" href="cetak_nominatif.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-success btn-xs"  title="Nominatif" data-toggle="tooltip" target="_BLANK">
+                       <span class="glyphicon glyphicon-print"></span>
+                     </a>
                   </div>
                 <?php } ?>
                </td>
