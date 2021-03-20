@@ -290,25 +290,19 @@ if($_GET['status']=='delete_nodin'){
                         ?>
                         <a class="btn btn-success" disabled>Sudah Diapprovel</a>
                       <?php }else if($sale['approvel_atasan'] == 2){?>
-                        <a href="" class="btn btn-warning" disabled>Menunggu Approval</a>
-                      <?php }else{ ?>
-                        <a onclick="return confirm('Apakah Anda Yakin ingin mengajuan Approval?')" href="nodin_bpp.php?id=<?=$sale['id']?>&key=
-                                                                                                         &p=update_approval" class="btn btn-primary">Ajukan Approval</a>
+                        <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=update_approval" class="btn btn-warning" disabled>Menunggu Approval</a>
+                      <?php }else{ $sp1= find_nodin_j_pengajuan_j_dt_count($satker[0]['tahun'],$user['id_satker'],$sale['id']); ?>
+                        <a onclick="return confirm('Apakah Anda Yakin ingin mengajuan Approval?')" href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=update_approval" class="btn btn-primary" <?php if($sp1[0]['status'] == 0){ echo 'disabled';}?>>Ajukan Approval</a>
                   <?php } ?>
 
 
-                        
+
 
                       <?php $sp= find_nodin_j_pengajuan_j_dt_count($satker[0]['tahun'],$user['id_satker'],$sale['id']); 
 							if($sp[0]['status'] == 0){ 
  							 echo "<span class='btn btn-danger'>isi detail transaksi dulu</span>";}else{?>
-                      <?php if($sale['status_pengajuan'] == 1){
-                                $pengajuan = find_all_global('pengajuan',$sale['id'],'id_nodin'); 
-                        ?>
-                        <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success" <?php if($pengajuan[0]['status_verifikasi'] != 0){?>disabled <?php } ?>>Sudah Diajukan</a>
-                      <?php }else{ ?>
-                        <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary" <?php if($sale['approvel_atasan'] != 1){echo "disabled";}?>>Ajukan</a>
-                  <?php } }?>
+                      
+                  <?php }?>
                 
                 </td>
               
