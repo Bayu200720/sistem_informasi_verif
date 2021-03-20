@@ -157,7 +157,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                    PPH</span>
-                  <input type="text" id="pph" class="form-control" name="pph" placeholder="pph" value="0" placeholder="PPH" >
+                  <input type="text" id="pph" class="form-control" name="pph" placeholder="pph" value="0" placeholder="PPH" required>
                </div>
               </div>
 
@@ -166,7 +166,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   PPN</span>
-                  <input type="text" id="ppn" class="form-control" name="ppn" placeholder="ppn" value="0" >
+                  <input type="text" id="ppn" class="form-control" name="ppn" placeholder="ppn" value="0" required>
                </div>
               </div>
 

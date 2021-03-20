@@ -24,6 +24,19 @@ if($_GET['p']=='update'){
   //echo $query;exit();
   	
     if($db->query($query)){
+        $query1  = "UPDATE nodin SET ";
+        $query1 .=" status_pengajuan= 1";
+        $query1 .=" WHERE id='{$id}'";  
+
+        $db->query($query1);
+        $from = $user['email'];    
+        $to = "bayukominfo20@gmail.com";    
+        $subject = "Pengajuan SPM ".$satker[0]['keterangan'];    
+        $message = "pengajuan SPM";   
+        $headers = "From:" . $from;    
+        mail($to,$subject,$message, $headers);    
+        echo "Pesan email sudah terkirim.";
+
       $session->msg('s',"Telah di Approvel ");
      // ini_set( 'display_errors', 1 );   
    // error_reporting( E_ALL );    
@@ -43,6 +56,7 @@ if($_GET['p']=='update'){
 
 }
 
+
 if($_GET['p']=='batal'){
 
   $id   = remove_junk($db->escape($_GET['id']));
@@ -50,8 +64,11 @@ if($_GET['p']=='batal'){
   $query  = "UPDATE nodin SET ";
   $query .=" approvel_atasan= 0";
   $query .=" WHERE id='{$id}'";
-//echo $query;exit();
   if($db->query($query)){
+    $query1  = "UPDATE nodin SET ";
+    $query1 .=" status_pengajuan= 0";
+    $query1 .=" WHERE id='{$id}'";
+    $db->query($query1);
     $session->msg('s',"Berhasil di batalkan  ");
     if($user['user_level']==8){
      redirect('nodin_pimpinan.php', false);
@@ -125,9 +142,9 @@ if($_GET['p']=='batal'){
                       <?php if($sale['approvel_atasan'] == 1){
                                 $pengajuan = find_all_global('nodin',$sale['id'],'id'); 
                         ?>
-                        <a onclick="return confirm('Apakah anda yakin untuk membatalkan Approvel?');" href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success" <?php if($pengajuan[0]['status_verifikasi'] != 0){?>disabled <?php } ?>>Sudah Diapprovel</a>
+                        <a onclick="return confirm('Apakah anda yakin untuk membatalkan Approvel?');" href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success" <?php if($pengajuan[0]['status_verifikasi'] != 0){?> disabled <?php } ?>>Sudah Diapprovel</a>
                       <?php }else if($sale['approvel_atasan'] == 2){ ?>
-                        <a onclick="return confirm('Apakah anda yakin untuk Approvel?');" href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary">Approvel</a>
+                        <a onclick="return confirm('Apakah anda yakin untuk Approvel?');" href="nodin_pimpinan.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary">Approvl</a>
                       <?php } ?>
                 
                 </td>

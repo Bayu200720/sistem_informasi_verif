@@ -81,6 +81,44 @@ if(isset($_POST['update_kekurangan'])){
 
 }
 
+if(isset($_POST['update_kekuranganKsV'])){
+  $req_fields = array('verifikasi');
+  validate_fields($req_fields);
+  if(empty($errors)){
+    $id   = remove_junk($db->escape($_POST['id']));
+    $verifikasi   = remove_junk($db->escape($_POST['verifikasi']));
+
+    $query  = "UPDATE detail_pengajuan SET ";
+    $query .=" keterangan_k_verifikasi= '{$verifikasi}'";
+    $query .=" WHERE id='{$id}'";
+      $pengajuan = find_by_id('detail_pengajuan',$id);
+
+
+    if($db->query($query)){
+      $session->msg('s',"Kekurangan Updated ");
+      if($user['user_level']==2){
+       redirect('detail_pengajuan.php?id='.$pengajuan['id_pengajuan'], false);
+      }else{
+      redirect('detail_pengajuan.php?id='.$pengajuan['id_pengajuan'], false);
+      }
+    } else {
+      $session->msg('d',' Sorry failed to Updated!');
+      if($user['user_level']==2){
+       redirect('detail_pengajuan.php?id='.$pengajuan['id_pengajuan'], false);
+     }else{
+        redirect('detail_pengajuan.php?id='.$pengajuan['id_pengajuan'], false);
+     }
+    }
+
+  } else{
+    $session->msg("d", $errors);
+    redirect('detail_pengajuan.php?id='.$pengajuan['id_pengajuan'],false);
+  }
+
+}
+
+
+
 if($_GET['v']=='insert'){
 
   $verif = find_by_filed('verifikasi',$_GET['id'],'id_pengajuan');
@@ -300,7 +338,7 @@ if($_GET['s']=='tolak'){
                <td class="text-center"><?php echo $sale['tanggal_dp']; ?></td>
                <td class="text-center"><?php echo $sale['keterangan'];  ?></td>
                <td class="text-center">
-               <?php  if($user['user_level'] != 6 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>
+               <?php  if($user['user_level'] != 6 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 ){?>
                    <?php if($sale['keterangan_verifikasi']==''){ ?><a href="#" class="btn btn-primary" id="kekurangan"  data-toggle="modal" data-target="#PenolakanKPPN" data-id='<?=$sale['id'];?>' data-verifikasi='<?=$sale['keterangan_verifikasi'];?>'>Keterangan Verifikasi</a>
                    <?php }else{ ?><a href="#" class="btn btn-warning" id="kekurangan"  data-toggle="modal" data-target="#PenolakanKPPN" data-id='<?=$sale['id'];?>' data-verifikasi='<?=$sale['keterangan_verifikasi'];?>'><?=$sale['keterangan_verifikasi'];?></a><?php } ?>
                <?php  }else{ ?>
@@ -326,7 +364,7 @@ if($_GET['s']=='tolak'){
                        <span class="glyphicon glyphicon-trash"></span>
                      </a>
                   </div>
-                <?php }?>
+                <?php } ?>
                </td>
              </tr>
 
@@ -414,6 +452,33 @@ if($_GET['s']=='tolak'){
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="KeteranganKsVerif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Kekurangan Kasubbag Verifikasi </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="detail_pengajuan.php" method="POST">
+      <div class="modal-body">
+       <div class="form-group">
+        <label for="exampleInputEmail1">Masukkan Kekurangan</label>
+        <input type="text" class="form-control" id="verifikasi" name="verifikasi" placeholder="verifikasi" required> 
+       </div>
+       <input type="hidden" class="form-control" id="id" name="id" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" name="update_kekuranganKsV" value="Save">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal Import Data-->
 <div class="modal fade" id="UploadCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
