@@ -84,7 +84,9 @@
                             <th class="text-center">Jenis Panjar</th>
                             <th class="text-center">Tanggal Pencairan </th>
                             <th class="text-center"> Nominal </th>
-                            <th class="text-center">Keterangan </th>
+                            <th class="text-center"> Saldo </th>
+                            <th class="text-center">Pengembalian </th>
+                            <th class="text-center">Action </th>
                         </tr>
                         </thead>
                     <tbody>
@@ -92,7 +94,8 @@
                           
                             $pencairan= find_pencairan_tahun($satker[0]['tahun'],$user['id_satker']);
                         
-                        $tot=0; $tot_pengmbalian=0; foreach ($pencairan as $sale):?>
+                        $tot=0; $tot_pengmbalian=0;$tot_hasil=0; 
+                        foreach ($pencairan as $sale):?>
                         <tr>
                             <td class="text-center"><?php echo $sale['spm'];;?></td>
                             <td class="text-center" >
@@ -101,27 +104,36 @@
                             <td class="text-center">    
                                 <?php echo rupiah($sale['nominal'])?>
                             </td>
+                            <td class="text-center"><?php $detail_pengajuan = find_sum_sptjb($sale['id']);  $hasil=$sale['nominal']-$detail_pengajuan[0]['nominal']; echo rupiah($hasil)  ; ?></td>
                             <td class="text-center" >
                                     <?php if($sale['tanggal_pengembalian'] == ''){?>
                                         <a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input Pengembalian</a>
                                     <?php }else{?>
-                                        <a href="#" class="btn btn-warning nominal" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['tanggal_pengembalian'];?>' data-nominal='<?=$sale['pengembalian'];?>'><?=$sale['tanggal_pengembalian'];?></a> 
+                                        <a href="#" class="btn btn-warning nominal" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['tanggal_pengembalian'];?>' data-nominal='<?=$sale['pengembalian'];?>'><?=rupiah($sale['pengembalian']);?></a> 
                                     <?php } ?>
                             </td>
+                            
+                            <td class="text-center">
+                                      <a href="detail_pengajuan_pum.php?id=<?php echo $sale['id']?>" class="btn btn-primary">Detail</a>
+                            </td>
                         </tr>
-                        <?php $tot+=$sale['nominal']; $tot_pengmbalian+=$sale['pengembalian']; endforeach;?>
+                        <?php $tot+=$sale['nominal']; $tot_pengmbalian+=$sale['pengembalian']; $tot_hasil+=$hasil; endforeach;?>
                     </tbody>
                     <tr>
                             <th class="text-center">#</th>
                             <th class="text-center" > </th>
                             <th class="text-center"><?=rupiah($tot);?></th> 
+                            <th class="text-center"><?=rupiah($tot_hasil);?></th>
                             <th class="text-center"><?=rupiah($tot_pengmbalian);?></th>
+                            <th class="text-center"></th>
                     </tr>
                     <tr>
                             <th class="text-center"></th>
                             <th class="text-center" > Saldo Akhir</th>
-                            <th class="text-center"><?php $uang=$tot-$tot_pengmbalian; $saldo=$uang-$tot1;?></th> 
+                            <th class="text-center"><?php $uang=$tot_hasil-$tot_pengmbalian; $saldo=$uang-$tot1;?></th>                 
+                            <th class="text-center"></th>
                             <th class="text-center"><?=rupiah($saldo);?></th>
+                            <th class="text-center"><?php echo $tot1; ?></th>
                     </tr>
                 </table>
         </div>

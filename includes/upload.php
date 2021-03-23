@@ -16,6 +16,7 @@ class  Media {
   public $adk = SITE_ROOT.DS.'..'.DS.'uploads/adk';
   public $kekuranganPath = SITE_ROOT.DS.'..'.DS.'uploads/kekurangan';
   public $Adk_spm = SITE_ROOT.DS.'..'.DS.'uploads/adk_spm';
+  public $sptjb_pum = SITE_ROOT.DS.'..'.DS.'uploads/sptjb_pum';
   
 
 
@@ -113,6 +114,41 @@ class  Media {
     {
 
       if($this->insert_media($id)){
+        unset($this->fileTempPath);
+        return true;
+      }
+
+    } else {
+
+      $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.";
+      return false;
+    }
+
+  }
+
+  public function process_pum($id){
+    if(!empty($this->errors)){
+        return false;
+      }
+    if(empty($this->fileName) || empty($this->fileTempPath)){
+        $this->errors[] = "The file location was not available.";
+        return false;
+      }
+
+    if(!is_writable($this->sptjb_pum)){
+        $this->errors[] = $this->sptjb_pum." Must be writable!!!.";
+        return false;
+      }
+
+    if(file_exists($this->sptjb_pum."/".$this->fileName)){
+      $this->errors[] = "The file {$this->fileName} already exists.";
+      return false;
+    }
+    //$h =$this->spmPath.'/'.$this->fileName; var_dump($h); exit();// echo 
+    if(move_uploaded_file($this->fileTempPath,$this->sptjb_pum.'/'.$this->fileName))
+    {
+
+      if($this->insert_pum($id)){
         unset($this->fileTempPath);
         return true;
       }
@@ -421,6 +457,14 @@ class  Media {
        return ($db->query($sql) ? true : false);
 
   }
+
+  private function insert_pum($id){
+
+    global $db;
+    $sql  = "UPDATE detail_pengajuan SET file_pj ='{$db->escape($this->fileName)}' WHERE id= '{$db->escape($id)}'";
+  return ($db->query($sql) ? true : false);
+
+}
 
 
   /*--------------------------------------------------------------*/

@@ -5,10 +5,14 @@
   page_require_level(6);
   
   $detail = find_by_id('detail_pengajuan',(int)$_GET['id']);
-  //var_dump($detail);exit();
+  $user = find_by_id('users',$_SESSION['user_id']);
   if(!$detail){
     $session->msg("d","Missing detail pengajuan id.");
-    redirect('detail_pengajuan.php');
+    if($user['id_satker'] == 1 or $user['id_satker'] == 2 or $user['id_satker'] == 3 or $user['id_satker'] == 4 or $user['id_satker'] == 14){
+      redirect('detail_pengajuan_pum.php?id='.$detail['id_pencairan']);
+    }else{
+      redirect('detail_pengajuan.php?id='.$detail['id_pengajuan']);
+    }
   }
 
 ?>
@@ -55,15 +59,27 @@
      $query .=" WHERE id= '{$id_pengajuan}'";
      if($db->query($query)){
        $session->msg('s',"Detail Pengajuan edited ");
-       redirect('detail_pengajuan.php?id='.$detail['id_pengajuan'], false);
+        if($user['id_satker'] == 1 or $user['id_satker'] == 2 or $user['id_satker'] == 3 or $user['id_satker'] == 4 or $user['id_satker'] == 14){
+          redirect('detail_pengajuan_pum.php?id='.$detail['id_pencairan']);
+        }else{
+          redirect('detail_pengajuan.php?id='.$detail['id_pengajuan']);
+        }
      } else {
        $session->msg('d',' Sorry failed to edited!');
-       redirect('detail_pengajuan.php?id='.$detail['id_pengajuan'], false);
+        if($user['id_satker'] == 1 or $user['id_satker'] == 2 or $user['id_satker'] == 3 or $user['id_satker'] == 4 or $user['id_satker'] == 14){
+          redirect('detail_pengajuan_pum.php?id='.$detail['id_pencairan']);
+        }else{
+          redirect('detail_pengajuan.php?id='.$detail['id_pengajuan']);
+        }
      }
 
    } else{
      $session->msg("d", $errors);
-     redirect('detail_pengajuan.php?id='.$detail['id_pengajuan'],false);
+      if($user['id_satker'] == 1 or $user['id_satker'] == 2 or $user['id_satker'] == 3 or $user['id_satker'] == 4 or $user['id_satker'] == 14){
+        redirect('detail_pengajuan_pum.php?id='.$detail['id_pencairan']);
+      }else{
+        redirect('detail_pengajuan.php?id='.$detail['id_pengajuan']);
+      }
    }
 
  }

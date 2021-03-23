@@ -210,6 +210,21 @@ function find_detail($id) {
   global $db;
     return find_by_sql("SELECT * FROM detail_pengajuan WHERE id_pengajuan = '{$id}'");
 }
+
+function find_sum_sptjb($id) {
+  global $db;
+    return find_by_sql("SELECT sum(nominal) as nominal FROM detail_pengajuan WHERE id_pencairan = '{$id}'");
+}
+
+function find_detail_pum($id) {
+  global $db;
+    return find_by_sql("SELECT * FROM detail_pengajuan WHERE id_pencairan = '{$id}'");
+}
+
+function find_sptjb_pum() {
+  global $db;
+    return find_by_sql("SELECT dp.no_sptjb as no_sptjb,dp.id_akun as id_akun,dp.nominal as nominal,dp.pph as pph,dp.ppn as ppn,dp.tanggal_dp as tanggal_dp,dp.keterangan as keterangan,dp.id as id,dp.file_pj as file_pj,p.id_satker as id_satker FROM detail_pengajuan dp, pencairan p WHERE dp.id_pencairan = p.id and dp.id_pengajuan = 0");
+}
 /*--------------------------------------------------------------*/
 /* Function for Perform queries
 /*--------------------------------------------------------------*/

@@ -376,6 +376,7 @@ if($_GET['s']=='tolak'){
 
              <?php $tot+=$sale['nominal']; $tot1+=$sale['pph']; $tot2+=$sale['ppn']; endforeach;?>
            </tbody>
+           <tfoot>
            
             <tr>
                 <th class="text-center">Jumlah</th>
@@ -399,6 +400,7 @@ if($_GET['s']=='tolak'){
                 <th class="text-center">  </th>
                 <th class="text-center"> </th>
              </tr>
+             </tfoot>
              <?php $user = find_by_id('users',$_SESSION['user_id']);
               //var_dump($user['user_level']);
             if($user['user_level'] == 7){ 

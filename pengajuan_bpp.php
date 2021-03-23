@@ -138,9 +138,15 @@ if(isset($_GET['s']) and $_GET['s']==='hapus_adk'){
                      <a href="edit_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-pencil"></span>
                      </a>
+                     <?php if($user['user_level'] == 5){ ?>
+                     <a href="detail_pengajuan_ben.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
+                       <span class="glyphicon glyphicon-eye-open"></span>
+                     </a>
+                     <?php }else{ ?>
                      <a href="detail_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-primary btn-xs"  title="Detail Pengajuan" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-eye-open"></span>
                      </a>
+                     <?php } ?>
                      <a onclick="return confirm('Yakin Hapus?')" href="delete_pengajuan.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>
                      </a>

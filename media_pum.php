@@ -4,29 +4,29 @@
   // Checkin What level user has permission to view this page
   page_require_level(6);
 ?>
-<?php $media_files = find_all('media'); $id=$_GET['id'];
+<?php 
   $user = find_by_id('users',(int)$_SESSION['user_id']);
-  $pengajuan = find_by_id('pengajuan',$_GET['id']);
+  $detail_pengajuan = find_by_id('detail_pengajuan',$_GET['id']);
 ?>
 <?php
   if(isset($_POST['submit'])) {
      $id = $_POST['id'];
-
+       
   $photo = new Media();
-  $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
-    if($photo->process_adk($id)){
+  $photo->upload($_FILES['file_upload'],'');
+    if($photo->process_pum($id)){
         $session->msg('s','dokumen has been uploaded.');
             if($user['user_level']==5){
-           redirect('detail_dokumen.php?id='.$pengajuan['id'], false);
+           redirect('detail_pengajuan_pum.php'.$detail_pengajuan['id_pencairan'], false);
         }else{
-        redirect('detail_dokumen.php?id='.$pengajuan['id']);
+        redirect('detail_pengajuan_pum.php?id='.$detail_pengajuan['id_pencairan']);
        }
     } else{
       $session->msg('d',join($photo->errors));
       if($user['user_level']==5){
-           redirect('detail_dokumen.php?id='.$pengajuan['id'], false);
+           redirect('detail_pengajuan_pum.php?id='.$detail_pengajuan['id_pencairan'], false);
         }else{
-        redirect('detail_dokumen.php?id='.$pengajuan['id']);
+        redirect('detail_pengajuan_pum.php?id='.$detail_pengajuan['id_pencairan']);
        }
     }
 
@@ -45,7 +45,7 @@
             <span class="glyphicon glyphicon-camera"></span>
             <span>Dokumen</span>
             <div class="pull-right">
-              <form class="form-inline" action="media_adk.php?id=<?=$_GET['id'];?>" method="POST" enctype="multipart/form-data">
+              <form class="form-inline" action="media_pum.php?id=<?=$_GET['id'];?>" method="POST" enctype="multipart/form-data">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-btn">
